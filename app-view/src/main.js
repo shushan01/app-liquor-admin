@@ -11,7 +11,7 @@ import "babel-polyfill";
 Vue.use(ElementUI, { size: 'small' });
 Vue.prototype.$axios = axios;//原生axios
 
-let basURL = "http://localhost:8080";
+let basURL = "http://localhost:8090/api";
 let http = axios.create({
     baseURL: basURL,
     timeout: 10000,
