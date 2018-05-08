@@ -1,4 +1,4 @@
---商品类别表
+#商品类别表
 drop table if exists tb_good_category;
 CREATE TABLE tb_good_category (
 id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -13,7 +13,7 @@ status int(4) NOT NULL COMMENT '状态',
 PRIMARY KEY (id)
 ) COMMENT '商品类别表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---商品品牌表
+#商品品牌表
 drop table if exists tb_good_brand;
 CREATE TABLE tb_good_brand (
 id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -28,7 +28,7 @@ status int(4) NOT NULL COMMENT '状态',
 PRIMARY KEY (id)
 ) COMMENT '商品品牌表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---商品表
+#商品表
 drop table if exists tb_good;
 CREATE TABLE tb_good (
 id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -58,7 +58,7 @@ status int(4) NOT NULL COMMENT '状态',
 PRIMARY KEY (id)
 ) COMMENT '商品表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---商品属性表
+#商品属性表
 drop table if exists tb_good_attribute;
 CREATE TABLE tb_good_attribute (
 id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -73,7 +73,7 @@ status int(4) NOT NULL COMMENT '状态',
 PRIMARY KEY (id)
 ) COMMENT '商品属性表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---收货地址表
+#收货地址表
 drop table if exists tb_address;
 CREATE TABLE tb_address (
 id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -93,7 +93,7 @@ status int(4) NOT NULL COMMENT '状态',
 PRIMARY KEY (id)
 ) COMMENT '收货地址表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---购物车表
+#购物车表
 drop table if exists tb_shopping_cart;
 CREATE TABLE tb_shopping_cart (
 id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -106,7 +106,7 @@ status int(4) NOT NULL COMMENT '状态',
 PRIMARY KEY (id)
 ) COMMENT '购物车表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---订单表
+#订单表
 drop table if exists tb_order;
 CREATE TABLE tb_order (
 id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -123,7 +123,7 @@ status int(4) NOT NULL COMMENT '订单状态',
 PRIMARY KEY (id)
 ) COMMENT '订单表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---物流表
+#物流表
 drop table if exists tb_logistics;
 CREATE TABLE tb_logistics (
 id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -138,7 +138,7 @@ status int(4) NOT NULL COMMENT '物流状态',
 PRIMARY KEY (id)
 ) COMMENT '物流表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---物流在途追踪表
+#物流在途追踪表
 drop table if exists tb_logistics;
 CREATE TABLE tb_logistics (
 id bigint(20) NOT NULL AUTO_INCREMENT,
