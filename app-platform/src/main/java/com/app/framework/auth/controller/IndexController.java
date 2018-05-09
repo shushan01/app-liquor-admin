@@ -16,4 +16,10 @@ public class IndexController extends BaseController {
     public String index() {
         return "index";
     }
+
+    @GetMapping("/login")
+    @SuppressWarnings("unchecked")
+    public String login() {
+        return "login";
+    }
 }
