@@ -214,3 +214,12 @@ utime bigint(20) NOT NULL COMMENT '物流更新时间',
 PRIMARY KEY (id)
 ) COMMENT '物流在途追踪表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#酒柜表
+drop table if exists tb_wine_cabinet;
+CREATE TABLE tb_wine_cabinet (
+id bigint(20) NOT NULL AUTO_INCREMENT,
+good_id bigint(20) NOT NULL COMMENT '商品id',
+ctime bigint(20) NOT NULL COMMENT '创建时间',
+PRIMARY KEY (id)
+) COMMENT '酒柜表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
