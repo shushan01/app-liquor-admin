@@ -101,12 +101,11 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setUnauthorizedUrl("/logout");
-
-        shiroFilterFactoryBean.setFilterChainDefinitions("/login = anon");
-        shiroFilterFactoryBean.setFilterChainDefinitions("/logout = anon");
-        shiroFilterFactoryBean.setFilterChainDefinitions("/findAll = anon");
-        shiroFilterFactoryBean.setFilterChainDefinitions("/api/test/* = anon");
+        shiroFilterFactoryBean.setFilterChainDefinitions("/index = anon");
+        // shiroFilterFactoryBean.setFilterChainDefinitions("/login = anon");
+        // shiroFilterFactoryBean.setFilterChainDefinitions("/logout = anon");
         shiroFilterFactoryBean.setFilterChainDefinitions("/swagger-ui.html = anon");
+        shiroFilterFactoryBean.setFilterChainDefinitions("/** = anon");
         return shiroFilterFactoryBean;
     }
 
