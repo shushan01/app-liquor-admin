@@ -83,3 +83,9 @@ shiro:
 logging:
     level:
         com.app.framework: debug
+
+#文件上传路径
+fileUpload:
+    path: /Users/haizhi/yyj/workspace/app-liquor-admin/app-platform/file
+    totalMaxSize:  10240KB
+    singleMaxSize:  1024000KB
