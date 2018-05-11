@@ -84,8 +84,11 @@ logging:
     level:
         com.app.framework: debug
 
-#文件上传路径
+#文件上传配置
 fileUpload:
+    #文件上传路径
     path: /Users/haizhi/yyj/workspace/app-liquor-admin/app-platform/file
-    totalMaxSize:  10240KB
-    singleMaxSize:  1024000KB
+    #所有文件大小
+    totalMaxSize:  1024000KB
+    #单个文件大小
+    singleMaxSize:  10240KB
