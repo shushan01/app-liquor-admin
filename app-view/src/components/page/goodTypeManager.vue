@@ -114,18 +114,26 @@
             },
             // 保存编辑
             saveEdit() {
-                console.log(232);
-                this.$http.get('/goodType/update', {
-                    params: {
-                        id: this.form.id,
-                        name: this.form.name,
-                        description: this.form.description
-                    }
+                this.$http.post('/goodType/update', {
+                    id: this.form.id,
+                    name: this.form.name,
+                    description: this.form.description
                 }).then((res) => {
                     console.log(res);
                 })
                 this.getData();
                 this.editVisible = false;
+                // this.$http.get('/goodType/update', {
+                //     params: {
+                //         id: this.form.id,
+                //         name: this.form.name,
+                //         description: this.form.description
+                //     }
+                // }).then((res) => {
+                //     console.log(res);
+                // })
+                // this.getData();
+                // this.editVisible = false;
             }
         }
     }
