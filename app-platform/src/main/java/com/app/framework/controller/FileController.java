@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yangyijun on 2018/5/11.
@@ -38,9 +39,8 @@ public class FileController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public String fileUpload(@RequestParam("fileName") MultipartFile file) {
-        FileUtils.upload(file, false, uploadPath);
-        return "true";
+    public Map<String, String> fileUpload(@RequestParam("fileName") MultipartFile file) {
+        return FileUtils.upload(file, false, uploadPath);
     }
 
     /**
@@ -49,15 +49,21 @@ public class FileController {
      */
     @RequestMapping(value = "/multiUpload", method = RequestMethod.POST)
     @ResponseBody
-    public String multiUpload(@RequestParam("fileName") List<MultipartFile> files) {
-        FileUtils.multiUpload(files, false, null);
-        return "true";
+    public Map<String, String> multiUpload(@RequestParam("fileName") List<MultipartFile> files) {
+        return FileUtils.multiUpload(files, false, null);
     }
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     @ResponseBody
     public String download(HttpServletResponse response) {
         FileUtils.download(response, "/Users/haizhi/yyj/workspace/app-liquor-admin/app-platform/logs/info-2018-05-10.log");
+        return "true";
+    }
+
+    @RequestMapping(value = "/channelDownload", method = RequestMethod.GET)
+    @ResponseBody
+    public String channelDownload(HttpServletResponse response) {
+        FileUtils.channelDownload("/Users/haizhi/yyj/workspace/app-liquor-admin/app-platform/logs/info-2018-05-10.log", "/Users/haizhi/yyj/workspace/app-liquor-admin/app-platform/");
         return "true";
     }
 
