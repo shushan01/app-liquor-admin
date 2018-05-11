@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -50,6 +51,13 @@ public class FileController {
     @ResponseBody
     public String multiUpload(@RequestParam("fileName") List<MultipartFile> files) {
         FileUtils.multiUpload(files, false, null);
+        return "true";
+    }
+
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    @ResponseBody
+    public String download(HttpServletResponse response) {
+        FileUtils.download(response, "/Users/haizhi/yyj/workspace/app-liquor-admin/app-platform/logs/info-2018-05-10.log");
         return "true";
     }
 
