@@ -1,13 +1,13 @@
 <template>
     <div class="login-wrap">
-        <div class="ms-title">后台管理系统</div>
+        <div class="ms-title">体验酒柜后台管理系统</div>
         <div class="ms-login">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username"></el-input>
+                    <el-input v-model="ruleForm.username" prefix-icon="ye-icon-account" placeholder="请输入用户名"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+                    <el-input v-model="ruleForm.password" type="password" prefix-icon="ye-icon-password" placeholder="请输入密码" @keyup.enter.native="submitForm('ruleForm')"></el-input>
                 </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -46,14 +46,14 @@
                             console.log(res)
                             if (res.status == 200) {
                                 this.$message({
-                                    message: '登录成功',
+                                    message: '登录成功！',
                                     type: 'success'
                                 });
                                 localStorage.setItem('ms_username', this.ruleForm.username);
                                 this.$router.push('/');
                             } else {
                                 this.$message({
-                                    message: '用戶名或者密碼錯誤',
+                                    message: '用户名或者密码错误！',
                                     type: 'error'
                                 });
                             }
