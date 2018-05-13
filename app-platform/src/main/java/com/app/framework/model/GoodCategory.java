@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Table(name = "tb_good_category")
 public class GoodCategory extends BaseEntity {
     private Long parentId;
-//    @Transient
+    @Transient
     private String parentName;
     private String name;
     private String description;
