@@ -12,7 +12,7 @@
                     <el-col :span="12">
                         <div class="grid-cont-right">
                             <el-input v-model="search_keyword" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                            <el-button type="primary" class="el-icon-search"> 搜索</el-button>
+                            <el-button type="primary" class="el-icon-search" @click="search"> 搜索</el-button>
                         </div>
                     </el-col>
                 </el-row>
@@ -91,7 +91,7 @@
     export default {
         data() {
             return {
-                url: '/goodType/list',
+                url: '/goodCategory/list',
                 search_keyword: '',
                 tableData: [],
                 delIds: [],
@@ -129,12 +129,19 @@
             },
             //加载表格数据
             getData() {
-                this.$http.post(this.url, {
-                    page: this.curPage
+                this.$http.get(this.url, {
+                    params: {
+                        pageNo: this.curPage,
+                        pageSize: this.pageSize,
+                        searchKeywork: this.search_keyword
+                    }
                 }).then((res) => {
-                    this.tableData = res.data.list;
+                    this.tableData = res.data.data;
                     this.total = res.data.total;
                 })
+            },
+            search() {
+                this.getData();
             },
             //弹出添加商品类别信息页面
             addGoodType() {
