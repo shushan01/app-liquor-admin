@@ -6,7 +6,7 @@
                     <el-col :span="12">
                         <div class="grid-cont-left">
                             <el-button type="primary" class="el-icon-plus mr10" @click="addGoodType"> 添加</el-button>
-                            <el-button type="danger" class="el-icon-delete mr10"> 删除</el-button>
+                            <el-button type="danger" class="el-icon-delete mr10" @click="deleteAll"> 删除</el-button>
                         </div>
                     </el-col>
                     <el-col :span="12">
@@ -18,7 +18,7 @@
                 </el-row>
             </div>
 
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" prop="id" width="55"></el-table-column>
                 <el-table-column prop="name" label="名称" width="120">
                 </el-table-column>
@@ -138,7 +138,6 @@
             },
             //弹出添加商品类别信息页面
             addGoodType() {
-                console.log(999)
                 this.addVisible = true;
             },
             //保存商品类别信息
@@ -160,11 +159,46 @@
             //删除指定商品类别
             deleteOne(index) {
                 const item = this.tableData[index];
-                console.log(item.id);
+                this.delIds.push(item.id);
+                this.delVisible = true;
+            },
+            //删除指定商品类别
+            deleteAll() {
+                this.delVisible = true;
             },
             //删除选中商品类别
             confirmDel() {
-                console.log(item.id);
+                this.delVisible = false;
+                this.$http.get('/goodType/delete',
+                    {
+                        params: {
+                            ids: this.delIds
+                        }
+                    }
+                ).then((res) => {
+                    if (res.status == 200) {
+                        this.delIds = []
+                        this.$message({
+                            message: '删除成功！',
+                            type: 'success'
+                        });
+                        this.getData();
+                    } else {
+                        this.$message({
+                            message: '删除失败！',
+                            type: 'error'
+                        });
+                    }
+                });
+            },
+            handleSelectionChange(records) {
+                if (records.length > 0) {
+                    for (let i = 0; i < records.length; i++) {
+                        this.delIds.push(records[i].id);
+                    }
+                } else {
+                    this.delIds = [];
+                }
             },
             // 更新商品类别信息
             updateGoodType() {
@@ -174,20 +208,9 @@
                     description: this.form.description
                 }).then((res) => {
                     console.log(res);
-                })
+                });
                 this.getData();
                 this.editVisible = false;
-                // this.$http.get('/goodType/update', {
-                //     params: {
-                //         id: this.form.id,
-                //         name: this.form.name,
-                //         description: this.form.description
-                //     }
-                // }).then((res) => {
-                //     console.log(res);
-                // })
-                // this.getData();
-                // this.editVisible = false;
             }
         }
     }
