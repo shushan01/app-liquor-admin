@@ -8,7 +8,7 @@
                         <template slot="title">
                             <i :class="item.icon"></i>{{ item.title }}
                         </template>
-                        <el-menu-item v-for="subItem in item.subs" :index="subItem.index">
+                        <el-menu-item v-for="subItem in item.subs" :key="subItem.index" :index="subItem.index">
                             <i :class="subItem.icon"></i>{{ subItem.title }}
                         </el-menu-item>
                     </el-submenu>
