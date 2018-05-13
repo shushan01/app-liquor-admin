@@ -179,7 +179,7 @@
             },
             // 更新商品类别信息
             updateGoodType() {
-                this.$http.post('/goodCategory/save', {
+                this.$http.post(this.saveUrl, {
                     id: this.editForm.id,
                     name: this.editForm.name,
                     parentId: this.editForm.parentId,
@@ -203,7 +203,7 @@
             //删除选中商品类别
             confirmDel() {
                 this.delVisible = false;
-                this.$http.get('/goodType/delete',
+                this.$http.get(this.deleteUrl,
                     {
                         params: {
                             ids: this.delIds
