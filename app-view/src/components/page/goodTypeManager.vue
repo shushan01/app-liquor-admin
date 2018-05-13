@@ -3,17 +3,16 @@
         <div class="container">
             <div class="handle-box">
                 <el-row>
-                    <el-col :span="12">
+                    <el-col :span="16">
                         <div class="grid-cont-left">
                             <el-button type="primary" class="el-icon-plus mr10" @click="addGoodType"> 添加</el-button>
                             <el-button type="danger" class="el-icon-delete mr10" @click="deleteAll"> 删除</el-button>
                         </div>
                     </el-col>
-                    <el-col :span="12">
-                        <div class="grid-cont-right">
-                            <el-input v-model="search_keyword" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-                            <el-button type="primary" class="el-icon-search" @click="search"> 搜索</el-button>
-                        </div>
+                    <el-col :span="8">
+                        <el-input placeholder="筛选关键词" v-model="search_keyword" class="input-with-select">
+                            <el-button type="primary" slot="append" class="el-icon-search" @click="search"> 搜索</el-button>
+                        </el-input>
                     </el-col>
                 </el-row>
             </div>
@@ -23,6 +22,10 @@
                 <el-table-column prop="name" label="名称" width="120">
                 </el-table-column>
                 <el-table-column prop="parentName" label="父类别" width="120">
+                </el-table-column>
+                <el-table-column prop="ctime" label="创建时间">
+                </el-table-column>
+                <el-table-column prop="utime" :formatter="dateFormat" label="修改时间">
                 </el-table-column>
                 <el-table-column prop="description" label="描述">
                 </el-table-column>
@@ -270,6 +273,17 @@
                 } else {
                     this.delIds = [];
                 }
+            },
+            //时间格式化
+            dateFormat: function (row, column) {
+                var date = row[column.property];
+                console.log(date)
+                return date;
+                // if (date == undefined) {
+                //     return "";
+                // }
+                // return moment(date).format("YYYY-MM-DD HH:mm:ss");
+                // return moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
             }
         }
     }
@@ -278,11 +292,6 @@
 <style scoped>
     .handle-box {
         margin-bottom: 20px;
-    }
-
-    .handle-input {
-        width: 300px;
-        display: inline-block;
     }
 
     .del-dialog-cnt {
