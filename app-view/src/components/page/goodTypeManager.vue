@@ -25,7 +25,7 @@
                 </el-table-column>
                 <el-table-column prop="ctime" label="创建时间">
                 </el-table-column>
-                <el-table-column prop="utime" :formatter="dateFormat" label="修改时间">
+                <el-table-column prop="utime" label="修改时间">
                 </el-table-column>
                 <el-table-column prop="description" label="描述">
                 </el-table-column>
@@ -232,6 +232,7 @@
             },
             //删除指定商品类别
             deleteOne(index) {
+                this.delIds = [];
                 const item = this.tableData[index];
                 this.delIds.push(item.id);
                 this.delVisible = true;
@@ -273,17 +274,6 @@
                 } else {
                     this.delIds = [];
                 }
-            },
-            //时间格式化
-            dateFormat: function (row, column) {
-                var date = row[column.property];
-                console.log(date)
-                return date;
-                // if (date == undefined) {
-                //     return "";
-                // }
-                // return moment(date).format("YYYY-MM-DD HH:mm:ss");
-                // return moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
             }
         }
     }
