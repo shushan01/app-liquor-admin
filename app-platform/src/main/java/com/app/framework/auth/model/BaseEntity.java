@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by yangyijun on 2018/4/13.
@@ -20,8 +21,8 @@ public class BaseEntity extends BaseObject implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     protected Long creator;
-    protected Long ctime;
+    protected Date ctime;
     protected Long modifier;
-    protected Long utime;
+    protected Date utime;
     private Integer status;
 }

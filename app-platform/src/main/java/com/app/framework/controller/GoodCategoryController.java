@@ -9,6 +9,9 @@ import com.app.framework.service.GoodCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
+
 @RestController
 @RequestMapping("/goodCategory")
 public class GoodCategoryController {
@@ -21,12 +24,12 @@ public class GoodCategoryController {
         Response response = new Response();
         try {
             if (null != goodCategory.getId()) {
-                goodCategory.setUtime(System.currentTimeMillis());
+                goodCategory.setUtime(new Date());
                 goodCategory.setModifier(1l);
                 goodCategoryService.update(goodCategory);
             } else {
-                goodCategory.setCtime(System.currentTimeMillis());
-                goodCategory.setUtime(System.currentTimeMillis());
+                goodCategory.setCtime(new Date());
+                goodCategory.setUtime(new Date());
                 goodCategory.setCreator(1l);
                 goodCategory.setModifier(1l);
                 goodCategory.setStatus(1);
@@ -46,6 +49,16 @@ public class GoodCategoryController {
     public PageResult<GoodCategory> list(String searchKeyword, Integer pageNo, Integer pageSize) {
         try {
             return goodCategoryService.list(searchKeyword, pageNo, pageSize);
+        } catch (Exception e) {
+            logger.error("查询商品类别信息失败!", e);
+        }
+        return null;
+    }
+
+    @GetMapping("/findAll")
+    public List<GoodCategory> findAll() {
+        try {
+            return goodCategoryService.findAll();
         } catch (Exception e) {
             logger.error("查询商品类别信息失败!", e);
         }

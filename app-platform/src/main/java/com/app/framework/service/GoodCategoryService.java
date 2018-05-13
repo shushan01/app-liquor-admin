@@ -6,11 +6,12 @@ import com.app.framework.dao.GoodCategoryDao;
 import com.app.framework.model.GoodCategory;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodCategoryService extends BaseService<GoodCategory> {
@@ -24,13 +25,9 @@ public class GoodCategoryService extends BaseService<GoodCategory> {
 
     public PageResult<GoodCategory> list(String name, int pageNo, int pageSize) {
         Page<GoodCategory> page = PageHelper.startPage(pageNo, pageSize);
-        List<GoodCategory> list = null;
-        if (StringUtils.isBlank(name)) {
-            list = goodCategoryDao.selectAll();
-        } else {
-            list = goodCategoryDao.findByName(name);
-        }
+        Map<String, String> map = new HashMap<>();
+        map.put("name", name);
+        List<GoodCategory> list = goodCategoryDao.findByName(map);
         return new PageResult<GoodCategory>(pageNo, pageSize, page.getTotal(), list);
     }
-
 }
