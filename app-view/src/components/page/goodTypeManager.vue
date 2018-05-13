@@ -48,12 +48,16 @@
 
         <!-- 添加弹出框 -->
         <el-dialog title="添加" :visible.sync="addVisible" width="30%">
-            <el-form ref="addForm" label-width="50px">
+            <el-form ref="addForm" label-width="100px">
                 <el-form-item label="名称">
                     <el-input v-model="addForm.name"></el-input>
                 </el-form-item>
                 <el-form-item label="父类别">
-                    <el-input v-model="addForm.parentId"></el-input>
+                    <el-select v-model="addForm.parentId" placeholder="请选择父类型">
+                        <template v-for="parentType in parentTypes" :label="parentType.name" :value="parentType.id">
+                            <el-option :label="parentType.name" :value="parentType.id">{{parentType.name}}</el-option>
+                        </template>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="描述">
                     <el-input v-model="addForm.description"></el-input>
@@ -71,6 +75,18 @@
                 <el-input v-model="editForm.id" type="hidden"></el-input>
                 <el-form-item label="名称">
                     <el-input v-model="editForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="父类别">
+                    <el-select v-model="editForm.parentId" placeholder="请选择父类型">
+                        <template v-for="parentType in parentTypes" :label="parentType.name" :value="parentType.id">
+                            <template v-if="parentType.id==editForm.parentId">
+                                <el-option :label="parentType.name" :value="parentType.id" selected>{{parentType.name}}</el-option>
+                            </template>
+                            <template v-else>
+                                <el-option :label="parentType.name" :value="parentType.id">{{parentType.name}}</el-option>
+                            </template>
+                        </template>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="描述">
                     <el-input v-model="editForm.description"></el-input>
@@ -96,11 +112,13 @@
     export default {
         data() {
             return {
+                findAllUrl: '/goodCategory/findAll',
                 listUrl: '/goodCategory/list',
                 saveUrl: '/goodCategory/save',
                 deleteUrl: '/goodCategory/delete',
                 search_keyword: '',
                 tableData: [],
+                parentTypes: [],
                 delIds: [],
                 total: 0,
                 pageSize: 5,
@@ -155,6 +173,9 @@
             //弹出添加商品类别信息页面
             addGoodType() {
                 this.addVisible = true;
+                this.$http.get(this.findAllUrl).then((res) => {
+                    this.parentTypes = res.data;
+                })
             },
             //保存商品类别信息
             saveGoodType() {
@@ -163,6 +184,8 @@
                     parentId: this.addForm.parentId,
                     description: this.addForm.description
                 }).then((res) => {
+                    if (res.status == 200)
+                        this.getData();
                 })
                 this.addVisible = false;
             },
@@ -185,9 +208,9 @@
                     parentId: this.editForm.parentId,
                     description: this.editForm.description
                 }).then((res) => {
-                    console.log(res);
+                    if (res.status == 200)
+                        this.getData();
                 });
-                this.getData();
                 this.editVisible = false;
             },
             //删除指定商品类别
