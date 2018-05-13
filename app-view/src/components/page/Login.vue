@@ -4,10 +4,11 @@
         <div class="ms-login">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" prefix-icon="ye-icon-account" placeholder="请输入用户名"></el-input>
+                    <el-input v-model="ruleForm.username" prefix-icon="icon-zhanghu" placeholder="请输入用户名"></el-input>
+                    <!--<el-input v-model="ruleForm.username" prefix-icon="ye-icon-account" placeholder="请输入用户名"></el-input>-->
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="ruleForm.password" type="password" prefix-icon="ye-icon-password" placeholder="请输入密码" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+                    <el-input v-model="ruleForm.password" type="password" prefix-icon="icon-mima" placeholder="请输入密码" @keyup.enter.native="submitForm('ruleForm')"></el-input>
                 </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -75,6 +76,10 @@
         height: 100%;
     }
 
+    /*.icon-mima {
+        background-color: rgba(0, 0, 0, 0.1);
+    }*/
+
     .ms-title {
         position: absolute;
         top: 50%;
@@ -83,7 +88,6 @@
         text-align: center;
         font-size: 30px;
         color: #fff;
-
     }
 
     .ms-login {
