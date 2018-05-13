@@ -31,13 +31,13 @@ public class AccountController extends BaseController {
     @Autowired
     private UserService userService;
 
-//    @ApiOperation(value = "用户登录接口", notes = "用户登录接口")
-//    @PostMapping("/login")
-//    @SuppressWarnings("unchecked")
-//    public Response login(@RequestBody @Valid LoginPara loginPara) {
+    @ApiOperation(value = "用户登录接口", notes = "用户登录接口")
+    @PostMapping("/login")
+    @SuppressWarnings("unchecked")
+    public Response login(@RequestBody @Valid LoginPara loginPara) {
 //        SecurityUtils.getSubject().login(new UsernamePasswordToken(loginPara.getUserName(), loginPara.getPassword()));
-//        return new Response(Status.SUCCESS.code(), Status.SUCCESS.msg());
-//    }
+        return new Response(Status.SUCCESS.code(), Status.SUCCESS.msg());
+    }
 
     @ApiOperation(value = "退出登录", notes = "退出登录")
     @PostMapping("/logout")

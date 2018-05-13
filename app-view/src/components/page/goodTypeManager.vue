@@ -22,11 +22,13 @@
                 <el-table-column type="selection" prop="id" width="55"></el-table-column>
                 <el-table-column prop="name" label="名称" width="120">
                 </el-table-column>
+                <el-table-column prop="parentId" label="父类别" width="120">
+                </el-table-column>
                 <el-table-column prop="description" label="描述">
                 </el-table-column>
                 <el-table-column label="操作" width="180">
                     <template slot-scope="scope">
-                        <el-button size="small" class="el-icon-edit" @click="editGoodType(scope.$index)">编辑</el-button>
+                        <el-button size="small" class="el-icodn-edit" @click="editGoodType(scope.$index)">编辑</el-button>
                         <el-button type="danger" class="el-icon-delete mr10" @click="deleteOne(scope.$index)"> 删除</el-button>
                     </template>
                 </el-table-column>
@@ -49,6 +51,9 @@
             <el-form ref="addForm" label-width="50px">
                 <el-form-item label="名称">
                     <el-input v-model="addForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="父类别">
+                    <el-input v-model="addForm.parentId"></el-input>
                 </el-form-item>
                 <el-form-item label="描述">
                     <el-input v-model="addForm.description"></el-input>
@@ -91,7 +96,9 @@
     export default {
         data() {
             return {
-                url: '/goodCategory/list',
+                listUrl: '/goodCategory/list',
+                saveUrl: '/goodCategory/save',
+                deleteUrl: '/goodCategory/delete',
                 search_keyword: '',
                 tableData: [],
                 delIds: [],
@@ -103,11 +110,13 @@
                 addVisible: false,
                 addForm: {
                     name: '',
+                    parentId: -1,
                     description: ''
                 },
                 editForm: {
                     id: 0,
                     name: '',
+                    parentId: -1,
                     description: ''
                 }
             }
@@ -129,11 +138,11 @@
             },
             //加载表格数据
             getData() {
-                this.$http.get(this.url, {
+                this.$http.get(this.listUrl, {
                     params: {
                         pageNo: this.curPage,
                         pageSize: this.pageSize,
-                        searchKeywork: this.search_keyword
+                        searchKeyword: this.search_keyword
                     }
                 }).then((res) => {
                     this.tableData = res.data.data;
@@ -149,8 +158,12 @@
             },
             //保存商品类别信息
             saveGoodType() {
-                console.log(this.addForm.name)
-                console.log(this.addForm.description)
+                this.$http.post(this.saveUrl, {
+                    name: this.addForm.name,
+                    parentId: this.addForm.parentId,
+                    description: this.addForm.description
+                }).then((res) => {
+                })
                 this.addVisible = false;
             },
             //弹出编辑商品类别页面
@@ -159,9 +172,23 @@
                 this.editForm = {
                     id: item.id,
                     name: item.name,
+                    parentId: item.parentId,
                     description: item.description,
                 }
                 this.editVisible = true;
+            },
+            // 更新商品类别信息
+            updateGoodType() {
+                this.$http.post('/goodCategory/save', {
+                    id: this.editForm.id,
+                    name: this.editForm.name,
+                    parentId: this.editForm.parentId,
+                    description: this.editForm.description
+                }).then((res) => {
+                    console.log(res);
+                });
+                this.getData();
+                this.editVisible = false;
             },
             //删除指定商品类别
             deleteOne(index) {
@@ -206,18 +233,6 @@
                 } else {
                     this.delIds = [];
                 }
-            },
-            // 更新商品类别信息
-            updateGoodType() {
-                this.$http.post('/goodType/update', {
-                    id: this.form.id,
-                    name: this.form.name,
-                    description: this.form.description
-                }).then((res) => {
-                    console.log(res);
-                });
-                this.getData();
-                this.editVisible = false;
             }
         }
     }

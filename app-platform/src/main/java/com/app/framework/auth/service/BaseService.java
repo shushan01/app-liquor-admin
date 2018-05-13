@@ -21,6 +21,13 @@ public class BaseService<T> {
         return baseDao.deleteByPrimaryKey(o);
     }
 
+    public int deleteByIds(Object[] ids) {
+        for (Object id : ids) {
+            baseDao.deleteByPrimaryKey(id);
+        }
+        return ids.length;
+    }
+
     public int delete(T t) {
         return baseDao.delete(t);
     }
