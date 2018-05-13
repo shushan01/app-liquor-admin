@@ -22,7 +22,7 @@
                 <el-table-column type="selection" prop="id" width="55"></el-table-column>
                 <el-table-column prop="name" label="名称" width="120">
                 </el-table-column>
-                <el-table-column prop="parentId" label="父类别" width="120">
+                <el-table-column prop="parentName" label="父类别" width="120">
                 </el-table-column>
                 <el-table-column prop="description" label="描述">
                 </el-table-column>
@@ -40,7 +40,7 @@
                     @current-change="handleCurrentChange"
                     :page-sizes="[5,10, 20, 30, 40,50]"
                     :page-size="pageSize"
-                    layout="sizes, prev, pager, next"
+                    layout="total, sizes, prev, pager, next"
                     :total="total">
                 </el-pagination>
             </div>
@@ -71,7 +71,7 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="editForm" label-width="50px">
+            <el-form ref="editForm" label-width="100px">
                 <el-input v-model="editForm.id" type="hidden"></el-input>
                 <el-form-item label="名称">
                     <el-input v-model="editForm.name"></el-input>
@@ -197,7 +197,10 @@
                     name: item.name,
                     parentId: item.parentId,
                     description: item.description,
-                }
+                };
+                this.$http.get(this.findAllUrl).then((res) => {
+                    this.parentTypes = res.data;
+                });
                 this.editVisible = true;
             },
             // 更新商品类别信息
@@ -208,8 +211,19 @@
                     parentId: this.editForm.parentId,
                     description: this.editForm.description
                 }).then((res) => {
-                    if (res.status == 200)
+                    if (res.status == 200) {
+                        this.$message({
+                            message: '修改成功！',
+                            type: 'success'
+                        });
                         this.getData();
+                    } else {
+                        this.$message({
+                            message: '修改失败！',
+                            type: 'error'
+                        });
+                    }
+
                 });
                 this.editVisible = false;
             },
