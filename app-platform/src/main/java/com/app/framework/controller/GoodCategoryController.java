@@ -9,6 +9,7 @@ import com.app.framework.service.GoodCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class GoodCategoryController {
     private GoodCategoryService goodCategoryService;
 
     @PostMapping("/save")
-    public Response save(@RequestBody GoodCategory goodCategory) {
+    public Response save(@RequestBody @Valid GoodCategory goodCategory) {
         Response response = new Response();
         try {
             if (null != goodCategory.getId()) {
@@ -46,7 +47,9 @@ public class GoodCategoryController {
     }
 
     @GetMapping("/list")
-    public PageResult<GoodCategory> list(String searchKeyword, Integer pageNo, Integer pageSize) {
+    public PageResult<GoodCategory> list(String searchKeyword,
+                                         @RequestParam(defaultValue = "1") Integer pageNo,
+                                         @RequestParam(defaultValue = "10") Integer pageSize) {
         try {
             return goodCategoryService.list(searchKeyword, pageNo, pageSize);
         } catch (Exception e) {
