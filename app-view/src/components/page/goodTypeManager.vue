@@ -140,13 +140,16 @@
                 editForm: {
                     id: 0,
                     name: '',
-                    parentId: -1,
+                    parentId: '',
                     description: ''
                 },
                 rules: {
                     name: [
                         {required: true, message: '请输入商品类别名称', trigger: 'blur'},
                         {max: 15, message: '商品类别名称不超过15个字符', trigger: 'blur'}
+                    ],
+                    description: [
+                        {max: 100, message: '商品类别描述不超过100个字符', trigger: 'blur'}
                     ]
                 }
             }
