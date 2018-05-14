@@ -10,7 +10,7 @@
                         </div>
                     </el-col>
                     <el-col :span="8">
-                        <el-input placeholder="筛选关键词" v-model="search_keyword" class="input-with-select">
+                        <el-input placeholder="请输入商品类别名称" v-model="search_keyword" class="input-with-select">
                             <el-button type="primary" slot="append" class="el-icon-search" @click="search"> 搜索</el-button>
                         </el-input>
                     </el-col>
@@ -31,7 +31,7 @@
                 </el-table-column>
                 <el-table-column label="操作" width="180">
                     <template slot-scope="scope">
-                        <el-button size="small" class="el-icodn-edit" @click="editGoodType(scope.$index)">编辑</el-button>
+                        <el-button size="small" class="el-icon-edit" @click="editGoodType(scope.$index)">编辑</el-button>
                         <el-button type="danger" class="el-icon-delete mr10" @click="deleteOne(scope.$index)"> 删除</el-button>
                     </template>
                 </el-table-column>
@@ -50,10 +50,11 @@
         </div>
 
         <!-- 添加弹出框 -->
-        <el-dialog title="添加" :visible.sync="addVisible" width="30%">
-            <el-form ref="addForm" label-width="100px">
-                <el-form-item label="名称">
-                    <el-input v-model="addForm.name"></el-input>
+        <el-dialog title="添加商品类别" :visible.sync="addVisible" width="30%">
+            <el-form :model="addForm" ref="addForm" :rules="rules" label-width="100px">
+
+                <el-form-item prop="name" label="名称">
+                    <el-input v-model="addForm.name" placeholder="请输入商品类别名称"></el-input>
                 </el-form-item>
                 <el-form-item label="父类别">
                     <el-select v-model="addForm.parentId" placeholder="请选择父类型">
@@ -62,22 +63,23 @@
                         </template>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="描述">
-                    <el-input v-model="addForm.description"></el-input>
+                <el-form-item prop="description" label="描述">
+                    <el-input type="textarea" autosize placeholder="请输入商品类别描述" v-model="addForm.description">
+                    </el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveGoodType">确 定</el-button>
+                <el-button type="primary" class="icon-baocun7" @click="saveGoodType('addForm')"> 保存</el-button>
             </span>
         </el-dialog>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="editForm" label-width="100px">
+        <el-dialog title="修改商品类别信息" :visible.sync="editVisible" width="30%">
+            <el-form :model="editForm" :rules="rules" ref="editForm" label-width="100px">
                 <el-input v-model="editForm.id" type="hidden"></el-input>
-                <el-form-item label="名称">
-                    <el-input v-model="editForm.name"></el-input>
+                <el-form-item prop="name" label="名称">
+                    <el-input v-model="editForm.name" placeholder="请输入商品类别名称"></el-input>
                 </el-form-item>
                 <el-form-item label="父类别">
                     <el-select v-model="editForm.parentId" placeholder="请选择父类型">
@@ -91,13 +93,14 @@
                         </template>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="描述">
-                    <el-input v-model="editForm.description"></el-input>
+                <el-form-item prop="description" label="描述">
+                    <el-input type="textarea" autosize placeholder="请输入商品类别描述" v-model="editForm.description">
+                    </el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="updateGoodType">确 定</el-button>
+                <el-button type="primary" class="icon-baocun7" @click="updateGoodType('editForm')">确 定</el-button>
             </span>
         </el-dialog>
 
@@ -131,7 +134,7 @@
                 addVisible: false,
                 addForm: {
                     name: '',
-                    parentId: -1,
+                    parentId: '',
                     description: ''
                 },
                 editForm: {
@@ -139,6 +142,12 @@
                     name: '',
                     parentId: -1,
                     description: ''
+                },
+                rules: {
+                    name: [
+                        {required: true, message: '请输入商品类别名称', trigger: 'blur'},
+                        {max: 15, message: '商品类别名称不超过15个字符', trigger: 'blur'}
+                    ]
                 }
             }
         },
@@ -181,16 +190,23 @@
                 })
             },
             //保存商品类别信息
-            saveGoodType() {
-                this.$http.post(this.saveUrl, {
-                    name: this.addForm.name,
-                    parentId: this.addForm.parentId,
-                    description: this.addForm.description
-                }).then((res) => {
-                    if (res.status == 200)
-                        this.getData();
-                })
-                this.addVisible = false;
+            saveGoodType(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.$http.post(this.saveUrl, {
+                            name: this.addForm.name,
+                            parentId: this.addForm.parentId,
+                            description: this.addForm.description
+                        }).then((res) => {
+                            if (res.status == 200) {
+                                this.getData();
+                                this.addVisible = false;
+                            }
+                        });
+                    } else {
+                        return false;
+                    }
+                });
             },
             //弹出编辑商品类别页面
             editGoodType(index) {
@@ -207,28 +223,33 @@
                 this.editVisible = true;
             },
             // 更新商品类别信息
-            updateGoodType() {
-                this.$http.post(this.saveUrl, {
-                    id: this.editForm.id,
-                    name: this.editForm.name,
-                    parentId: this.editForm.parentId,
-                    description: this.editForm.description
-                }).then((res) => {
-                    if (res.status == 200) {
-                        this.$message({
-                            message: '修改成功！',
-                            type: 'success'
+            updateGoodType(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.$http.post(this.saveUrl, {
+                            id: this.editForm.id,
+                            name: this.editForm.name,
+                            parentId: this.editForm.parentId,
+                            description: this.editForm.description
+                        }).then((res) => {
+                            if (res.status == 200) {
+                                this.$message({
+                                    message: '修改成功！',
+                                    type: 'success'
+                                });
+                                this.getData();
+                                this.editVisible = false;
+                            } else {
+                                this.$message({
+                                    message: '修改失败！',
+                                    type: 'error'
+                                });
+                            }
                         });
-                        this.getData();
                     } else {
-                        this.$message({
-                            message: '修改失败！',
-                            type: 'error'
-                        });
+                        return false;
                     }
-
                 });
-                this.editVisible = false;
             },
             //删除指定商品类别
             deleteOne(index) {
