@@ -114,7 +114,9 @@
         </el-dialog>
     </div>
 </template>
+<!--<script src="../../../static/moment/moment.min.js'"></script>-->
 <script>
+    // import moment from "I:\\体验酒柜\\app-liquor-admin\\app-view\\static\\moment\\moment.js'";
     export default {
         data() {
             return {
@@ -300,6 +302,12 @@
                 }
             }
         }
+        // },
+        // filters: {
+        //     dateFrm: function (el) {
+        //         return moment(el).format("YYYY-MM-DD HH:mm:ss")
+        //     }
+        // }
     }
 </script>
 
