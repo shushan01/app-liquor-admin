@@ -3,14 +3,15 @@
         <div class="container">
             <div class="handle-box">
                 <el-row>
-                    <el-col :span="16">
+                    <el-col :span="18">
                         <div class="grid-cont-left">
-                            <el-button type="primary" class="el-icon-plus mr10" @click="addGoodType"> 添加</el-button>
+                            <el-button type="primary" class="el-icon-plus mr10" @click="addGood"> 添加商品基本信息</el-button>
+                            <el-button type="primary" class="el-icon-plus mr10" @click="addGood"> 添加商品属性信息</el-button>
                             <el-button type="danger" class="el-icon-delete mr10" @click="deleteAll"> 删除</el-button>
                         </div>
                     </el-col>
-                    <el-col :span="8">
-                        <el-input placeholder="请输入商品类别名称" v-model="search_keyword" class="input-with-select">
+                    <el-col :span="6">
+                        <el-input placeholder="请输入商品名称" v-model="search_keyword" class="input-with-select">
                             <el-button type="primary" slot="append" class="el-icon-search" @click="search"> 搜索</el-button>
                         </el-input>
                     </el-col>
@@ -19,9 +20,9 @@
 
             <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" prop="id" width="55"></el-table-column>
-                <el-table-column prop="name" label="名称" width="120">
+                <el-table-column show-overflow-tooltip="true" prop="name" label="名称">
                 </el-table-column>
-                <el-table-column prop="parentName" label="父类别" width="120">
+                <el-table-column prop="parentName" label="父类别">
                 </el-table-column>
                 <el-table-column prop="ctime" label="创建时间">
                 </el-table-column>
@@ -29,9 +30,10 @@
                 </el-table-column>
                 <el-table-column prop="description" label="描述">
                 </el-table-column>
-                <el-table-column label="操作" width="180">
+                <el-table-column label="操作" width="270">
                     <template slot-scope="scope">
-                        <el-button size="small" class="el-icon-edit" @click="editGoodType(scope.$index)">编辑</el-button>
+                        <el-button size="small" class="el-icon-view" @click="detailGood(scope.$index)"> 详情</el-button>
+                        <el-button size="small" class="el-icon-edit" @click="editGood(scope.$index)"> 编辑</el-button>
                         <el-button type="danger" class="el-icon-delete mr10" @click="deleteOne(scope.$index)"> 删除</el-button>
                     </template>
                 </el-table-column>
@@ -50,23 +52,20 @@
         </div>
 
         <!-- 添加弹出框 -->
-        <el-dialog title="添加商品类别" :visible.sync="addVisible" width="30%">
+        <el-dialog title="添加商品" :visible.sync="addVisible" width="80%">
             <el-form :model="addForm" ref="addForm" :rules="rules" label-width="100px">
-
-                <el-form-item prop="name" label="名称">
-                    <el-input v-model="addForm.name" placeholder="请输入商品类别名称"></el-input>
-                </el-form-item>
-                <el-form-item label="父类别">
-                    <el-select v-model="addForm.parentId" placeholder="请选择父类型">
-                        <template v-for="parentType in parentTypes" :label="parentType.name" :value="parentType.id">
-                            <el-option :label="parentType.name" :value="parentType.id">{{parentType.name}}</el-option>
-                        </template>
-                    </el-select>
-                </el-form-item>
-                <el-form-item prop="description" label="描述">
-                    <el-input type="textarea" autosize placeholder="请输入商品类别描述" v-model="addForm.description">
-                    </el-input>
-                </el-form-item>
+                <el-row>
+                    <el-col :span="12">
+                        <el-form-item prop="name" label="名称">
+                            <el-input v-model="editForm.name" placeholder="请输入商品名称"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item prop="name" label="类别">
+                            <el-input v-model="editForm.name" placeholder="请输入商品类别"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="addVisible = false">取 消</el-button>
@@ -75,7 +74,7 @@
         </el-dialog>
 
         <!-- 编辑弹出框 -->
-        <el-dialog title="修改商品类别信息" :visible.sync="editVisible" width="30%">
+        <el-dialog title="修改商品类别信息" :visible.sync="editVisible" width="80%">
             <el-form :model="editForm" :rules="rules" ref="editForm" label-width="100px">
                 <el-input v-model="editForm.id" type="hidden"></el-input>
                 <el-form-item prop="name" label="名称">
@@ -114,9 +113,7 @@
         </el-dialog>
     </div>
 </template>
-<!--<script src="../../../static/moment/moment.min.js'"></script>-->
 <script>
-    // import moment from "I:\\体验酒柜\\app-liquor-admin\\app-view\\static\\moment\\moment.js'";
     export default {
         data() {
             return {
@@ -188,7 +185,7 @@
                 this.getData();
             },
             //弹出添加商品类别信息页面
-            addGoodType() {
+            addGood() {
                 this.addVisible = true;
                 this.$http.get(this.findAllUrl).then((res) => {
                     this.parentTypes = res.data;
