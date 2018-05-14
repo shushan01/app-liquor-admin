@@ -21,13 +21,13 @@ export default new Router({
                 },
                 {
                     path: '/goodTypeManager',
-                    component: resolve => require(['../components/page/goodTypeManager.vue'], resolve),
+                    component: resolve => require(['../components/page/good/goodTypeManager.vue'], resolve),
                     meta: {title: '商品类别管理'}
                 },
                 {
-                    path: '/tabs',
-                    component: resolve => require(['../components/page/Tabs.vue'], resolve),
-                    meta: {title: 'tab选项卡'}
+                    path: '/goodManager',
+                    component: resolve => require(['../components/page/good/goodManager.vue'], resolve),
+                    meta: {title: '商品信息管理'}
                 },
                 {
                     path: '/form',
