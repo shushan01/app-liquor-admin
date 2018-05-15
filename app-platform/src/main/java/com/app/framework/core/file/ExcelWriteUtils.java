@@ -24,14 +24,14 @@ public final class ExcelWriteUtils {
     private static final String EXCEL_XLS = ".xls";
     private static final String EXCEL_XLSX = ".xlsx";
 
-    public static void writeExcel(String sheetName, String fileName, String[] titles, List<Map<String, Object>> datas) {
+    public static void writeExcel(String sheetName, String filePath, String[] titles, List<Map<String, Object>> datas) {
         OutputStream fos = null;
         Workbook workbook = null;
         try {
             //第一步，创建一个workbook对应一个excel文件
-            if (fileName.endsWith(EXCEL_XLS)) {
+            if (filePath.endsWith(EXCEL_XLS)) {
                 workbook = new HSSFWorkbook();
-            } else if (fileName.endsWith(EXCEL_XLSX)) {
+            } else if (filePath.endsWith(EXCEL_XLSX)) {
                 workbook = new XSSFWorkbook();
             }
             //第二步，在workbook中创建一个sheet对应excel中的sheet
@@ -53,7 +53,7 @@ public final class ExcelWriteUtils {
                 }
             }
             //将文件保存到指定的位置
-            fos = new FileOutputStream(fileName);
+            fos = new FileOutputStream(filePath);
             workbook.write(fos);
         } catch (IOException e) {
             logger.error("写入excel异常", e);
