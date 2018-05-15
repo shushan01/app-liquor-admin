@@ -47,7 +47,7 @@
                                 title: '商品类别管理'
                             },
                             {
-                                icon: 'icon-shangpin',
+                                icon: 'icon-wutushangpin',
                                 index: 'goodManager',
                                 title: '商品信息管理'
                             }
@@ -62,6 +62,11 @@
                         icon: 'icon-wuliuxiaocheche',
                         index: 'logisticManager',
                         title: '物流管理'
+                    },
+                    {
+                        icon: 'icon-wuliuxiaocheche',
+                        index: 'form',
+                        title: '基本表单'
                     },
                     {
                         icon: 'el-icon-setting',
@@ -84,7 +89,7 @@
                                 title: '角色管理'
                             },
                             {
-                                icon:'icon-quanxianguanli',
+                                icon: 'icon-quanxianguanli',
                                 index: 'authorityManager',
                                 title: '权限管理'
                             }

@@ -52,7 +52,6 @@
         <!-- 添加弹出框 -->
         <el-dialog title="添加商品类别" :visible.sync="addVisible" width="30%">
             <el-form :model="addForm" ref="addForm" :rules="rules" label-width="100px">
-
                 <el-form-item prop="name" label="名称">
                     <el-input v-model="addForm.name" placeholder="请输入商品类别名称"></el-input>
                 </el-form-item>

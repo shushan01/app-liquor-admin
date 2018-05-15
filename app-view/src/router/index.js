@@ -30,6 +30,11 @@ export default new Router({
                     meta: {title: '商品信息管理'}
                 },
                 {
+                    path: '/addGood',
+                    component: resolve => require(['../components/page/good/addGood.vue'], resolve),
+                    meta: {title: '添加商品基本信息'}
+                },
+                {
                     path: '/form',
                     component: resolve => require(['../components/page/BaseForm.vue'], resolve),
                     meta: {title: '基本表单'}
