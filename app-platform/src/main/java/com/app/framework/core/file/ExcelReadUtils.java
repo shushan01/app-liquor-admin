@@ -9,6 +9,7 @@ import com.app.framework.core.utils.LoggerFactory;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.read.biff.BiffException;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
 import java.util.LinkedList;
@@ -25,6 +26,20 @@ public class ExcelReadUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // 去读Excel的方法readExcel，该方法的入口参数为filePath
+    public static List<List> readExcel(String filePath) {
+        if (StringUtils.isBlank(filePath)) {
+            throw new RuntimeException("文件名称不能为空");
+        }
+        File file = new File(filePath);
+        if (file.exists()) {
+            return readExcel(file);
+        } else {
+            throw new RuntimeException("目标文件不存在");
+        }
+
     }
 
     // 去读Excel的方法readExcel，该方法的入口参数为一个File对象
