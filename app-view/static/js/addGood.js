@@ -4,6 +4,10 @@ export default {
             findAllGoodCategoryUrl: '/goodCategory/findAll',
             saveUrl: '/good/save',
             goodCategorys: [],
+            fileList: [],
+            active: 0,
+            baseInfoDisplay: "display: block;",
+            uploadPictureDisplay: "display: none;",
             addForm: {
                 name: '',
                 categoryId: '',
@@ -33,20 +37,36 @@ export default {
     },
     computed: {},
     methods: {
-        //保存商品类别信息
-        saveGoodType(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    this.$http.post(this.saveUrl, {
-                        name: this.addForm.name
-                    }).then((res) => {
-                        if (res.status == 200) {
-                        }
-                    });
-                } else {
-                    return false;
+        next() {
+            if (this.active == 0) {
+                this.baseInfoDisplay = "display: none;";
+                this.uploadPictureDisplay = "display: block;";
+            }
+            if (this.active++ > 2) this.active = 0;
+        },
+        handleExceed(files, fileList) {
+            console.log(files)
+            console.log(fileList)
+            this.$message.error('上传图片个数超过限制!最多可以上传12张图片。');
+        },
+        handleSuccess(response, file, fileList) {
+            this.fileList = fileList;
+            console.log(this.fileList)
+        },
+        //保存商品别信息
+        saveGood(formName) {
+            // this.$refs[formName].validate((valid) => {
+            //     if (valid) {
+            this.$http.post(this.saveUrl, {
+                file: this.fileList
+            }).then((res) => {
+                if (res.status == 200) {
                 }
             });
+            //     } else {
+            //         return false;
+            //     }
+            // });
         }
     }
 }
