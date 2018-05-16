@@ -3,6 +3,7 @@ package com.app.framework.auth.filter;
 import com.app.framework.core.utils.Log;
 import com.app.framework.core.utils.LoggerFactory;
 import com.app.framework.core.utils.Response;
+import com.app.framework.core.utils.Status;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
@@ -44,28 +45,39 @@ public class GlobalExceptionHandler {
          */
         /**
          * （IncorrectCredentialsException，ExpiredCredentialsException）-> CredentialsException
-         * 最后的顺序(zi-parent)：LockedAccountException->DisabledAccountException
          */
-        DisabledAccountException disabledAccountException = null;
         if (exception instanceof UnknownAccountException) {
-            return new Response(responseCode, "账号不存在");
+            return new Response(responseCode, Status.ACCOUNT_NOT_EXISTS.msg());
         } else if (exception instanceof IncorrectCredentialsException) {
-            return new Response(responseCode, "密码错误");
-        } else if (exception instanceof UnauthenticatedException) {
-            return new Response(responseCode, "用户未通过认证");
-        } else if (exception instanceof UnauthorizedException) {
-            return new Response(responseCode, "用户授权错误");
-        } else if (exception instanceof ExcessiveAttemptsException) {
-            return new Response(responseCode, "登录失败次数过多");
-        } else if (exception instanceof ExpiredCredentialsException) {
-            return new Response(responseCode, "凭证过期");
+            return new Response(responseCode, Status.ACCOUNT_MISMATCH.msg());
         } else if (exception instanceof LockedAccountException) {
-            return new Response(responseCode, "帐号被锁定");
-        } else if (exception instanceof DisabledAccountException) {
-            return new Response(responseCode, "帐号被禁用");
+            return new Response(responseCode, Status.ACCOUNT_LOCKED.msg());
+        } else if (exception instanceof ExcessiveAttemptsException) {
+            return new Response(responseCode, Status.ACCOUNT_TOO_MANY_LOGIN_ATTEMPT.msg());
+        } else if (exception instanceof AuthenticationException) {
+            return new Response(responseCode, Status.ACCOUNT_MISMATCH.msg());
         } else {
-            return new Response(responseCode, "用户未通过认证");
+            return new Response(responseCode, Status.ACCOUNT_NOT_LOGINED.msg());
         }
+//        if (exception instanceof UnknownAccountException) {
+//            return new Response(responseCode, "账号不存在");
+//        } else if (exception instanceof IncorrectCredentialsException) {
+//            return new Response(responseCode, "密码错误");
+//        } else if (exception instanceof UnauthenticatedException) {
+//            return new Response(responseCode, "用户未通过认证");
+//        } else if (exception instanceof UnauthorizedException) {
+//            return new Response(responseCode, "用户授权错误");
+//        } else if (exception instanceof ExcessiveAttemptsException) {
+//            return new Response(responseCode, "登录失败次数过多");
+//        } else if (exception instanceof ExpiredCredentialsException) {
+//            return new Response(responseCode, "凭证过期");
+//        } else if (exception instanceof LockedAccountException) {
+//            return new Response(responseCode, "帐号被锁定");
+//        } else if (exception instanceof DisabledAccountException) {
+//            return new Response(responseCode, "帐号被禁用");
+//        } else {
+//            return new Response(responseCode, "用户未通过认证");
+//        }
     }
 
     @ExceptionHandler(IllegalStateException.class)
