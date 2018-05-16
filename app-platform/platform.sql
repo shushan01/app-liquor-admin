@@ -3,7 +3,7 @@ DROP TABLE if EXISTS ts_user;
 CREATE TABLE ts_user (
   id bigint(20) NOT NULL AUTO_INCREMENT,
   user_name varchar(50) NOT NULL COMMENT '用户名',
-  password varchar(255) NOT NULL COMMENT '密码',
+  password varchar(50) NOT NULL COMMENT '密码',
   name varchar(50) DEFAULT NULL COMMENT '姓名',
   phone varchar(50) DEFAULT NULL COMMENT '电话号码',
   email varchar(50) DEFAULT NULL COMMENT '邮箱',
@@ -29,33 +29,59 @@ CREATE TABLE ts_role (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理后台角色表';
 
-DROP TABLE if EXISTS tb_authority;
-CREATE TABLE tb_authority (
-  utime datetime NOT NULL COMMENT '修改时间',
-  ctime datetime NOT NULL COMMENT '创建时间',
-  modifier bigint(20) NOT NULL COMMENT '修改人',
-  creator bigint(20) NOT NULL COMMENT '创建人',
-  description varchar(255) NOT NULL COMMENT '描述',
-  name varchar(255) NOT NULL COMMENT '名称',
+DROP TABLE if EXISTS ts_authority;
+CREATE TABLE ts_authority (
   id bigint(20) NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL COMMENT '名称',
+  parent_id bigint(20) DEFAULT NULL COMMENT '父权限',
+  description varchar(50) DEFAULT NULL COMMENT '描述',
+  ctime datetime DEFAULT NULL COMMENT '创建时间',
+  creator bigint(20) DEFAULT NULL COMMENT '创建人',
+  utime datetime DEFAULT NULL COMMENT '修改时间',
+  modifier bigint(20) DEFAULT NULL COMMENT '修改人',
+  status tinyint(4) DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理后台权限表';
 
-DROP TABLE if EXISTS tb_user_role;
-CREATE TABLE tb_user_role (
+DROP TABLE if EXISTS ts_menu;
+CREATE TABLE ts_menu (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  name varchar(50) NOT NULL COMMENT '名称',
+  parent_id bigint(20) DEFAULT NULL COMMENT '父菜单',
+  icon varchar(50) DEFAULT NULL COMMENT '菜单图标',
+  url varchar(50) DEFAULT NULL COMMENT '菜单跳转页面的路由名称',
+  description varchar(50) NOT NULL COMMENT '描述',
+  ctime datetime DEFAULT NULL COMMENT '创建时间',
+  creator bigint(20) DEFAULT NULL COMMENT '创建人',
+  utime datetime DEFAULT NULL COMMENT '修改时间',
+  modifier bigint(20) DEFAULT NULL COMMENT '修改人',
+  status tinyint(4) DEFAULT NULL COMMENT '状态',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理后台菜单表';
+
+DROP TABLE if EXISTS ts_user_menu;
+CREATE TABLE ts_user_menu (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  user_id bigint(20) NOT NULL COMMENT='用户id',
+  menu_id bigint(20) NOT NULL COMMENT='菜单id',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理后台用户菜单表';
+
+DROP TABLE if EXISTS ts_user_role;
+CREATE TABLE ts_user_role (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
   user_id bigint(20) NOT NULL COMMENT '用户id',
   role_id bigint(20) NOT NULL COMMENT '角色id',
-  id bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理后台用户角色表';
 
-DROP TABLE if EXISTS tb_role_authority;
-CREATE TABLE tb_role_authority (
+DROP TABLE if EXISTS ts_role_authority;
+CREATE TABLE ts_role_authority (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
   role_id bigint(20) NOT NULL COMMENT '角色id',
   authority_id bigint(20) NOT NULL COMMENT '权限id',
-  id bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理后台角色权限表';
 
 #系统功能相关表===================
 #商品类别表
