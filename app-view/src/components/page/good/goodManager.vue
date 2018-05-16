@@ -6,7 +6,7 @@
                     <el-col :span="18">
                         <div class="grid-cont-left">
                             <el-button type="primary" class="el-icon-plus mr10" @click="addGoodInfo"> 添加商品基本信息</el-button>
-                            <el-button type="primary" class="el-icon-plus mr10" @click="addGoodAttr"> 添加商品属性信息</el-button>
+                            <!--<el-button type="primary" class="el-icon-plus mr10" @click="addGoodAttr"> 添加商品属性信息</el-button>-->
                             <el-button type="danger" class="el-icon-delete mr10" @click="deleteAll"> 删除</el-button>
                         </div>
                     </el-col>
@@ -20,7 +20,7 @@
 
             <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" prop="id" width="55"></el-table-column>
-                <el-table-column show-overflow-tooltip="true" prop="name" label="名称">
+                <el-table-column :show-overflow-tooltip="true" prop="name" label="名称">
                 </el-table-column>
                 <el-table-column prop="code" label="编码">
                 </el-table-column>

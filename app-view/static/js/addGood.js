@@ -39,6 +39,16 @@ export default {
         this.$http.get(this.findAllGoodCategoryUrl).then((res) => {
             this.goodCategorys = res.data;
         });
+    }, watch: {
+        '$route'(to, from) {
+            this.active = 0;
+            this.baseInfoDisplay = "display: block;";
+            this.uploadPictureDisplay = "display: none;";
+            this.addAttrDisplay = "display: none;";
+            this.finishDisplay = "display: none;";
+            this.nextCss = "";
+            this.finishCss = "display: none;";
+        }
     },
     computed: {},
     methods: {
