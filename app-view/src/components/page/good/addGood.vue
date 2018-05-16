@@ -9,11 +9,12 @@
         <div class="container">
             <div style="margin-bottom: 50px;">
                 <el-steps :active="active" finish-status="success">
-                    <el-step title="添加商品基本信息" icon="el-icon-edit">
+                    <el-step title="添加商品基本信息" icon="el-icon-circle-plus">
                     </el-step>
                     <el-step title="上传商品图片信息" icon="el-icon-upload">
                     </el-step>
-                    <el-step title="添加商品属性信息" icon="el-icon-picture"></el-step>
+                    <el-step title="添加商品属性信息" icon="el-icon-info"></el-step>
+                    <el-step title="完成" icon="el-icon-success"></el-step>
                 </el-steps>
             </div>
 
@@ -32,30 +33,30 @@
                     <el-form-item prop="price" label="价格">
                         <el-input v-model="addForm.price" placeholder="请输入商品价格"></el-input>
                     </el-form-item>
-                    <el-form-item label="推荐商品">
-                        <el-select v-model="addForm.recommend" placeholder="请选是否是推荐商品">
-                            <el-option :label="是" :value="1">是</el-option>
-                            <el-option :label="否" :value="0">否</el-option>
-                        </el-select>
-                    </el-form-item>
+                    <!-- <el-form-item label="推荐商品">
+                         <el-select v-model="addForm.recommend" placeholder="请选是否是推荐商品">
+                             <el-option :label="是" :value="1">是</el-option>
+                             <el-option :label="否" :value="0">否</el-option>
+                         </el-select>
+                     </el-form-item>-->
                     <el-form-item prop="weigth" label="重量">
                         <el-input v-model="addForm.weigth" placeholder="请输入商品重量"></el-input>
                     </el-form-item>
-                    <el-form-item label="活动状态">
-                        <el-select v-model="addForm.activityStatus" placeholder="活动状态">
-                            <el-option :label="是" :value="1">是</el-option>
-                            <el-option :label="否" :value="0">否</el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item prop="currentPrice" label="当前价格">
-                        <el-input v-model="addForm.currentPrice" placeholder="请输入商品当前价格"></el-input>
-                    </el-form-item>
-                    <el-form-item label="特价状态">
-                        <el-select v-model="addForm.bargainStatus" placeholder="特价状态">
-                            <el-option :label="是" :value="1">是</el-option>
-                            <el-option :label="否" :value="0">否</el-option>
-                        </el-select>
-                    </el-form-item>
+                    <!-- <el-form-item label="活动状态">
+                         <el-select v-model="addForm.activityStatus" placeholder="活动状态">
+                             <el-option :label="是" :value="1">是</el-option>
+                             <el-option :label="否" :value="0">否</el-option>
+                         </el-select>
+                     </el-form-item>-->
+                    <!-- <el-form-item prop="currentPrice" label="当前价格">
+                         <el-input v-model="addForm.currentPrice" placeholder="请输入商品当前价格"></el-input>
+                     </el-form-item>
+                     <el-form-item label="特价状态">
+                         <el-select v-model="addForm.bargainStatus" placeholder="特价状态">
+                             <el-option :label="是" :value="1">是</el-option>
+                             <el-option :label="否" :value="0">否</el-option>
+                         </el-select>
+                     </el-form-item>-->
                     <el-form-item prop="emsFreight" label="EMS运费">
                         <el-input v-model="addForm.emsFreight" placeholder="请输入商品EMS运费"></el-input>
                     </el-form-item>
@@ -65,9 +66,9 @@
                     <el-form-item prop="mailFreight" label="平邮运费">
                         <el-input v-model="addForm.mailFreight" placeholder="请输入商品平邮运费"></el-input>
                     </el-form-item>
-                    <el-form-item prop="stockCnt" label="库存量">
-                        <el-input v-model="addForm.stockCnt" placeholder="请输入商品库存量"></el-input>
-                    </el-form-item>
+                    <!-- <el-form-item prop="stockCnt" label="库存量">
+                         <el-input v-model="addForm.stockCnt" placeholder="请输入商品库存量"></el-input>
+                     </el-form-item>-->
                 </el-form>
             </div>
             <div :style="uploadPictureDisplay">
@@ -87,7 +88,19 @@
                     </el-dialog>
                 </el-form>
             </div>
-            <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+
+            <div :style="addAttrDisplay">
+                添加商品属性
+            </div>
+            <div :style="finishDisplay">
+                你已经成功添加完善了商品信息
+                <el-button @click="goBack">返回</el-button>
+            </div>
+            <div style="margin-top: 50px;">
+                <!--<el-button :style="prevCss" @click="prev">上一步</el-button>-->
+                <el-button :style="nextCss" @click="next">下一步</el-button>
+                <el-button :style="finishCss" @click="finish">完成</el-button>
+            </div>
         </div>
     </div>
 </template>

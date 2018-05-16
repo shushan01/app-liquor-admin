@@ -8,6 +8,11 @@ export default {
             active: 0,
             baseInfoDisplay: "display: block;",
             uploadPictureDisplay: "display: none;",
+            addAttrDisplay: "display: none;",
+            finishDisplay: "display: none;",
+            // prevCss: "display: none;",
+            nextCss: "",
+            finishCss: "display: none;",
             addForm: {
                 name: '',
                 categoryId: '',
@@ -37,12 +42,46 @@ export default {
     },
     computed: {},
     methods: {
+        // prev() {
+        //     this.active--;
+        //     if (this.active == 0) {
+        //         this.prevCss = "display: none;";
+        //     }
+        //     if (this.active == 1) {
+        //         this.prevCss = "display: block;";
+        //     }
+        //     if (this.active == 2) {
+        //         this.prevCss = "display: block;";
+        //     }
+        // },
         next() {
             if (this.active == 0) {
                 this.baseInfoDisplay = "display: none;";
                 this.uploadPictureDisplay = "display: block;";
+                this.prevCss = "display: block;";
             }
-            if (this.active++ > 2) this.active = 0;
+            if (this.active == 1) {
+                this.uploadPictureDisplay = "display: none;";
+                this.addAttrDisplay = "display: block;"
+                this.nextCss = "display: none;";
+                this.finishCss = "display: block;";
+            }
+            this.active++;
+        },
+        finish() {
+            this.active++;
+            this.uploadPictureDisplay = "display: none;";
+            this.baseInfoDisplay = "display: none;";
+            this.addAttrDisplay = "display: none;"
+            this.finishDisplay = "display: block;"
+            // this.prevCss = "display: none;";
+            this.nextCss = "display: none;";
+            this.finishCss = "display: none;";
+            this.active++;
+        },
+        goBack() {
+            this.finishCss = "display: none;";
+            this.$router.push("/goodManager");
         },
         handleExceed(files, fileList) {
             console.log(files)
