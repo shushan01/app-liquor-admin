@@ -25,7 +25,7 @@
                 </el-table-column>
                 <!--<el-table-column :show-overflow-tooltip="true" prop="code" label="编码">-->
                 <!--</el-table-column>-->
-                <el-table-column :show-overflow-tooltip="true" prop="categoryName" label="类别">
+                <el-table-column :show-overflow-tooltip="true" prop="categoryName" fixed label="类别">
                 </el-table-column>
                 <!--<el-table-column prop="clickCnt" label="点击量">-->
                 <!--</el-table-column>-->
@@ -33,22 +33,48 @@
                 <!--</el-table-column>-->
                 <!--<el-table-column prop="code" label="库存量">-->
                 <!--</el-table-column>-->
-                <!--<el-table-column prop="saleCnt" label="销售量">-->
-                <!--</el-table-column>-->
-                <el-table-column :show-overflow-tooltip="true" prop="recommend" :formatter="recommendFmt" width="80px;" label="推荐商品">
+                <el-table-column :show-overflow-tooltip="true" prop="price" sortable width="90px;" label="价格">
+                </el-table-column>
+                <el-table-column :show-overflow-tooltip="true" prop="saleCnt" sortable width="90px;" label="销售量">
+                </el-table-column>
+                <el-table-column :show-overflow-tooltip="true" prop="clickCnt" sortable width="90px;" label="点击量">
+                </el-table-column>
+                <el-table-column :show-overflow-tooltip="true" prop="collectCnt" sortable width="90px;" label="收藏量">
                 </el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="weight" width="80px;" label="重量">
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="activityStatus" :formatter="activityStatusFmt" width="80px;" label="活动状态">
-                    <span>aaa</span>
+                <el-table-column :show-overflow-tooltip="true" width="100px;" label="推荐商品">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.recommend==0">
+                            <el-button type="text" disabled>未推荐</el-button>
+                        </div>
+                        <div v-else>
+                            <el-button type="text">推荐</el-button>
+                        </div>
+                    </template>
                 </el-table-column>
+                <!--<el-table-column :show-overflow-tooltip="true" prop="recommend" sortable :formatter="recommendFmt" width="100px;" label="推荐商品">-->
+                <!--<template slot-scope="scope"></template>-->
+                <!--</el-table-column>-->
+                <el-table-column :show-overflow-tooltip="true" width="80px;" label="活动状态">
+                    <template slot-scope="scope">
+                        <div v-if="scope.row.activityStatus==0">
+                            <el-button type="text" disabled>未活动</el-button>
+                        </div>
+                        <div v-else>
+                            <el-button type="text">活动中</el-button>
+                        </div>
+                    </template>
+                </el-table-column>
+                <!--<el-table-column :show-overflow-tooltip="true" prop="activityStatus" :formatter="activityStatusFmt" width="80px;" label="活动状态">-->
+                <!--</el-table-column>-->
                 <!--<el-table-column prop="code" label="特价状态">-->
                 <!--</el-table-column>-->
                 <el-table-column prop="currentPrice" width="80px;" sortable label="现价">
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="ctime" sortable label="创建时间">
+                <el-table-column :show-overflow-tooltip="true" prop="ctime" sortable width="100px;" label="创建时间">
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="utime" sortable label="修改时间">
+                <el-table-column :show-overflow-tooltip="true" prop="utime" sortable width="100px;" label="修改时间">
                 </el-table-column>
                 <el-table-column label="操作" width="460" fixed="right">
                     <template slot-scope="scope">

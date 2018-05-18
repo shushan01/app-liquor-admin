@@ -3,13 +3,13 @@
         <div class="container">
             <div class="handle-box">
                 <el-row>
-                    <el-col :span="16">
+                    <el-col :span="18">
                         <div class="grid-cont-left">
                             <el-button type="primary" class="el-icon-plus mr10" @click="addGoodType"> 添加</el-button>
                             <el-button type="danger" class="el-icon-delete mr10" @click="deleteAll"> 删除</el-button>
                         </div>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-input placeholder="请输入商品类别名称" v-model="search_keyword" class="input-with-select">
                             <el-button type="primary" slot="append" class="el-icon-search" @click="search"> 搜索</el-button>
                         </el-input>
@@ -18,7 +18,7 @@
             </div>
 
             <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" prop="id" width="55"></el-table-column>
+                <el-table-column type="selection" prop="id" width="35"></el-table-column>
                 <el-table-column show-overflow-tooltip="true" prop="name" label="名称">
                 </el-table-column>
                 <el-table-column prop="parentName" label="父类别">
