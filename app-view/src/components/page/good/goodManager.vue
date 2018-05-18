@@ -6,6 +6,8 @@
                     <el-col :span="18">
                         <div class="grid-cont-left">
                             <el-button type="primary" class="el-icon-plus mr10" @click="addGoodInfo"> 添加商品基本信息</el-button>
+                            <el-button type="primary" class="el-icon-delete mr10" @click="recommendAll"> 推荐选中商品</el-button>
+                            <el-button type="primary" class="el-icon-delete mr10" @click="activityAll"> 选中商品加入活动</el-button>
                             <el-button type="danger" class="el-icon-delete mr10" @click="deleteAll"> 删除</el-button>
                         </div>
                     </el-col>
@@ -19,10 +21,10 @@
 
             <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" prop="id" width="35"></el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="name" label="名称">
+                <el-table-column :show-overflow-tooltip="true" sortable prop="name" fixed label="名称">
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="code" label="编码">
-                </el-table-column>
+                <!--<el-table-column :show-overflow-tooltip="true" prop="code" label="编码">-->
+                <!--</el-table-column>-->
                 <el-table-column :show-overflow-tooltip="true" prop="categoryName" label="类别">
                 </el-table-column>
                 <!--<el-table-column prop="clickCnt" label="点击量">-->
@@ -33,22 +35,25 @@
                 <!--</el-table-column>-->
                 <!--<el-table-column prop="saleCnt" label="销售量">-->
                 <!--</el-table-column>-->
-                <el-table-column :show-overflow-tooltip="true" prop="recommend" width="80px;" label="推荐商品">
+                <el-table-column :show-overflow-tooltip="true" prop="recommend" :formatter="recommendFmt" width="80px;" label="推荐商品">
                 </el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="weight" width="80px;" label="重量">
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="activityStatus" width="80px;" label="活动状态">
+                <el-table-column :show-overflow-tooltip="true" prop="activityStatus" :formatter="activityStatusFmt" width="80px;" label="活动状态">
+                    <span>aaa</span>
                 </el-table-column>
                 <!--<el-table-column prop="code" label="特价状态">-->
                 <!--</el-table-column>-->
-                <el-table-column prop="currentPrice" width="80px;" label="现价">
+                <el-table-column prop="currentPrice" width="80px;" sortable label="现价">
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="ctime" label="创建时间">
+                <el-table-column :show-overflow-tooltip="true" prop="ctime" sortable label="创建时间">
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="utime" label="修改时间">
+                <el-table-column :show-overflow-tooltip="true" prop="utime" sortable label="修改时间">
                 </el-table-column>
-                <el-table-column label="操作" width="270">
+                <el-table-column label="操作" width="460" fixed="right">
                     <template slot-scope="scope">
+                        <el-button type="primary" class="el-icon-delete mr10" @click="activityAll"> 加入活动</el-button>
+                        <el-button type="primary" size="small" class="el-icon-view" @click="recommendGood(scope.$index)"> 推荐</el-button>
                         <el-button size="small" class="el-icon-view" @click="detailGood(scope.$index)"> 详情</el-button>
                         <el-button size="small" class="el-icon-edit" @click="editGood(scope.$index)"> 编辑</el-button>
                         <el-button type="danger" class="el-icon-delete mr10" @click="deleteOne(scope.$index)"> 删除</el-button>

@@ -6,7 +6,7 @@ export default {
             detailUrl: '/good/detail',
             search_keyword: '',
             tableData: [],
-            delVisible:false,
+            delVisible: false,
             delIds: [],
             total: 0,
             pageSize: 5,
@@ -40,6 +40,22 @@ export default {
                 this.tableData = res.data.data;
                 this.total = res.data.total;
             })
+        },
+        activityStatusFmt(row, column) {
+            var status = row.activityStatus;
+            if (status == 0) {
+                return "未活动"
+            } else {
+                return "活动中"
+            }
+        },
+        recommendFmt(row, column) {
+            var recommend = row.recommend;
+            if (recommend == 0) {
+                return "未推荐"
+            } else {
+                return "已推荐"
+            }
         },
         search() {
             this.getData();
