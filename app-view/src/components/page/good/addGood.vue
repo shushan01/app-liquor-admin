@@ -40,7 +40,7 @@
                          </el-select>
                      </el-form-item>-->
                     <el-form-item prop="weigth" label="重量">
-                        <el-input v-model="addForm.weigth" placeholder="请输入商品重量"></el-input>
+                        <el-input v-model="addForm.weight" placeholder="请输入商品重量"></el-input>
                     </el-form-item>
                     <!-- <el-form-item label="活动状态">
                          <el-select v-model="addForm.activityStatus" placeholder="活动状态">
@@ -93,7 +93,7 @@
                 添加商品属性
             </div>
             <div :style="finishDisplay">
-                你已经成功添加完善了商品信息
+                你已经成功添加完善了商品信息<br/>
                 <el-button @click="goBack">返回</el-button>
             </div>
             <div style="margin-top: 50px;">

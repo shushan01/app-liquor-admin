@@ -8,7 +8,7 @@ export default {
             active: 0,
             baseInfoDisplay: "display: block;",
             uploadPictureDisplay: "display: none;",
-            addAttrDisplay: "display: none;",
+            addAttrDisplay: false,
             finishDisplay: "display: none;",
             // prevCss: "display: none;",
             nextCss: "",
@@ -17,15 +17,10 @@ export default {
                 name: '',
                 categoryId: '',
                 price: '',
-                recommend: '',
-                weigth: '',
-                activityStatus: '',
-                currentPrice: '',
-                bargainStatus: '',
+                weight: '',
                 emsFreight: '',
                 expressFreight: '',
-                mailFreight: '',
-                stockCnt: ''
+                mailFreight: ''
             },
             rules: {
                 name: [
@@ -66,9 +61,10 @@ export default {
         // },
         next() {
             if (this.active == 0) {
+                this.saveGood('addForm');
                 this.baseInfoDisplay = "display: none;";
                 this.uploadPictureDisplay = "display: block;";
-                this.prevCss = "display: block;";
+                // this.prevCss = "display: block;";
             }
             if (this.active == 1) {
                 this.uploadPictureDisplay = "display: none;";
@@ -77,7 +73,8 @@ export default {
                 this.finishCss = "display: block;";
             }
             this.active++;
-        },
+        }
+        ,
         finish() {
             this.active++;
             this.uploadPictureDisplay = "display: none;";
@@ -88,28 +85,39 @@ export default {
             this.nextCss = "display: none;";
             this.finishCss = "display: none;";
             this.active++;
-        },
+        }
+        ,
         goBack() {
             this.finishCss = "display: none;";
             this.$router.push("/goodManager");
-        },
+        }
+        ,
         handleExceed(files, fileList) {
             console.log(files)
             console.log(fileList)
             this.$message.error('上传图片个数超过限制!最多可以上传12张图片。');
-        },
+        }
+        ,
         handleSuccess(response, file, fileList) {
             this.fileList = fileList;
             console.log(this.fileList)
-        },
+        }
+        ,
         //保存商品别信息
         saveGood(formName) {
             // this.$refs[formName].validate((valid) => {
             //     if (valid) {
             this.$http.post(this.saveUrl, {
-                file: this.fileList
+                name: this.addForm.name,
+                categoryId: this.addForm.categoryId,
+                price: this.addForm.price,
+                weight: this.addForm.weight,
+                emsFreight: this.addForm.emsFreight,
+                expressFreight: this.addForm.expressFreight,
+                mailFreight: this.addForm.mailFreight
             }).then((res) => {
                 if (res.status == 200) {
+                    this.$message.success('添加商品基本信息成功');
                 }
             });
             //     } else {

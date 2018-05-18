@@ -1,41 +1,16 @@
 export default {
     data() {
         return {
-            findAllGoodCategoryUrl: '/goodCategory/findAll',
             listUrl: '/good/list',
-            saveUrl: '/good/save',
             deleteUrl: '/good/delete',
             detailUrl: '/good/detail',
             search_keyword: '',
             tableData: [],
-            parentTypes: [],
+            delVisible:false,
             delIds: [],
             total: 0,
             pageSize: 5,
-            curPage: 1,
-            delVisible: false,
-            editVisible: false,
-            addVisible: false,
-            addForm: {
-                name: '',
-                parentId: '',
-                description: ''
-            },
-            editForm: {
-                id: 0,
-                name: '',
-                parentId: '',
-                description: ''
-            },
-            rules: {
-                name: [
-                    {required: true, message: '请输入商品类别名称', trigger: 'blur'},
-                    {max: 15, message: '商品类别名称不超过15个字符', trigger: 'blur'}
-                ],
-                description: [
-                    {max: 100, message: '商品类别描述不超过100个字符', trigger: 'blur'}
-                ]
-            }
+            curPage: 1
         }
     },
     created() {
@@ -72,68 +47,6 @@ export default {
         //弹出添加商品类别信息页面
         addGoodInfo() {
             this.$router.push('/addGood');
-        },
-        //保存商品类别信息
-        saveGoodType(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    this.$http.post(this.saveUrl, {
-                        name: this.addForm.name,
-                        parentId: this.addForm.parentId,
-                        description: this.addForm.description
-                    }).then((res) => {
-                        if (res.status == 200) {
-                            this.getData();
-                            this.addVisible = false;
-                        }
-                    });
-                } else {
-                    return false;
-                }
-            });
-        },
-        //弹出编辑商品类别页面
-        editGoodType(index) {
-            const item = this.tableData[index];
-            this.editForm = {
-                id: item.id,
-                name: item.name,
-                parentId: item.parentId,
-                description: item.description,
-            };
-            this.$http.get(this.findAllUrl).then((res) => {
-                this.parentTypes = res.data;
-            });
-            this.editVisible = true;
-        },
-        // 更新商品类别信息
-        updateGoodType(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    this.$http.post(this.saveUrl, {
-                        id: this.editForm.id,
-                        name: this.editForm.name,
-                        parentId: this.editForm.parentId,
-                        description: this.editForm.description
-                    }).then((res) => {
-                        if (res.status == 200) {
-                            this.$message({
-                                message: '修改成功！',
-                                type: 'success'
-                            });
-                            this.getData();
-                            this.editVisible = false;
-                        } else {
-                            this.$message({
-                                message: '修改失败！',
-                                type: 'error'
-                            });
-                        }
-                    });
-                } else {
-                    return false;
-                }
-            });
         },
         //删除指定商品类别
         deleteOne(index) {

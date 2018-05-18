@@ -6,7 +6,6 @@
                     <el-col :span="18">
                         <div class="grid-cont-left">
                             <el-button type="primary" class="el-icon-plus mr10" @click="addGoodInfo"> 添加商品基本信息</el-button>
-                            <!--<el-button type="primary" class="el-icon-plus mr10" @click="addGoodAttr"> 添加商品属性信息</el-button>-->
                             <el-button type="danger" class="el-icon-delete mr10" @click="deleteAll"> 删除</el-button>
                         </div>
                     </el-col>
@@ -19,36 +18,34 @@
             </div>
 
             <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelectionChange">
-                <el-table-column type="selection" prop="id" width="55"></el-table-column>
+                <el-table-column type="selection" prop="id" width="35"></el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="name" label="名称">
                 </el-table-column>
-                <el-table-column prop="code" label="编码">
+                <el-table-column :show-overflow-tooltip="true" prop="code" label="编码">
                 </el-table-column>
-                <el-table-column prop="code" label="类别">
+                <el-table-column :show-overflow-tooltip="true" prop="categoryName" label="类别">
                 </el-table-column>
-                <el-table-column prop="code" label="点击量">
+                <!--<el-table-column prop="clickCnt" label="点击量">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="collectCnt" label="收藏量">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="code" label="库存量">-->
+                <!--</el-table-column>-->
+                <!--<el-table-column prop="saleCnt" label="销售量">-->
+                <!--</el-table-column>-->
+                <el-table-column :show-overflow-tooltip="true" prop="recommend" width="80px;" label="推荐商品">
                 </el-table-column>
-                <el-table-column prop="code" label="收藏量">
+                <el-table-column :show-overflow-tooltip="true" prop="weight" width="80px;" label="重量">
                 </el-table-column>
-                <el-table-column prop="code" label="库存量">
+                <el-table-column :show-overflow-tooltip="true" prop="activityStatus" width="80px;" label="活动状态">
                 </el-table-column>
-                <el-table-column prop="code" label="销售量">
+                <!--<el-table-column prop="code" label="特价状态">-->
+                <!--</el-table-column>-->
+                <el-table-column prop="currentPrice" width="80px;" label="现价">
                 </el-table-column>
-                <el-table-column prop="code" label="是否推荐商品">
+                <el-table-column :show-overflow-tooltip="true" prop="ctime" label="创建时间">
                 </el-table-column>
-                <el-table-column prop="code" label="重量">
-                </el-table-column>
-                <el-table-column prop="code" label="活动状态">
-                </el-table-column>
-                <el-table-column prop="code" label="特价状态">
-                </el-table-column>
-                <el-table-column prop="code" label="现价">
-                </el-table-column>
-                <el-table-column prop="ctime" label="创建时间">
-                </el-table-column>
-                <el-table-column prop="utime" label="修改时间">
-                </el-table-column>
-                <el-table-column prop="description" label="描述">
+                <el-table-column :show-overflow-tooltip="true" prop="utime" label="修改时间">
                 </el-table-column>
                 <el-table-column label="操作" width="270">
                     <template slot-scope="scope">
