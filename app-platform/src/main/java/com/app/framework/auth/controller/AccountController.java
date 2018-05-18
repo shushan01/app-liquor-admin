@@ -36,7 +36,7 @@ public class AccountController extends BaseController {
     @SuppressWarnings("unchecked")
     public Response login(@RequestBody @Valid LoginPara loginPara) {
 //        SecurityUtils.getSubject().login(new UsernamePasswordToken(loginPara.getUserName(), loginPara.getPassword()));
-        return new Response(Status.SUCCESS.code(), Status.SUCCESS.msg());
+        return Response.success();
     }
 
     @ApiOperation(value = "退出登录", notes = "退出登录")
@@ -47,7 +47,7 @@ public class AccountController extends BaseController {
         if (principals != null) {
             subject.logout();
         }
-        return new Response(Status.SUCCESS.code(), Status.SUCCESS.msg());
+        return Response.success();
     }
 
     @ApiOperation(value = "修改密碼", notes = "修改密碼")
@@ -56,7 +56,7 @@ public class AccountController extends BaseController {
     public Response editPassword(@RequestBody @Valid EditPasswordParam editPasswordParam) throws NoSuchAlgorithmException, InvalidKeySpecException {
         Subject subject = SecurityUtils.getSubject();
         editPassword(subject, editPasswordParam);
-        return new Response(Status.SUCCESS.code(), Status.SUCCESS.msg());
+        return Response.success();
     }
 
     private void editPassword(Subject subject, EditPasswordParam editPasswordParam) {

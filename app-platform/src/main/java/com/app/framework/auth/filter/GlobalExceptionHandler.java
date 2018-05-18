@@ -47,36 +47,36 @@ public class GlobalExceptionHandler {
          * （IncorrectCredentialsException，ExpiredCredentialsException）-> CredentialsException
          */
         if (exception instanceof UnknownAccountException) {
-            return new Response(responseCode, Status.ACCOUNT_NOT_EXISTS.msg());
+            return Response.error(responseCode, Status.ACCOUNT_NOT_EXISTS.msg());
         } else if (exception instanceof IncorrectCredentialsException) {
-            return new Response(responseCode, Status.ACCOUNT_MISMATCH.msg());
+            return Response.error(responseCode, Status.ACCOUNT_MISMATCH.msg());
         } else if (exception instanceof LockedAccountException) {
-            return new Response(responseCode, Status.ACCOUNT_LOCKED.msg());
+            return Response.error(responseCode, Status.ACCOUNT_LOCKED.msg());
         } else if (exception instanceof ExcessiveAttemptsException) {
-            return new Response(responseCode, Status.ACCOUNT_TOO_MANY_LOGIN_ATTEMPT.msg());
+            return Response.error(responseCode, Status.ACCOUNT_TOO_MANY_LOGIN_ATTEMPT.msg());
         } else if (exception instanceof AuthenticationException) {
-            return new Response(responseCode, Status.ACCOUNT_MISMATCH.msg());
+            return Response.error(responseCode, Status.ACCOUNT_MISMATCH.msg());
         } else {
-            return new Response(responseCode, Status.ACCOUNT_NOT_LOGINED.msg());
+            return Response.error(responseCode, Status.ACCOUNT_NOT_LOGINED.msg());
         }
 //        if (exception instanceof UnknownAccountException) {
-//            return new Response(responseCode, "账号不存在");
+//            return Response.error(responseCode, "账号不存在");
 //        } else if (exception instanceof IncorrectCredentialsException) {
-//            return new Response(responseCode, "密码错误");
+//            return Response.error(responseCode, "密码错误");
 //        } else if (exception instanceof UnauthenticatedException) {
-//            return new Response(responseCode, "用户未通过认证");
+//            return Response.error(responseCode, "用户未通过认证");
 //        } else if (exception instanceof UnauthorizedException) {
-//            return new Response(responseCode, "用户授权错误");
+//            return Response.error(responseCode, "用户授权错误");
 //        } else if (exception instanceof ExcessiveAttemptsException) {
-//            return new Response(responseCode, "登录失败次数过多");
+//            return Response.error(responseCode, "登录失败次数过多");
 //        } else if (exception instanceof ExpiredCredentialsException) {
-//            return new Response(responseCode, "凭证过期");
+//            return Response.error(responseCode, "凭证过期");
 //        } else if (exception instanceof LockedAccountException) {
-//            return new Response(responseCode, "帐号被锁定");
+//            return Response.error(responseCode, "帐号被锁定");
 //        } else if (exception instanceof DisabledAccountException) {
-//            return new Response(responseCode, "帐号被禁用");
+//            return Response.error(responseCode, "帐号被禁用");
 //        } else {
-//            return new Response(responseCode, "用户未通过认证");
+//            return Response.error(responseCode, "用户未通过认证");
 //        }
     }
 
@@ -84,14 +84,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response handleException(HttpServletRequest request, IllegalStateException exception) throws Exception {
         logger.error(exception.getMessage());
-        return new Response(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+        return Response.error(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response handleException(HttpServletRequest request, IllegalArgumentException exception) throws Exception {
         logger.error(exception.getMessage());
-        return new Response(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
+        return Response.error(HttpStatus.BAD_REQUEST.value(), exception.getMessage());
     }
 
     //参数绑定异常处理
@@ -115,7 +115,7 @@ public class GlobalExceptionHandler {
     public Response handleException(HttpServletRequest request, MissingServletRequestParameterException exception) throws Exception {
         StringBuffer sb = new StringBuffer();
         buildLog(sb, exception.getParameterName(), exception.getMessage());
-        return new Response(HttpStatus.BAD_REQUEST.value(), sb.toString());
+        return Response.error(HttpStatus.BAD_REQUEST.value(), sb.toString());
     }
 
     private void buildLog(StringBuffer sb, String field, String msg) {
@@ -128,14 +128,10 @@ public class GlobalExceptionHandler {
     }
 
     private Response buildResponse(List<FieldError> fieldErrors) throws IOException {
-        Response response = new Response();
         StringBuffer sb = new StringBuffer();
         for (FieldError fieldError : fieldErrors) {
             buildLog(sb, fieldError.getField(), fieldError.getDefaultMessage());
         }
-        response.setCode(HttpStatus.BAD_REQUEST.value());
-        response.setMsg(sb.toString());
-        return response;
+        return Response.error(HttpStatus.BAD_REQUEST.value(), sb.toString());
     }
-
 }
