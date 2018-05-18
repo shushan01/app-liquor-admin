@@ -61,8 +61,11 @@
                         <div v-if="scope.row.activityStatus==0">
                             <el-button type="text" disabled>未活动</el-button>
                         </div>
-                        <div v-else>
+                        <div v-else-if="scope.row.activityStatus==1">
                             <el-button type="text">活动中</el-button>
+                        </div>
+                        <div v-else>
+                            <el-button type="text" disabled>活动结束</el-button>
                         </div>
                     </template>
                 </el-table-column>
