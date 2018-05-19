@@ -23,7 +23,7 @@
         data: function () {
             return {
                 ruleForm: {
-                    username: 'admin',
+                    username: 'yangyijun',
                     password: '123456'
                 },
                 rules: {
@@ -44,13 +44,13 @@
                             userName: this.ruleForm.username,
                             password: this.ruleForm.password
                         }).then((res) => {
-                            console.log(res)
-                            if (res.status == 200) {
+                            if (res.data.code == 0) {
+                                this.$http.defaults.params = {"JSESSIONID": res.data.data.jsessionid}
                                 this.$message({
                                     message: '登录成功！',
                                     type: 'success'
                                 });
-                                localStorage.setItem('ms_username', this.ruleForm.username);
+                                localStorage.setItem('ms_username', res.data.data.user.name);
                                 this.$router.push('/');
                             } else {
                                 this.$message({

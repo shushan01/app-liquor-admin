@@ -19,7 +19,7 @@
 
             <el-table :data="tableData" border style="width: 100%" @selection-change="handleSelectionChange">
                 <el-table-column type="selection" prop="id" width="35"></el-table-column>
-                <el-table-column show-overflow-tooltip="true" prop="name" label="名称">
+                <el-table-column :show-overflow-tooltip="true" prop="name" label="名称">
                 </el-table-column>
                 <el-table-column prop="parentName" label="父类别">
                 </el-table-column>
@@ -27,7 +27,7 @@
                 </el-table-column>
                 <el-table-column prop="utime" label="修改时间">
                 </el-table-column>
-                <el-table-column show-overflow-tooltip="true" prop="description" label="描述">
+                <el-table-column :show-overflow-tooltip="true" prop="description" label="描述">
                 </el-table-column>
                 <el-table-column label="操作" width="180">
                     <template slot-scope="scope">
