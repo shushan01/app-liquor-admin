@@ -24,4 +24,8 @@ public class BaseBusiness {
         }
         return null;
     }
+
+    protected Long getUserId() {
+        return getUser().getId();
+    }
 }

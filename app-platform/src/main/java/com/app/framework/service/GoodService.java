@@ -1,8 +1,7 @@
 package com.app.framework.service;
 
 import com.app.framework.auth.service.BaseService;
-import com.app.framework.core.utils.PageResult;
-import com.app.framework.dao.GoodCategoryDao;
+import com.app.framework.core.utils.PageResponse;
 import com.app.framework.dao.GoodDao;
 import com.app.framework.model.Good;
 import com.app.framework.model.GoodCategory;
@@ -25,11 +24,11 @@ public class GoodService extends BaseService<Good> {
         this.goodDao = goodDao;
     }
 
-    public PageResult<Good> list(String name, int pageNo, int pageSize) {
+    public PageResponse list(String name, int pageNo, int pageSize) {
         Page<GoodCategory> page = PageHelper.startPage(pageNo, pageSize);
         Map<String, String> map = new HashMap<>();
         map.put("name", name);
         List<Good> list = goodDao.findByName(map);
-        return new PageResult<Good>(pageNo, pageSize, page.getTotal(), list);
+        return PageResponse.success(list, page.getTotal());
     }
 }

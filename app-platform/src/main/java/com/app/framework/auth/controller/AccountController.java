@@ -13,7 +13,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @RestController
@@ -40,10 +37,7 @@ public class AccountController extends BaseController {
     @SuppressWarnings("unchecked")
     public Response login(@RequestBody @Valid LoginPara loginPara) {
         SecurityUtils.getSubject().login(new UsernamePasswordToken(loginPara.getUserName(), loginPara.getPassword()));
-        Map<String, Object> data = new HashMap<>();
-        data.put("jsessionid", SecurityUtils.getSubject().getSession().getId());
-        data.put("user", getUser());
-        return Response.success(data);
+        return Response.success(getUser());
     }
 
     /**
