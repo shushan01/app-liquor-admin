@@ -15,7 +15,8 @@ public enum Status {
     ACCOUNT_MISMATCH(9, "用户名或密码错误"),
     //mysql
     DUPLICATE_KEY(10, "重复的名字或主键值"),
-    USER_ALREADY_EXISTS(11, "用户已存在");
+    USER_ALREADY_EXISTS(11, "用户已存在"),
+    USER_NOT_LOGIN(12, "账号未登录");
 
     private int code;
     private String msg;

@@ -13,9 +13,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -36,7 +40,20 @@ public class AccountController extends BaseController {
     @SuppressWarnings("unchecked")
     public Response login(@RequestBody @Valid LoginPara loginPara) {
         SecurityUtils.getSubject().login(new UsernamePasswordToken(loginPara.getUserName(), loginPara.getPassword()));
-        return Response.success();
+        Map<String, Object> data = new HashMap<>();
+        data.put("jsessionid", SecurityUtils.getSubject().getSession().getId());
+        data.put("user", getUser());
+        return Response.success(data);
+    }
+
+    /**
+     * 未登录，shiro应重定向到登录界面，此处返回未登录状态信息由前端控制跳转页面
+     *
+     * @return
+     */
+    @GetMapping(value = "/unauth")
+    public Response unauth() {
+        return Response.error(Status.USER_NOT_LOGIN.code(), Status.USER_NOT_LOGIN.msg());
     }
 
     @ApiOperation(value = "退出登录", notes = "退出登录")
