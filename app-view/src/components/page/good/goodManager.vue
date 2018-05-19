@@ -23,16 +23,8 @@
                 <el-table-column type="selection" prop="id" width="35"></el-table-column>
                 <el-table-column :show-overflow-tooltip="true" sortable prop="name" fixed label="名称">
                 </el-table-column>
-                <!--<el-table-column :show-overflow-tooltip="true" prop="code" label="编码">-->
-                <!--</el-table-column>-->
                 <el-table-column :show-overflow-tooltip="true" prop="categoryName" fixed label="类别">
                 </el-table-column>
-                <!--<el-table-column prop="clickCnt" label="点击量">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column prop="collectCnt" label="收藏量">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column prop="code" label="库存量">-->
-                <!--</el-table-column>-->
                 <el-table-column :show-overflow-tooltip="true" prop="price" sortable width="90px;" label="价格">
                 </el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="saleCnt" sortable width="90px;" label="销售量">
@@ -53,9 +45,6 @@
                         </div>
                     </template>
                 </el-table-column>
-                <!--<el-table-column :show-overflow-tooltip="true" prop="recommend" sortable :formatter="recommendFmt" width="100px;" label="推荐商品">-->
-                <!--<template slot-scope="scope"></template>-->
-                <!--</el-table-column>-->
                 <el-table-column :show-overflow-tooltip="true" width="80px;" label="活动状态">
                     <template slot-scope="scope">
                         <div v-if="scope.row.activityStatus==0">
@@ -69,10 +58,6 @@
                         </div>
                     </template>
                 </el-table-column>
-                <!--<el-table-column :show-overflow-tooltip="true" prop="activityStatus" :formatter="activityStatusFmt" width="80px;" label="活动状态">-->
-                <!--</el-table-column>-->
-                <!--<el-table-column prop="code" label="特价状态">-->
-                <!--</el-table-column>-->
                 <el-table-column prop="currentPrice" width="80px;" sortable label="现价">
                 </el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="ctime" sortable width="100px;" label="创建时间">
@@ -81,8 +66,8 @@
                 </el-table-column>
                 <el-table-column label="操作" width="460" fixed="right">
                     <template slot-scope="scope">
-                        <el-button type="primary" class="el-icon-delete mr10" @click="activityAll"> 加入活动</el-button>
-                        <el-button type="primary" size="small" class="el-icon-view" @click="recommendGood(scope.$index)"> 推荐</el-button>
+                        <el-button type="primary" class="el-icon-delete mr10" @click="activityOne"> 加入活动</el-button>
+                        <el-button type="primary" size="small" class="el-icon-view" @click="recommendOne(scope.$index)"> 推荐</el-button>
                         <el-button size="small" class="el-icon-view" @click="detailGood(scope.$index)"> 详情</el-button>
                         <el-button size="small" class="el-icon-edit" @click="editGood(scope.$index)"> 编辑</el-button>
                         <el-button type="danger" class="el-icon-delete mr10" @click="deleteOne(scope.$index)"> 删除</el-button>

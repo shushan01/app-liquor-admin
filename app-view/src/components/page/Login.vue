@@ -45,12 +45,15 @@
                             password: this.ruleForm.password
                         }).then((res) => {
                             if (res.data.code == 0) {
-                                this.$http.defaults.params = {"JSESSIONID": res.data.data.jsessionid}
+                                // this.$http.defaults.params = {"JSESSIONID": res.data.data.jsessionid}
+                                // 在实例已创建后修改默认值
+                                // localStorage.setItem('JSESSIONID', res.data.data.jsessionid);
                                 this.$message({
                                     message: '登录成功！',
                                     type: 'success'
                                 });
-                                localStorage.setItem('ms_username', res.data.data.user.name);
+                                console.log(res)
+                                localStorage.setItem('ms_username', res.data.data.name);
                                 this.$router.push('/');
                             } else {
                                 this.$message({

@@ -5,6 +5,7 @@ export default {
             deleteUrl: '/good/delete',
             detailUrl: '/good/detail',
             search_keyword: '',
+            // JSESSIONID: '',
             tableData: [],
             delVisible: false,
             delIds: [],
@@ -14,6 +15,7 @@ export default {
         }
     },
     created() {
+        // this.JSESSIONID = localStorage.getItem("JSESSIONID");
         this.getData();
     },
     computed: {},
@@ -35,27 +37,30 @@ export default {
                     pageNo: this.curPage,
                     pageSize: this.pageSize,
                     searchKeyword: this.search_keyword
+                    // JSESSIONID: this.JSESSIONID
                 }
             }).then((res) => {
                 this.tableData = res.data.data;
                 this.total = res.data.total;
             })
         },
-        activityStatusFmt(row, column) {
-            var status = row.activityStatus;
-            if (status == 0) {
-                return "未活动"
-            } else {
-                return "活动中"
-            }
+        recommendAll() {
+
         },
-        recommendFmt(row, column) {
-            var recommend = row.recommend;
-            if (recommend == 0) {
-                return "未推荐"
-            } else {
-                return "已推荐"
-            }
+        recommendOne() {
+
+        },
+        activityAll() {
+
+        },
+        activityOne() {
+
+        },
+        detailGood() {
+
+        },
+        editGood() {
+
         },
         search() {
             this.getData();

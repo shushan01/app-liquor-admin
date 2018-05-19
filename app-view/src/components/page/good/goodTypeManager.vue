@@ -190,7 +190,7 @@
             addGoodType() {
                 this.addVisible = true;
                 this.$http.get(this.findAllUrl).then((res) => {
-                    this.parentTypes = res.data;
+                    this.parentTypes = res.data.data;
                 })
             },
             //保存商品类别信息
@@ -222,7 +222,7 @@
                     description: item.description,
                 };
                 this.$http.get(this.findAllUrl).then((res) => {
-                    this.parentTypes = res.data;
+                    this.parentTypes = res.data.data;
                 });
                 this.editVisible = true;
             },

@@ -4,23 +4,25 @@ import router from './router';
 import axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';    // 默认主题
-// import './assets/iconfont/iconfont.css';
-import '../static/iconfont/iconfont.css';
 // import '../static/css/theme-green/index.css';       // 浅绿色主题
+import '../static/iconfont/iconfont.css';
 import "babel-polyfill";
 
 Vue.use(ElementUI, {size: 'small'});
-Vue.prototype.$axios = axios;//原生axios
+//开启debug模式
+// Vue.config.debug = true;
+axios.defaults.withCredentials = true;
 
 let basURL = "http://localhost:8080";
-let http = axios.create({
+
+//基本配置的axios
+Vue.prototype.$http = axios.create({
     baseURL: basURL,
     timeout: 10000,
     params: {},
     headers: {'Content-Type': 'application/json; charset=utf-8'}
 });
-//基本配置的axios
-Vue.prototype.$http = http;
+
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
     const role = localStorage.getItem('ms_username');

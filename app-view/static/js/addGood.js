@@ -32,7 +32,7 @@ export default {
     },
     created() {
         this.$http.get(this.findAllGoodCategoryUrl).then((res) => {
-            this.goodCategorys = res.data;
+            this.goodCategorys = res.data.data;
         });
     }, watch: {
         '$route'(to, from) {
