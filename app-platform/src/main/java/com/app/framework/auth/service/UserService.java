@@ -1,18 +1,18 @@
 package com.app.framework.auth.service;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.app.framework.auth.dao.UserDao;
-import com.app.framework.auth.model.LoginUser;
+import com.app.framework.auth.model.User;
 import com.app.framework.core.utils.Md5SaltUtil;
 import com.app.framework.core.utils.PageResult;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 @Service
-public class UserService extends BaseService<LoginUser> {
+public class UserService extends BaseService<User> {
 
     private UserDao userDao;
 
@@ -33,9 +33,9 @@ public class UserService extends BaseService<LoginUser> {
         userDao.updatePassword(username, password);
     }
 
-    public PageResult<LoginUser> findAll(int pageNo, int pageSize) {
+    public PageResult<User> findAll(int pageNo, int pageSize) {
         Page page = PageHelper.startPage(pageNo, pageSize);
-        List<LoginUser> userList = userDao.selectAll();
-        return new PageResult<LoginUser>(pageNo, pageSize, page.getTotal(), userList);
+        List<User> userList = userDao.selectAll();
+        return new PageResult<User>(pageNo, pageSize, page.getTotal(), userList);
     }
 }

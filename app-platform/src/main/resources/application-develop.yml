@@ -76,9 +76,9 @@ pagehelper:
 
 shiro:
     login-max-retry: 5
-    login-retry-wait: 600
-    need-role: true
-    need-permission: true
+    login-retry-wait: 10
+    need-role: false
+    need-permission: false
 
 logging:
     level:

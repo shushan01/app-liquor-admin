@@ -4,8 +4,8 @@ import com.app.framework.auth.dao.AuthorityDao;
 import com.app.framework.auth.dao.RoleDao;
 import com.app.framework.auth.dao.UserDao;
 import com.app.framework.auth.model.Authority;
-import com.app.framework.auth.model.LoginUser;
 import com.app.framework.auth.model.Role;
+import com.app.framework.auth.model.User;
 import com.app.framework.core.utils.Status;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -62,7 +62,7 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo auth = new SimpleAuthorizationInfo();
-        LoginUser user = principals.oneByType(LoginUser.class);
+        User user = principals.oneByType(User.class);
         if (isNeedRole) {
             Set<String> roles = roleDao.findRoleByUserName(user.getUserName()).stream().map(Role::getName).collect(Collectors.toSet());
             auth.setRoles(roles);
@@ -77,13 +77,15 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String username = (String) token.getPrincipal();
-        LoginUser user = userDao.findByUserName(username);
+        User u = new User();
+        u.setUserName(username);
+        User user = userDao.selectOne(u);
         if (user == null)
             throw new UnknownAccountException(Status.ACCOUNT_NOT_EXISTS.msg());
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
         // 当验证都通过后，把用户信息放在session里
         Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute("loginuser", user);
+        session.setAttribute("user", user);
         session.setAttribute("userId", user.getId());
         return info;
     }

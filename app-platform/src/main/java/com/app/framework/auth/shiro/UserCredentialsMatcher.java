@@ -5,6 +5,7 @@ import com.app.framework.core.utils.Status;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
@@ -29,7 +30,8 @@ public class UserCredentialsMatcher implements CredentialsMatcher {
     }
 
     @Override
-    public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
+    public boolean doCredentialsMatch(AuthenticationToken authcToken, AuthenticationInfo info) {
+        UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
         String username = (String) token.getPrincipal();
         AtomicInteger retryCnt = passwordRetryCache.get(username);
         if (retryCnt == null) {
@@ -39,9 +41,9 @@ public class UserCredentialsMatcher implements CredentialsMatcher {
         if (retryCnt.incrementAndGet() > maxRetry) {
             throw new ExcessiveAttemptsException(String.format("%s,%s, %s秒后重试", Status.ACCOUNT_TOO_MANY_LOGIN_ATTEMPT.msg(), maxRetry, waitTime));
         }
-        String dbPassword = new String((char[]) info.getCredentials());
-        String inpassword = new String((char[]) token.getCredentials());
-        boolean login = userService.login(dbPassword, inpassword);
+        String dbPassword = info.getCredentials().toString();
+        String inPassword = new String(token.getPassword());
+        boolean login = userService.login(dbPassword, inPassword);
         if (login) {
             passwordRetryCache.remove(username);
         }

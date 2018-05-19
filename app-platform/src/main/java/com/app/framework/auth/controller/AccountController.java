@@ -2,7 +2,7 @@ package com.app.framework.auth.controller;
 
 import com.app.framework.auth.model.EditPasswordParam;
 import com.app.framework.auth.model.LoginPara;
-import com.app.framework.auth.model.LoginUser;
+import com.app.framework.auth.model.User;
 import com.app.framework.auth.service.UserService;
 import com.app.framework.base.BaseController;
 import com.app.framework.core.utils.Md5SaltUtil;
@@ -35,7 +35,7 @@ public class AccountController extends BaseController {
     @PostMapping("/login")
     @SuppressWarnings("unchecked")
     public Response login(@RequestBody @Valid LoginPara loginPara) {
-//        SecurityUtils.getSubject().login(new UsernamePasswordToken(loginPara.getUserName(), loginPara.getPassword()));
+        SecurityUtils.getSubject().login(new UsernamePasswordToken(loginPara.getUserName(), loginPara.getPassword()));
         return Response.success();
     }
 
@@ -60,7 +60,7 @@ public class AccountController extends BaseController {
     }
 
     private void editPassword(Subject subject, EditPasswordParam editPasswordParam) {
-        LoginUser authUser = subject.getPrincipals().oneByType(LoginUser.class);
+        User authUser = subject.getPrincipals().oneByType(User.class);
         String oldPasswd = authUser.getPassword();
         if (!Md5SaltUtil.validPassword(editPasswordParam.getOldPassword(), oldPasswd)) {
             throw new IncorrectCredentialsException(Status.ACCOUNT_PASSWORD_ERROR.msg() +

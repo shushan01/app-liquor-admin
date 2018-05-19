@@ -1,6 +1,6 @@
 package com.app.framework.base;
 
-import com.app.framework.auth.model.LoginUser;
+import com.app.framework.auth.model.User;
 import com.app.framework.core.utils.Log;
 import com.app.framework.core.utils.LoggerFactory;
 import org.apache.shiro.SecurityUtils;
@@ -9,10 +9,10 @@ import org.apache.shiro.subject.Subject;
 public class BaseBusiness {
     protected Log log = LoggerFactory.getLogger(this.getClass());
 
-    protected LoginUser getUser() {
+    protected User getUser() {
         Subject subject = SecurityUtils.getSubject();
         if (null != subject) {
-            return (LoginUser) subject.getSession().getAttribute("loginuser");
+            return (User) subject.getSession().getAttribute("user");
         }
         return null;
     }

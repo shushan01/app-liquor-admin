@@ -138,4 +138,8 @@ public final class Md5SaltUtil {
         return byteToHexString(pwd);
     }
 
+    public static void main(String[] args) {
+        System.out.println(getEncryptedPwd("123456"));
+    }
+
 }
