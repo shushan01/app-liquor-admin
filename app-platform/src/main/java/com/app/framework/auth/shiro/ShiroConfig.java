@@ -107,7 +107,7 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 //        // 配置不会被拦截的链接 顺序判断
         filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/**", "anon");
+        filterChainDefinitionMap.put("/**", "authc");
 //        filterChainDefinitionMap.put("/static/**", "anon");
 //        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
 //        //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
