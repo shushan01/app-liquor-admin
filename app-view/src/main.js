@@ -19,8 +19,8 @@ let basURL = "http://localhost:8080";
 Vue.prototype.$http = axios.create({
     baseURL: basURL,
     timeout: 10000,
-    params: {},
-    headers: {'Content-Type': 'application/json; charset=utf-8'}
+    params: {}
+    // headers: {'Content-Type': 'application/json; charset=utf-8'}
 });
 
 //使用钩子函数对路由进行权限跳转

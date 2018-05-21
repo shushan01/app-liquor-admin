@@ -3,16 +3,22 @@ export default {
         return {
             findAllGoodCategoryUrl: '/goodCategory/findAll',
             saveUrl: '/good/save',
+            uploadUrl: 'http://localhost:8080/good/uploadPicture',
             goodCategorys: [],
             fileList: [],
+            uploadData: {
+                goodCode: ''
+            },
             active: 0,
             baseInfoDisplay: "display: block;",
             uploadPictureDisplay: "display: none;",
-            addAttrDisplay: false,
+            addAttrDisplay: "display: none;",
             finishDisplay: "display: none;",
             // prevCss: "display: none;",
             nextCss: "",
             finishCss: "display: none;",
+            dialogImageUrl: '',
+            dialogVisible: false,
             addForm: {
                 name: '',
                 categoryId: '',
@@ -34,7 +40,8 @@ export default {
         this.$http.get(this.findAllGoodCategoryUrl).then((res) => {
             this.goodCategorys = res.data.data;
         });
-    }, watch: {
+    },
+    watch: {
         '$route'(to, from) {
             this.active = 0;
             this.baseInfoDisplay = "display: block;";
@@ -93,30 +100,31 @@ export default {
         }
         ,
         handleExceed(files, fileList) {
-            console.log(files)
-            console.log(fileList)
             this.$message.error('上传图片个数超过限制!最多可以上传12张图片。');
-        }
-        ,
-        handleSuccess(response, file, fileList) {
-            this.fileList = fileList;
-            console.log(this.fileList)
-        }
-        ,
+        },
+        // handleSuccess(response, file, fileList) {
+        //     console.log(response, file, fileList)
+        //     this.fileList.push("1111.jpg")
+        //     // this.fileList = fileList;
+        // }
+        // ,
         //保存商品别信息
         saveGood(formName) {
             // this.$refs[formName].validate((valid) => {
             //     if (valid) {
-            this.$http.post(this.saveUrl, {
-                name: this.addForm.name,
-                categoryId: this.addForm.categoryId,
-                price: this.addForm.price,
-                weight: this.addForm.weight,
-                emsFreight: this.addForm.emsFreight,
-                expressFreight: this.addForm.expressFreight,
-                mailFreight: this.addForm.mailFreight
+            this.$http.get(this.saveUrl, {
+                params: {
+                    name: this.addForm.name,
+                    categoryId: this.addForm.categoryId,
+                    price: this.addForm.price,
+                    weight: this.addForm.weight,
+                    emsFreight: this.addForm.emsFreight,
+                    expressFreight: this.addForm.expressFreight,
+                    mailFreight: this.addForm.mailFreight
+                }
             }).then((res) => {
                 if (res.status == 200) {
+                    this.uploadData.goodCode = '';
                     this.$message.success('添加商品基本信息成功');
                 }
             });
@@ -124,6 +132,13 @@ export default {
             //         return false;
             //     }
             // });
+        },
+        handleRemove(file, fileList) {
+            console.log(file, fileList);
+        },
+        uploadError(err, file, fileList) {
+            this.$message.error(JSON.parse(err.message).message);
+            console.log(err, file, fileList);
         }
     }
 }

@@ -72,21 +72,24 @@
                 </el-form>
             </div>
             <div :style="uploadPictureDisplay">
-                <el-form enctype="multipart/form-data" action="">
-                    <el-upload
-                        action="https://jsonplaceholder.typicode.com/posts/"
-                        list-type="picture-card"
-                        :on-preview="handlePictureCardPreview"
-                        :on-remove="handleRemove"
-                        :limit="12"
-                        :on-exceed="handleExceed"
-                        :on-success="handleSuccess">
-                        <i class="el-icon-plus"></i>
-                    </el-upload>
-                    <el-dialog :visible.sync="dialogVisible">
-                        <img width="100%" :src="dialogImageUrl" alt="">
-                    </el-dialog>
-                </el-form>
+                <el-upload
+                    :action="uploadUrl"
+                    ref="upload"
+                    list-type="picture-card"
+                    :on-remove="handleRemove"
+                    :on-error="uploadError"
+                    :auto-upload="true"
+                    :with-credentials="true"
+                    :data="uploadData"
+                    :file-list="fileList"
+                    :limit="12"
+                    :on-exceed="handleExceed"
+                >
+                    <i class="el-icon-plus"></i>
+                </el-upload>
+                <el-dialog :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
             </div>
 
             <div :style="addAttrDisplay">
@@ -104,4 +107,4 @@
         </div>
     </div>
 </template>
-<script src="../../../../static/js/addGood.js"></script>
+<script src="../../../../static/js/good/addGood.js"></script>

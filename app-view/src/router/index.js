@@ -22,17 +22,17 @@ export default new Router({
                 {
                     path: '/goodTypeManager',
                     component: resolve => require(['../components/page/good/goodTypeManager.vue'], resolve),
-                    meta: {title: '商品类别管理'}
+                    meta: {title: '商品类别管理', keepAlive: false}
                 },
                 {
                     path: '/goodManager',
                     component: resolve => require(['../components/page/good/goodManager.vue'], resolve),
-                    meta: {title: '商品信息管理'}
+                    meta: {title: '商品信息管理', keepAlive: false}
                 },
                 {
                     path: '/addGood',
                     component: resolve => require(['../components/page/good/addGood.vue'], resolve),
-                    meta: {title: '添加商品基本信息'}
+                    meta: {title: '添加商品基本信息', keepAlive: false}
                 },
                 {
                     path: '/form',

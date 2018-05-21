@@ -97,7 +97,7 @@
         </el-dialog>
     </div>
 </template>
-<script src="../../../../static/js/goodManager.js"></script>
+<script src="../../../../static/js/good/goodManager.js"></script>
 
 <style scoped>
     .handle-box {
