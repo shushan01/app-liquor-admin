@@ -51,14 +51,19 @@ public class GoodController extends BaseController {
     }
 
     @PostMapping("/uploadPicture")
-    public Response uploadPicture(@RequestParam("file") List<MultipartFile> files, @RequestParam String goodCode) throws Exception {
+    public Response uploadPicture(@RequestParam("file") MultipartFile file, @RequestParam String goodCode) throws Exception {
         try {
-            FileUtils.multiUpload(files, true, "/good/" + goodCode);
+            String uploadPath = "/good/" + goodCode;
+            if (!FileUtils.fileExists(file, uploadPath)) {
+                FileUtils.upload(file, false, uploadPath);
+            } else {
+                throw new Exception("上传图片失败，图片已经存在，不能重复上传图片");
+            }
             return PageResponse.success();
         } catch (Exception e) {
             logger.error("上传图片失败!", e);
+            throw new Exception("上传图片失败，图片已经存在，不能重复上传图片");
         }
-        return PageResponse.error();
     }
 
     @GetMapping("/list")

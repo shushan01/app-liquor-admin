@@ -44,8 +44,9 @@ public final class FileUtils {
             }
         }
 
-        if (!dest.getParentFile().exists()) { //判断文件父目录是否存在
-            dest.getParentFile().mkdir();
+        File parentFile = dest.getParentFile();
+        if (!parentFile.exists()) { //判断文件父目录是否存在
+            parentFile.mkdirs();
         }
         try {
             file.transferTo(dest); //保存文件
@@ -53,11 +54,23 @@ public final class FileUtils {
             result.put(fileName, uploadFilePath);
             return result;
         } catch (IllegalStateException e) {
-            logger.error("上传文件【{}】异常", e, fileName);
+            logger.error("上传文件【{0}】异常", e, fileName);
         } catch (IOException e) {
-            logger.error("上传文件【{}】异常", e, fileName);
+            logger.error("上传文件【{0}】异常", e, fileName);
         }
         return null;
+    }
+
+    public static boolean fileExists(MultipartFile file, String uploadPath) {
+        uploadPath = getFileUploadPath(file, uploadPath);
+        String fileName = file.getOriginalFilename();
+        String uploadFilePath = uploadPath + "/" + fileName;
+        File dest = new File(uploadFilePath);
+        if (dest.exists()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private static String getFileUploadPath(MultipartFile file, String uploadPath) {
