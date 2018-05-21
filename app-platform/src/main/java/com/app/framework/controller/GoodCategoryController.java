@@ -3,7 +3,6 @@ package com.app.framework.controller;
 import com.app.framework.base.BaseController;
 import com.app.framework.core.utils.Log;
 import com.app.framework.core.utils.LoggerFactory;
-import com.app.framework.core.utils.PageResponse;
 import com.app.framework.core.utils.Response;
 import com.app.framework.model.GoodCategory;
 import com.app.framework.service.GoodCategoryService;
@@ -21,8 +20,8 @@ public class GoodCategoryController extends BaseController {
     @Autowired
     private GoodCategoryService goodCategoryService;
 
-    @PostMapping("/save")
-    public Response save(@RequestBody @Valid GoodCategory goodCategory) {
+    @GetMapping("/save")
+    public Response save(@Valid GoodCategory goodCategory) {
         try {
             if (null != goodCategory.getId()) {
                 goodCategory.setUtime(new Date());
@@ -40,19 +39,19 @@ public class GoodCategoryController extends BaseController {
         } catch (Exception e) {
             logger.error("保存商品类别信息失败!", e);
         }
-        return Response.error(1, "保存商品类别信息失败");
+        return Response.error("保存商品类别信息失败");
     }
 
     @GetMapping("/list")
-    public PageResponse list(String searchKeyword,
-                             @RequestParam(defaultValue = "1") Integer pageNo,
-                             @RequestParam(defaultValue = "10") Integer pageSize) {
+    public Response list(String searchKeyword,
+                         @RequestParam(defaultValue = "1") Integer pageNo,
+                         @RequestParam(defaultValue = "10") Integer pageSize) {
         try {
             return goodCategoryService.list(searchKeyword, pageNo, pageSize);
         } catch (Exception e) {
             logger.error("查询商品类别信息失败!", e);
         }
-        return null;
+        return Response.error("查询商品类别信息失败");
     }
 
     @GetMapping("/findAll")
@@ -62,17 +61,17 @@ public class GoodCategoryController extends BaseController {
         } catch (Exception e) {
             logger.error("查询商品类别信息失败!", e);
         }
-        return Response.error(1, "查询商品类别信息失败");
+        return Response.error("查询商品类别信息失败");
     }
 
     @GetMapping("/delete")
     public Response delete(@RequestParam(value = "ids[]") Long[] ids) {
         try {
             goodCategoryService.deleteByIds(ids);
-            Response.success();
+            return Response.success();
         } catch (Exception e) {
             logger.error("删除商品类别信息失败!", e);
         }
-        return Response.error(1, "删除商品类别信息失败");
+        return Response.error("删除商品类别信息失败");
     }
 }

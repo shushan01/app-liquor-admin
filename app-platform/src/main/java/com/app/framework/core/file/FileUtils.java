@@ -27,7 +27,7 @@ public final class FileUtils {
      * @return
      */
     public static Map<String, String> upload(MultipartFile file, boolean overwrite, String uploadPath) {
-        getFileUploadPath(file, uploadPath);
+        uploadPath = getFileUploadPath(file, uploadPath);
         if (null == uploadPath)
             return null;
 
@@ -65,8 +65,11 @@ public final class FileUtils {
             logger.warn("无效的文件");
             return null;
         }
-        if (StringUtils.isBlank(uploadPath))
+        if (StringUtils.isBlank(uploadPath)) {
             uploadPath = getProjectRootPath() + "/upload";
+        } else {
+            uploadPath = getProjectRootPath() + "/upload" + uploadPath;
+        }
         return uploadPath;
     }
 

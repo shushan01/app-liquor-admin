@@ -1,6 +1,7 @@
 package com.app.framework.controller;
 
 import com.app.framework.base.BaseController;
+import com.app.framework.core.file.FileUtils;
 import com.app.framework.core.utils.*;
 import com.app.framework.model.Good;
 import com.app.framework.service.GoodService;
@@ -21,14 +22,14 @@ public class GoodController extends BaseController {
     @Autowired
     private GoodService goodService;
 
-    @PostMapping("/save")
-    public Response save(@RequestBody @Valid Good good) {
+    @GetMapping("/save")
+    public Response save(@Valid Good good) {
         try {
             buildGood(good);
             goodService.save(good);
-            return Response.success(good);
+            return Response.success(good.getCode());
         } catch (Exception e) {
-            logger.error("查询商品信息失败!", e);
+            logger.error("保存商品信息失败!", e);
         }
         return Response.error();
 
@@ -50,9 +51,14 @@ public class GoodController extends BaseController {
     }
 
     @PostMapping("/uploadPicture")
-    public Response uploadPicture(@RequestParam("file") List<MultipartFile> files) {
-        Response response = new Response();
-        return response;
+    public Response uploadPicture(@RequestParam("file") List<MultipartFile> files, @RequestParam String goodCode) throws Exception {
+        try {
+            FileUtils.multiUpload(files, true, "/good/" + goodCode);
+            return PageResponse.success();
+        } catch (Exception e) {
+            logger.error("上传图片失败!", e);
+        }
+        return PageResponse.error();
     }
 
     @GetMapping("/list")
