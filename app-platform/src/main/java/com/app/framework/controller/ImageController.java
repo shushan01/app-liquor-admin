@@ -109,6 +109,26 @@ public class ImageController extends BaseController {
         }
     }
 
+    @GetMapping("/delete")
+    public Response delete(String fileName, String type, Long ownerId) {
+        try {
+            String filePath = FileUtils.getUploadRootPath() + FOLDER_SEPARATE + type + FOLDER_SEPARATE + ownerId + FOLDER_SEPARATE + fileName;
+            File img = new File(filePath);
+            if (!img.exists()) {
+                return Response.error("图片不存在");
+            }
+            img.delete();
+            Picture picture = new Picture();
+            picture.setType(type);
+            picture.setOwnerId(ownerId);
+            picture.setName(fileName);
+            pictureService.delete(pictureService.findOneBy(picture));
+        } catch (Exception e) {
+            logger.error("删除图片失败!", e);
+        }
+        return Response.success();
+    }
+
     private String getImageFormat(String file) {
         return file.substring(file.lastIndexOf(".") + 1);
     }
