@@ -119,9 +119,10 @@ DROP TABLE if EXISTS tb_picture;
 CREATE TABLE tb_picture (
 id bigint(20) NOT NULL AUTO_INCREMENT,
 url varchar(255) NOT NULL COMMENT '图片URL',
-name varchar(50) NOT NULL COMMENT '图片名称',
+name varchar(255) NOT NULL COMMENT '图片名称',
 description varchar(255) DEFAULT NULL COMMENT '图片描述',
-good_id bigint(20) NOT NULL COMMENT '商品ID',
+owner_id bigint(20) NOT NULL COMMENT '该图片所属实体ID；用户id或者商品id',
+type varchar(50) NOT NULL COMMENT '图片类型：user表示用户头像；good表示商品图片',
 ctime datetime NOT NULL COMMENT '创建时间',
 creator bigint(20) NOT NULL COMMENT '创建人',
 PRIMARY KEY (id)

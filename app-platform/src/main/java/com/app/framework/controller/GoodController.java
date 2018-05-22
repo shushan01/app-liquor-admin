@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -27,7 +26,7 @@ public class GoodController extends BaseController {
         try {
             buildGood(good);
             goodService.save(good);
-            return Response.success(good.getCode());
+            return Response.success(good.getId());
         } catch (Exception e) {
             logger.error("保存商品信息失败!", e);
         }
@@ -50,21 +49,21 @@ public class GoodController extends BaseController {
         good.setCurrentPrice(new BigDecimal(0));
     }
 
-    @PostMapping("/uploadPicture")
-    public Response uploadPicture(@RequestParam("file") MultipartFile file, @RequestParam String goodCode) throws Exception {
-        try {
-            String uploadPath = "/good/" + goodCode;
-            if (!FileUtils.fileExists(file, uploadPath)) {
-                FileUtils.upload(file, false, uploadPath);
-            } else {
-                throw new Exception("上传图片失败，图片已经存在，不能重复上传图片");
-            }
-            return PageResponse.success();
-        } catch (Exception e) {
-            logger.error("上传图片失败!", e);
-            throw new Exception("上传图片失败，图片已经存在，不能重复上传图片");
-        }
-    }
+//    @PostMapping("/uploadPicture")
+//    public Response uploadPicture(@RequestParam("file") MultipartFile file, @RequestParam String goodCode) throws Exception {
+//        try {
+//            String uploadPath = "/good/" + goodCode;
+//            if (!FileUtils.fileExists(file, uploadPath)) {
+//                FileUtils.upload(file, false, uploadPath);
+//            } else {
+//                throw new Exception("上传图片失败，图片已经存在，不能重复上传图片");
+//            }
+//            return PageResponse.success();
+//        } catch (Exception e) {
+//            logger.error("上传图片失败!", e);
+//            throw new Exception("上传图片失败，图片已经存在，不能重复上传图片");
+//        }
+//    }
 
     @GetMapping("/list")
     public Response list(String searchKeyword,

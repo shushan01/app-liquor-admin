@@ -2,7 +2,6 @@ package com.app.framework.core.file;
 
 import com.app.framework.core.utils.Log;
 import com.app.framework.core.utils.LoggerFactory;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,10 +26,7 @@ public final class FileUtils {
      * @return
      */
     public static Map<String, String> upload(MultipartFile file, boolean overwrite, String uploadPath) {
-        uploadPath = getFileUploadPath(file, uploadPath);
-        if (null == uploadPath)
-            return null;
-
+        uploadPath = getUploadRootPath() + uploadPath;
         String fileName = file.getOriginalFilename();
         String uploadFilePath = uploadPath + "/" + fileName;
         File dest = new File(uploadFilePath);
@@ -62,7 +58,7 @@ public final class FileUtils {
     }
 
     public static boolean fileExists(MultipartFile file, String uploadPath) {
-        uploadPath = getFileUploadPath(file, uploadPath);
+        uploadPath = getUploadRootPath() + uploadPath;
         String fileName = file.getOriginalFilename();
         String uploadFilePath = uploadPath + "/" + fileName;
         File dest = new File(uploadFilePath);
@@ -73,18 +69,18 @@ public final class FileUtils {
         }
     }
 
-    private static String getFileUploadPath(MultipartFile file, String uploadPath) {
-        if (file.isEmpty()) {
-            logger.warn("无效的文件");
-            return null;
-        }
-        if (StringUtils.isBlank(uploadPath)) {
-            uploadPath = getProjectRootPath() + "/upload";
-        } else {
-            uploadPath = getProjectRootPath() + "/upload" + uploadPath;
-        }
-        return uploadPath;
-    }
+//    private static String getFileUploadPath(MultipartFile file, String uploadPath) {
+//        if (file.isEmpty()) {
+//            logger.warn("无效的文件");
+//            return null;
+//        }
+//        if (StringUtils.isBlank(uploadPath)) {
+//            uploadPath = getProjectRootPath() + "/upload";
+//        } else {
+//            uploadPath = getProjectRootPath() + "/upload" + uploadPath;
+//        }
+//        return uploadPath;
+//    }
 
 
     /**
@@ -93,8 +89,12 @@ public final class FileUtils {
      *
      * @return
      */
-    private static String getProjectRootPath() {
+    public static String getProjectRootPath() {
         return System.getProperty("user.dir");
+    }
+
+    public static String getUploadRootPath() {
+        return getProjectRootPath() + "/upload";
     }
 
     /**
