@@ -3,11 +3,12 @@ export default {
         return {
             findAllGoodCategoryUrl: '/goodCategory/findAll',
             saveUrl: '/good/save',
-            uploadUrl: 'http://localhost:8080/good/uploadPicture',
+            uploadUrl: 'http://localhost:8080/image/upload',
             goodCategorys: [],
             fileList: [],
             uploadData: {
-                goodCode: ''
+                ownerId: -1,
+                type: 'good'
             },
             active: 0,
             baseInfoDisplay: "display: block;",
@@ -118,7 +119,7 @@ export default {
                         }
                     }).then((res) => {
                         if (res.data.code == 0) {
-                            this.uploadData.goodCode = res.data.data;
+                            this.uploadData.ownerId = res.data.data;
                             this.addBaseInfoSuccess = true;
                             this.$message.success('添加商品基本信息成功');
                             this.baseInfoDisplay = "display: none;";
