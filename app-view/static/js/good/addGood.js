@@ -4,6 +4,7 @@ export default {
             findAllGoodCategoryUrl: '/goodCategory/findAll',
             saveUrl: '/good/save',
             uploadUrl: 'http://localhost:8080/image/upload',
+            deleteImageUrl: '/image/delete',
             goodCategorys: [],
             fileList: [],
             uploadData: {
@@ -134,6 +135,19 @@ export default {
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
+            this.$http.get(this.deleteImageUrl, {
+                params: {
+                    type: this.uploadData.type,
+                    ownerId: this.uploadData.ownerId,
+                    fileName: file.name
+                }
+            }).then((res) => {
+                if (res.data.code == 0) {
+                    this.$message.success('删除图片成功');
+                } else {
+                    this.$message.success('删除图片失败');
+                }
+            });
         },
         uploadError(err, file, fileList) {
             this.$message.error(JSON.parse(err.message).message);
