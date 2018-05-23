@@ -26,11 +26,9 @@
                     <el-col :span="24">
                         <el-collapse-item title="商品图片信息" name="3">
                             <el-row>
-                                <template v-for="file in fileList" :label="file.name" :value="file.url">
-                                    <el-col :span="12">
-                                        <img :src="file.url"/>
-                                    </el-col>
-                                </template>
+                                <el-col :span="8" v-for="file in fileList">
+                                    <img width="70%;" :src="file.url"/>
+                                </el-col>
                             </el-row>
                         </el-collapse-item>
                     </el-col>
