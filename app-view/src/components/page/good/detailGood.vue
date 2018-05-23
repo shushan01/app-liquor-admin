@@ -11,8 +11,7 @@
                 <el-row>
                     <el-col :span="12">
                         <el-collapse-item title="商品基本信息" name="1">
-                            <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-                            <div>在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。</div>
+                            {{goodInfo.name}}
                         </el-collapse-item>
                     </el-col>
                     <el-col :span="12">
@@ -26,8 +25,13 @@
                 <el-row>
                     <el-col :span="24">
                         <el-collapse-item title="商品图片信息" name="3">
-                            <div>控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-                            <div>页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。</div>
+                            <el-row>
+                                <template v-for="file in fileList" :label="file.name" :value="file.url">
+                                    <el-col :span="12">
+                                        <img :src="file.url"/>
+                                    </el-col>
+                                </template>
+                            </el-row>
                         </el-collapse-item>
                     </el-col>
                 </el-row>
@@ -41,7 +45,9 @@
             return {
                 detailUrl: '/good/detail',
                 activeNames: ['1', '2'],
-                goodId: ''
+                goodId: '',
+                goodInfo: {},
+                fileList: [],
             };
         },
         created() {
@@ -56,8 +62,11 @@
                         id: this.goodId
                     }
                 }).then((res) => {
-                    console.log(res.data)
-                })
+                    this.fileList = res.data.data.pictures;
+                    this.goodInfo = res.data.data.good;
+                    console.log(this.fileList)
+                    console.log(this.goodInfo)
+                });
             }
         }
     }
