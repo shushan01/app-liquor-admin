@@ -18,8 +18,6 @@ export default {
             finishDisplay: "display: none;",
             nextCss: "",
             finishCss: "display: none;",
-            dialogImageUrl: '',
-            dialogVisible: false,
             addForm: {
                 name: '',
                 categoryId: '',

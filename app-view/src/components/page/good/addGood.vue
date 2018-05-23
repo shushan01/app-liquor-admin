@@ -83,13 +83,9 @@
                     :data="uploadData"
                     :file-list="fileList"
                     :limit="12"
-                    :on-exceed="handleExceed"
-                >
+                    :on-exceed="handleExceed">
                     <i class="el-icon-plus"></i>
                 </el-upload>
-                <el-dialog :visible.sync="dialogVisible">
-                    <img width="100%" :src="dialogImageUrl" alt="">
-                </el-dialog>
             </div>
 
             <div :style="addAttrDisplay">
