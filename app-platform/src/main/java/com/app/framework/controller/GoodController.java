@@ -1,17 +1,21 @@
 package com.app.framework.controller;
 
 import com.app.framework.base.BaseController;
-import com.app.framework.core.file.FileUtils;
 import com.app.framework.core.utils.*;
 import com.app.framework.model.Good;
+import com.app.framework.model.Picture;
 import com.app.framework.service.GoodService;
+import com.app.framework.service.PictureService;
+import com.app.framework.vo.GoodDetailVo;
+import com.app.framework.vo.GoodDetailVo.PictureVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -20,6 +24,8 @@ public class GoodController extends BaseController {
     private static final Log logger = LoggerFactory.getLogger(GoodController.class);
     @Autowired
     private GoodService goodService;
+    @Autowired
+    private PictureService pictureService;
 
     @GetMapping("/save")
     public Response save(@Valid Good good) {
@@ -49,22 +55,6 @@ public class GoodController extends BaseController {
         good.setCurrentPrice(new BigDecimal(0));
     }
 
-//    @PostMapping("/uploadPicture")
-//    public Response uploadPicture(@RequestParam("file") MultipartFile file, @RequestParam String goodCode) throws Exception {
-//        try {
-//            String uploadPath = "/good/" + goodCode;
-//            if (!FileUtils.fileExists(file, uploadPath)) {
-//                FileUtils.upload(file, false, uploadPath);
-//            } else {
-//                throw new Exception("上传图片失败，图片已经存在，不能重复上传图片");
-//            }
-//            return PageResponse.success();
-//        } catch (Exception e) {
-//            logger.error("上传图片失败!", e);
-//            throw new Exception("上传图片失败，图片已经存在，不能重复上传图片");
-//        }
-//    }
-
     @GetMapping("/list")
     public Response list(String searchKeyword,
                          @RequestParam(defaultValue = "1") Integer pageNo,
@@ -81,9 +71,35 @@ public class GoodController extends BaseController {
     public Response delete(@RequestParam(value = "ids[]") Long[] ids) {
         try {
             goodService.deleteByIds(ids);
+            pictureService.deleteByOwnerIds(ids);
             return Response.success();
         } catch (Exception e) {
             logger.error("删除商品类别信息失败!", e);
+        }
+        return Response.error();
+    }
+
+    @GetMapping("/detail")
+    public Response detail(@RequestParam Long id) {
+        try {
+            Good good = goodService.detailById(id);
+            Picture picture = new Picture();
+            picture.setOwnerId(id);
+            picture.setType("good");
+            List<Picture> pictureList = pictureService.findBy(picture);
+            List<PictureVo> pictureVos = new ArrayList<>();
+            for (Picture p : pictureList) {
+                PictureVo pictureVo = new PictureVo();
+                pictureVo.setName(p.getName());
+                pictureVo.setUrl(p.getUrl());
+                pictureVos.add(pictureVo);
+            }
+            GoodDetailVo goodDetailVo = new GoodDetailVo();
+            goodDetailVo.setGood(good);
+            goodDetailVo.setPictures(pictureVos);
+            return Response.success(goodDetailVo);
+        } catch (Exception e) {
+            logger.error("查看商品详细信息失败!", e);
         }
         return Response.error();
     }

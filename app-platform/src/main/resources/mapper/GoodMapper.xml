@@ -16,4 +16,17 @@
             where a.name like '%${name}%'
         </if>
     </select>
+
+    <select id="detailById" resultType="good" parameterType="long">
+        select a.id,a.name,a.code,a.weight,b.name as categoryName,
+        a.recommend,a.click_cnt as clickCnt,a.collect_cnt as collectCnt,
+        a.sale_cnt as saleCnt,a.activity_status as activityStatus,
+        a.current_price as currentPrice,a.ctime,a.utime,
+        a.price,a.weight,a.ems_freight as emsFreight,
+        a.express_freight as expressFreight ,a.mail_freight as mailFreight
+        from tb_good a
+        left join tb_good_category b
+        on a.category_id=b.id
+        where a.id=#{id}
+    </select>
 </mapper>

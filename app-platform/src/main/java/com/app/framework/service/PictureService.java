@@ -15,4 +15,8 @@ public class PictureService extends BaseService<Picture> {
         super(pictureDao);
         this.pictureDao = pictureDao;
     }
+
+    public void deleteByOwnerIds(Long[] ownerIds) {
+        pictureDao.deleteByOwnerIds(ownerIds);
+    }
 }

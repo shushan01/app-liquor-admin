@@ -31,4 +31,8 @@ public class GoodService extends BaseService<Good> {
         List<Good> list = goodDao.findByName(map);
         return PageResponse.success(list, page.getTotal());
     }
+
+    public Good detailById(Long id) {
+        return goodDao.detailById(id);
+    }
 }

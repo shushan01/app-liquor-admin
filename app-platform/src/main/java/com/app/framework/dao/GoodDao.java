@@ -8,4 +8,6 @@ import java.util.Map;
 
 public interface GoodDao extends BaseDao<Good> {
     List<Good> findByName(Map<String, String> map);
+
+    Good detailById(Long id);
 }
