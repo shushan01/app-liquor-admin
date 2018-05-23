@@ -3,9 +3,7 @@ export default {
         return {
             listUrl: '/good/list',
             deleteUrl: '/good/delete',
-            detailUrl: '/good/detail',
             search_keyword: '',
-            // JSESSIONID: '',
             tableData: [],
             delVisible: false,
             delIds: [],
@@ -15,7 +13,6 @@ export default {
         }
     },
     created() {
-        // this.JSESSIONID = localStorage.getItem("JSESSIONID");
         this.getData();
     },
     computed: {},
@@ -37,7 +34,6 @@ export default {
                     pageNo: this.curPage,
                     pageSize: this.pageSize,
                     searchKeyword: this.search_keyword
-                    // JSESSIONID: this.JSESSIONID
                 }
             }).then((res) => {
                 this.tableData = res.data.data;
@@ -56,8 +52,13 @@ export default {
         activityOne() {
 
         },
-        detailGood() {
-
+        detailGood(id) {
+            this.$router.push({
+                name: 'detailGood',
+                params: {
+                    goodId: id
+                }
+            });
         },
         editGood() {
 

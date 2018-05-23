@@ -68,7 +68,7 @@
                     <template slot-scope="scope">
                         <el-button type="primary" class="el-icon-delete mr10" @click="activityOne"> 加入活动</el-button>
                         <el-button type="primary" size="small" class="el-icon-view" @click="recommendOne(scope.$index)"> 推荐</el-button>
-                        <el-button size="small" class="el-icon-view" @click="detailGood(scope.$index)"> 详情</el-button>
+                        <el-button size="small" class="el-icon-view" @click="detailGood(scope.row.id)"> 详情</el-button>
                         <el-button size="small" class="el-icon-edit" @click="editGood(scope.$index)"> 编辑</el-button>
                         <el-button type="danger" class="el-icon-delete mr10" @click="deleteOne(scope.$index)"> 删除</el-button>
                     </template>

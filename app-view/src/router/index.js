@@ -35,6 +35,12 @@ export default new Router({
                     meta: {title: '添加商品基本信息', keepAlive: false}
                 },
                 {
+                    name: 'detailGood',
+                    path: '/detailGood',
+                    component: resolve => require(['../components/page/good/detailGood.vue'], resolve),
+                    meta: {title: '商品详细信息', keepAlive: false}
+                },
+                {
                     path: '/form',
                     component: resolve => require(['../components/page/BaseForm.vue'], resolve),
                     meta: {title: '基本表单'}
