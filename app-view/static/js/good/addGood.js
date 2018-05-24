@@ -7,6 +7,8 @@ export default {
             deleteImageUrl: '/image/delete',
             goodCategorys: [],
             fileList: [],
+            dialogImageUrl: '',
+            dialogVisible: false,
             uploadData: {
                 ownerId: -1,
                 type: 'good'
@@ -101,6 +103,10 @@ export default {
         },
         handleExceed(files, fileList) {
             this.$message.error('上传图片个数超过限制!最多可以上传12张图片。');
+        },
+        handlePictureCardPreview(file) {
+            this.dialogImageUrl = file.url;
+            this.dialogVisible = true;
         },
         //保存商品别信息
         saveGood(formName) {

@@ -84,6 +84,7 @@
                     list-type="picture-card"
                     :on-remove="handleRemove"
                     :on-error="uploadError"
+                    :on-preview="handlePictureCardPreview"
                     :auto-upload="true"
                     :with-credentials="true"
                     :data="uploadData"
@@ -92,6 +93,9 @@
                     :on-exceed="handleExceed">
                     <i class="el-icon-plus"></i>
                 </el-upload>
+                <el-dialog :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
             </div>
 
             <div :style="addAttrDisplay">
