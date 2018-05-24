@@ -32,7 +32,13 @@ export default new Router({
                 {
                     path: '/addGood',
                     component: resolve => require(['../components/page/good/addGood.vue'], resolve),
-                    meta: {title: '添加商品基本信息', keepAlive: false}
+                    meta: {title: '添加商品信息', keepAlive: false}
+                },
+                {
+                    name: 'editGood',
+                    path: '/editGood',
+                    component: resolve => require(['../components/page/good/editGood.vue'], resolve),
+                    meta: {title: '修改商品信息', keepAlive: false}
                 },
                 {
                     name: 'detailGood',

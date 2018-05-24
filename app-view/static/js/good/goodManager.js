@@ -60,8 +60,13 @@ export default {
                 }
             });
         },
-        editGood() {
-
+        editGood(id) {
+            this.$router.push({
+                name: 'editGood',
+                params: {
+                    goodId: id
+                }
+            });
         },
         search() {
             this.getData();

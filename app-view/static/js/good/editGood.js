@@ -2,19 +2,12 @@ export default {
     data() {
         return {
             findAllGoodCategoryUrl: '/goodCategory/findAll',
-            saveUrl: '/good/save',
+            saveUrl: '/good/update',
+            detailUrl: '/good/detail',
             uploadUrl: 'http://localhost:8080/image/upload',
             deleteImageUrl: '/image/delete',
             goodCategorys: [],
-            fileList: [
-                {
-                    name: 'food.jpeg',
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                },
-                {
-                    name: 'food2.jpeg',
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                }],
+            fileList: [],
             uploadData: {
                 ownerId: -1,
                 type: 'good'
@@ -26,8 +19,8 @@ export default {
             finishDisplay: "display: none;",
             nextCss: "",
             finishCss: "display: none;",
-            dialogImageUrl: 'http://localhost:8080/image/get?type=good&ownerId=30&fileName=deepin.bmp',
-            addForm: {
+            editForm: {
+                id: '',
                 name: '',
                 categoryId: '',
                 price: '',
@@ -65,6 +58,8 @@ export default {
         }
     },
     created() {
+        this.editForm.id = this.$route.params.goodId;
+        this.getData();
         this.$http.get(this.findAllGoodCategoryUrl).then((res) => {
             this.goodCategorys = res.data.data;
         });
@@ -82,9 +77,21 @@ export default {
     },
     computed: {},
     methods: {
+        //加载表格数据
+        getData() {
+            this.$http.get(this.detailUrl, {
+                params: {
+                    id: this.editForm.id
+                }
+            }).then((res) => {
+                console.log(res.data)
+                this.fileList = res.data.data.pictures;
+                this.editForm = res.data.data.good;
+            });
+        },
         next() {
             if (this.active == 0) {
-                this.saveGood('addForm');
+                this.saveGood('editForm');
             }
             if (this.active == 1) {
                 this.uploadPictureDisplay = "display: none;";
@@ -117,19 +124,20 @@ export default {
                 if (valid) {
                     this.$http.get(this.saveUrl, {
                         params: {
-                            name: this.addForm.name,
-                            categoryId: this.addForm.categoryId,
-                            price: this.addForm.price,
-                            weight: this.addForm.weight,
-                            emsFreight: this.addForm.emsFreight,
-                            expressFreight: this.addForm.expressFreight,
-                            mailFreight: this.addForm.mailFreight
+                            id: this.editForm.id,
+                            name: this.editForm.name,
+                            categoryId: this.editForm.categoryId,
+                            price: this.editForm.price,
+                            weight: this.editForm.weight,
+                            emsFreight: this.editForm.emsFreight,
+                            expressFreight: this.editForm.expressFreight,
+                            mailFreight: this.editForm.mailFreight
                         }
                     }).then((res) => {
                         if (res.data.code == 0) {
                             this.uploadData.ownerId = res.data.data;
                             this.addBaseInfoSuccess = true;
-                            this.$message.success('添加商品基本信息成功');
+                            this.$message.success('修改商品基本信息成功');
                             this.baseInfoDisplay = "display: none;";
                             this.uploadPictureDisplay = "display: block;";
                             this.active++;
@@ -141,7 +149,6 @@ export default {
             });
         },
         handleRemove(file, fileList) {
-            console.log(file, fileList);
             this.$http.get(this.deleteImageUrl, {
                 params: {
                     type: this.uploadData.type,
@@ -158,7 +165,6 @@ export default {
         },
         uploadError(err, file, fileList) {
             this.$message.error(JSON.parse(err.message).message);
-            console.log(err, file, fileList);
         }
     }
 }

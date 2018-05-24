@@ -71,8 +71,6 @@
                 }).then((res) => {
                     this.fileList = res.data.data.pictures;
                     this.goodInfo = res.data.data.good;
-                    console.log(this.fileList)
-                    console.log(this.goodInfo)
                 });
             }
         }
