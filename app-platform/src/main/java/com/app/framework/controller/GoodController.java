@@ -40,6 +40,20 @@ public class GoodController extends BaseController {
 
     }
 
+    @GetMapping("/update")
+    public Response update(@Valid Good good) {
+        try {
+            good.setUtime(new Date());
+            good.setModifier(getUserId());
+            goodService.update(good);
+            return Response.success(good.getId());
+        } catch (Exception e) {
+            logger.error("更新商品信息失败!", e);
+        }
+        return Response.error();
+
+    }
+
     private void buildGood(Good good) {
         good.setCode(CodeUtils.generate());
         good.setCreator(getUserId());
