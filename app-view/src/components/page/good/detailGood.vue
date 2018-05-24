@@ -11,14 +11,23 @@
                 <el-row>
                     <el-col :span="12">
                         <el-collapse-item title="商品基本信息" name="1">
-                            {{goodInfo.name}}
+                            <p>商品名称：{{goodInfo.name}}</p>
+                            <p>商品类别：{{goodInfo.categoryName}}</p>
+                            <p>商品编码：{{goodInfo.code}}</p>
+                            <p>商品价格：{{goodInfo.price}}</p>
+                            <p>商品销量：{{goodInfo.saleCnt}}</p>
+                            <p>创建时间：{{goodInfo.ctime}}</p>
+                            <p>创建人：{{goodInfo.createName}}</p>
+                            <p>修改时间：{{goodInfo.utime}}</p>
+                            <p>修改人：{{goodInfo.updateName}}</p>
+                            <p>EMS运费：{{goodInfo.emsFreight}} (单位/元)</p>
+                            <p>快递运费：{{goodInfo.expressFreight}} (单位/元)</p>
+                            <p>平邮运费：{{goodInfo.mailFreight}} (单位/元)</p>
                         </el-collapse-item>
                     </el-col>
                     <el-col :span="12">
                         <el-collapse-item title="商品属性信息" name="2">
-                            <div>简化流程：设计简洁直观的操作流程；</div>
-                            <div>清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
-                            <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
+
                         </el-collapse-item>
                     </el-col>
                 </el-row>
