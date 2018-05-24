@@ -17,6 +17,10 @@ public class Good extends BaseEntity {
     private Long categoryId;
     @Transient
     private String categoryName;
+    @Transient
+    private String createName;
+    @Transient
+    private String updateName;
     private BigDecimal price;
     private Long clickCnt;
     private Long collectCnt;

@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.app.framework.dao.GoodDao">
-
-    <select id="findByName" resultType="good" parameterType="map">
-        select a.id,a.name,a.code,a.weight,b.name as categoryName,
+    <sql id="selectFields">
+      select a.id,a.name,a.code,a.weight,a.category_id as categoryId,b.name as categoryName,
+        u1.name as createName,d.name as updateName,
         a.recommend,a.click_cnt as clickCnt,a.collect_cnt as collectCnt,
         a.sale_cnt as saleCnt,a.activity_status as activityStatus,
         a.current_price as currentPrice,a.ctime,a.utime,
         a.price,a.weight,a.ems_freight as emsFreight,
         a.express_freight as expressFreight ,a.mail_freight as mailFreight
+    </sql>
+    <select id="findByName" resultType="good" parameterType="map">
+        <include refid="selectFields"/>
         from tb_good a
         left join tb_good_category b
         on a.category_id=b.id
+        left join ts_user u1
+        on a.creator=u1.id
+        left join ts_user d
+        on a.modifier=d.id
         <if test="name != null and name != ''">
             where a.name like '%${name}%'
         </if>
     </select>
 
     <select id="detailById" resultType="good" parameterType="long">
-        select a.id,a.name,a.code,a.weight,b.name as categoryName,
-        a.recommend,a.click_cnt as clickCnt,a.collect_cnt as collectCnt,
-        a.sale_cnt as saleCnt,a.activity_status as activityStatus,
-        a.current_price as currentPrice,a.ctime,a.utime,
-        a.price,a.weight,a.ems_freight as emsFreight,
-        a.express_freight as expressFreight ,a.mail_freight as mailFreight
+        <include refid="selectFields"/>
         from tb_good a
         left join tb_good_category b
         on a.category_id=b.id
+        left join ts_user u1
+        on a.creator=u1.id
+        left join ts_user d
+        on a.modifier=d.id
         where a.id=#{id}
     </select>
 </mapper>
