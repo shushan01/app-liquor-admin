@@ -3,10 +3,14 @@ export default {
         return {
             listUrl: '/good/list',
             deleteUrl: '/good/delete',
+            recommendUrl: '/good/recommend',
+            cancelRecommendUrl: '/good/cancelRecommend',
             search_keyword: '',
             tableData: [],
             delVisible: false,
             delIds: [],
+            recommendIds: [],
+            cancelRecommendIds: [],
             total: 0,
             pageSize: 5,
             curPage: 1
@@ -41,10 +45,60 @@ export default {
             })
         },
         recommendAll() {
-
+            this.$http.get(this.recommendUrl,
+                {
+                    params: {
+                        ids: this.recommendIds
+                    }
+                }
+            ).then((res) => {
+                if (res.data.code == 0) {
+                    this.recommendIds = []
+                    this.$message({
+                        message: '推荐成功！',
+                        type: 'success'
+                    });
+                    this.getData();
+                } else {
+                    this.$message({
+                        message: '推荐失败！',
+                        type: 'error'
+                    });
+                }
+            });
         },
-        recommendOne() {
-
+        recommendOne(id) {
+            this.recommendIds = [];
+            this.recommendIds.push(id);
+            this.recommendAll();
+        },
+        cancelRecommendOne(id) {
+            this.cancelRecommendIds = [];
+            this.cancelRecommendIds.push(id);
+            this.cancelRecommendAll();
+        },
+        cancelRecommendAll() {
+            this.$http.get(this.cancelRecommendUrl,
+                {
+                    params: {
+                        ids: this.cancelRecommendIds
+                    }
+                }
+            ).then((res) => {
+                if (res.data.code == 0) {
+                    this.cancelRecommendIds = []
+                    this.$message({
+                        message: '取消推荐成功！',
+                        type: 'success'
+                    });
+                    this.getData();
+                } else {
+                    this.$message({
+                        message: '取消推荐失败！',
+                        type: 'error'
+                    });
+                }
+            });
         },
         activityAll() {
 
@@ -115,9 +169,13 @@ export default {
             if (records.length > 0) {
                 for (let i = 0; i < records.length; i++) {
                     this.delIds.push(records[i].id);
+                    this.recommendIds.push(records[i].id);
+                    this.cancelRecommendIds.push(records[i].id);
                 }
             } else {
                 this.delIds = [];
+                this.recommendIds = [];
+                this.cancelRecommendIds = [];
             }
         }
     }
