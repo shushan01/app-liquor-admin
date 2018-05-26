@@ -1,6 +1,7 @@
 package com.app.framework.controller;
 
 import com.app.framework.base.BaseController;
+import com.app.framework.core.file.FileUtils;
 import com.app.framework.core.utils.*;
 import com.app.framework.model.Good;
 import com.app.framework.model.Picture;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +24,7 @@ import java.util.List;
 @RequestMapping("/good")
 public class GoodController extends BaseController {
     private static final Log logger = LoggerFactory.getLogger(GoodController.class);
+    private static final String FOLDER_SEPARATE = "/";
     @Autowired
     private GoodService goodService;
     @Autowired
@@ -118,7 +121,22 @@ public class GoodController extends BaseController {
     public Response delete(@RequestParam(value = "ids[]") Long[] ids) {
         try {
             goodService.deleteByIds(ids);
-            pictureService.deleteByOwnerIds(ids);
+            for (Long id : ids) {
+                Picture picture = new Picture();
+                picture.setOwnerId(id);
+                picture.setType("good");
+                pictureService.delete(picture);
+                String filePath = FileUtils.getUploadRootPath() + FOLDER_SEPARATE + "good" + FOLDER_SEPARATE + id + FOLDER_SEPARATE;
+                File dir = new File(filePath);
+                if (!dir.exists()) {
+                    return Response.error("路径不存在");
+                }
+                File[] imgs = dir.listFiles();
+                for (File img : imgs) {
+                    img.delete();
+                }
+                dir.delete();
+            }
             return Response.success();
         } catch (Exception e) {
             logger.error("删除商品类别信息失败!", e);

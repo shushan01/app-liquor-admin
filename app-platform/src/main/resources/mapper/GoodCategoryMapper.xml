@@ -3,10 +3,14 @@
 <mapper namespace="com.app.framework.dao.GoodCategoryDao">
 
     <select id="findByName" resultType="goodCategory" parameterType="map">
-        select a.id,a.name,b.name as parentName,a.parent_id as parentId,a.description,a.status,a.utime,a.ctime,a.creator,a.modifier
+        select a.id,a.name,b.name as parentName,c1.name as createName,c2.name as updateName,a.parent_id as parentId,a.description,a.status,a.utime,a.ctime,a.creator,a.modifier
         from tb_good_category a
         left join tb_good_category b
         on a.parent_id=b.id
+        left join ts_user c1
+        on a.creator=c1.id
+        left join ts_user c2
+        on a.modifier=c2.id
         <if test="name != null and name != ''">
             where a.name like '%${name}%'
         </if>

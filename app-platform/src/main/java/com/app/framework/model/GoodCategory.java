@@ -16,6 +16,10 @@ public class GoodCategory extends BaseEntity {
     private Long parentId;
     @Transient
     private String parentName;
+    @Transient
+    private String createName;
+    @Transient
+    private String updateName;
     @NotNull(message = "商品类别名称不能为空！")
     private String name;
     private String description;
