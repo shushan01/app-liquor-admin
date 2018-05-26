@@ -47,6 +47,10 @@ export default new Router({
                     meta: {title: '商品详细信息', keepAlive: false}
                 }
             ]
+        },
+        {
+            path: '/login',
+            component: resolve => require(['../components/page/Login.vue'], resolve)
         }
     ]
 })

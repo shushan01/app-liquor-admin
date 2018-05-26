@@ -64,20 +64,15 @@
                         title: '物流管理'
                     },
                     {
-                        icon: 'icon-wuliuxiaocheche',
-                        index: 'form',
-                        title: '基本表单'
-                    },
-                    {
                         icon: 'el-icon-setting',
                         index: '2',
                         title: '系统管理',
                         subs: [
-                            {
-                                icon: 'icon-drxx11',
-                                index: 'menuManager',
-                                title: '菜单管理',
-                            },
+                            // {
+                            //     icon: 'icon-drxx11',
+                            //     index: 'menuManager',
+                            //     title: '菜单管理',
+                            // },
                             {
                                 icon: 'icon-drxx10',
                                 index: 'userManager',

@@ -3,7 +3,7 @@ export default {
         return {
             findAllGoodCategoryUrl: '/goodCategory/findAll',
             saveUrl: '/good/save',
-            uploadUrl: 'http://localhost:8080/image/upload',
+            uploadUrl: '/image/upload',
             deleteImageUrl: '/image/delete',
             goodCategorys: [],
             fileList: [],

@@ -13,7 +13,7 @@ Vue.use(ElementUI, {size: 'small'});
 // Vue.config.debug = true;
 axios.defaults.withCredentials = true;
 
-let basURL = "http://localhost:8080";
+let basURL = "http://localhost:8090/admin/api";
 
 //基本配置的axios
 Vue.prototype.$http = axios.create({
