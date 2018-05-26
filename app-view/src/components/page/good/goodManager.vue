@@ -42,7 +42,7 @@
                             <el-button type="text" disabled>未推荐</el-button>
                         </div>
                         <div v-else>
-                            <el-button type="text">推荐</el-button>
+                            <el-button type="text">已推荐</el-button>
                         </div>
                     </template>
                 </el-table-column>
