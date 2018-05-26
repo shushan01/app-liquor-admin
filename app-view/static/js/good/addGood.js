@@ -32,7 +32,7 @@ export default {
             rules: {
                 name: [
                     {required: true, message: '请输入商品名称', trigger: 'blur'},
-                    {max: 15, message: '商品名称不超过15个字符', trigger: 'blur'}
+                    {max: 50, message: '商品名称不超过50个字符', trigger: 'blur'}
                 ],
                 price: [
                     {required: true, message: '商品价格不能为空'},
