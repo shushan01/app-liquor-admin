@@ -34,11 +34,15 @@
                 <el-row>
                     <el-col :span="24">
                         <el-collapse-item title="商品图片信息" name="3">
-                            <el-row>
-                                <el-col :span="6" v-for="file in fileList">
-                                    <img width="70%;" :src="file.url"/>
-                                </el-col>
-                            </el-row>
+                            <el-upload
+                                list-type="picture-card"
+                                :on-preview="handlePictureCardPreview"
+                                :disabled="true"
+                                :file-list="fileList">
+                            </el-upload>
+                            <el-dialog :visible.sync="dialogVisible">
+                                <img width="100%" :src="dialogImageUrl" alt="">
+                            </el-dialog>
                         </el-collapse-item>
                     </el-col>
                 </el-row>
@@ -55,6 +59,8 @@
                 goodId: '',
                 goodInfo: {},
                 fileList: [],
+                dialogImageUrl: '',
+                dialogVisible: false
             };
         },
         created() {
@@ -72,7 +78,25 @@
                     this.fileList = res.data.data.pictures;
                     this.goodInfo = res.data.data.good;
                 });
+            },
+            handlePictureCardPreview(file) {
+                this.dialogImageUrl = file.url;
+                this.dialogVisible = true;
             }
         }
     }
 </script>
+<style scoped>
+    .el-upload--picture-card {
+        background-color: #fbfdff;
+        border: 1px dashed #c0ccda;
+        border-radius: 6px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 148px;
+        height: 148px;
+        display: none;
+        line-height: 146px;
+        vertical-align: top;
+    }
+</style>
