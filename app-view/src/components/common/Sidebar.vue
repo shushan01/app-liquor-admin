@@ -33,7 +33,7 @@
                 items: [
                     {
                         icon: 'icon-shouye',
-                        index: 'dashboard',
+                        index: 'index',
                         title: '系统首页'
                     },
                     {

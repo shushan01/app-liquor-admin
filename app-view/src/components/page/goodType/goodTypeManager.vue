@@ -23,7 +23,11 @@
                 </el-table-column>
                 <el-table-column prop="parentName" label="父类别">
                 </el-table-column>
+                <el-table-column prop="createName" label="创建人">
+                </el-table-column>
                 <el-table-column prop="ctime" label="创建时间">
+                </el-table-column>
+                <el-table-column prop="updateName" label="修改人">
                 </el-table-column>
                 <el-table-column prop="utime" label="修改时间">
                 </el-table-column>
@@ -113,7 +117,7 @@
         </el-dialog>
     </div>
 </template>
-<script src="../../../../static/js/good/goodTypeManager.js"></script>
+<script src="../../../../static/js/goodType/goodTypeManager.js"></script>
 <style scoped>
     .handle-box {
         margin-bottom: 20px;
