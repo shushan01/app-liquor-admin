@@ -61,19 +61,25 @@
                 <!--</el-table-column>-->
                 <!--<el-table-column prop="currentPrice" width="80px;" sortable label="现价">-->
                 <!--</el-table-column>-->
-                <el-table-column :show-overflow-tooltip="true" prop="createName"  width="100px;" label="创建人">
+                <el-table-column :show-overflow-tooltip="true" prop="createName" width="100px;" label="创建人">
                 </el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="ctime" sortable width="100px;" label="创建时间">
                 </el-table-column>
-                <el-table-column :show-overflow-tooltip="true" prop="updateName"  width="100px;" label="创建人">
+                <el-table-column :show-overflow-tooltip="true" prop="updateName" width="100px;" label="创建人">
                 </el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="utime" sortable width="100px;" label="修改时间">
                 </el-table-column>
                 <el-table-column label="操作" width="460" fixed="right">
                     <template slot-scope="scope">
                         <!--<el-button type="primary" class="el-icon-delete mr10" @click="activityOne"> 加入活动</el-button>-->
-                        <el-button type="primary" size="small" class="icon-tuijian" @click="recommendOne(scope.row.id)"> 推荐</el-button>
-                        <el-button type="danger" size="small" class="el-icon-circle-close-outline" @click="cancelRecommendOne(scope.row.id)"> 取消推荐</el-button>
+                        <template v-if="scope.row.recommend==0">
+                            <el-button type="primary" size="small" class="icon-tuijian" @click="recommendOne(scope.row.id)"> 推荐</el-button>
+                            <el-button type="danger" size="small" disabled="true" class="el-icon-circle-close-outline" @click="cancelRecommendOne(scope.row.id)"> 取消推荐</el-button>
+                        </template>
+                        <template v-else>
+                            <el-button type="primary" size="small" disabled="true" class="icon-tuijian" @click="recommendOne(scope.row.id)"> 推荐</el-button>
+                            <el-button type="danger" size="small" class="el-icon-circle-close-outline" @click="cancelRecommendOne(scope.row.id)"> 取消推荐</el-button>
+                        </template>
                         <el-button size="small" class="el-icon-view" @click="detailGood(scope.row.id)"> 详情</el-button>
                         <el-button size="small" class="el-icon-edit" @click="editGood(scope.row.id)"> 编辑</el-button>
                         <el-button type="danger" class="el-icon-delete mr10" @click="deleteOne(scope.$index)"> 删除</el-button>

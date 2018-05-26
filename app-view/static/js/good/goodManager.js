@@ -44,6 +44,9 @@ export default {
                 this.total = res.data.total;
             })
         },
+        isDisabled(){
+
+        },
         recommendAll() {
             this.$http.get(this.recommendUrl,
                 {
