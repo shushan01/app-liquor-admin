@@ -54,6 +54,39 @@ public class GoodController extends BaseController {
 
     }
 
+    @GetMapping("/recommend")
+    public Response recommend(@RequestParam(value = "ids[]") Long[] ids) {
+        try {
+            updateRecommend(ids, 1);
+            return Response.success();
+        } catch (Exception e) {
+            logger.error("推荐商品信息失败!", e);
+        }
+        return Response.error();
+
+    }
+
+    @GetMapping("/cancelRecommend")
+    public Response cancelRecommend(@RequestParam(value = "ids[]") Long[] ids) {
+        try {
+            updateRecommend(ids, 0);
+            return Response.success();
+        } catch (Exception e) {
+            logger.error("推荐商品信息失败!", e);
+        }
+        return Response.error();
+
+    }
+
+    private void updateRecommend(@RequestParam(value = "ids[]") Long[] ids, int i) {
+        for (Long id : ids) {
+            Good good = new Good();
+            good.setId(id);
+            good.setRecommend(i);
+            goodService.update(good);
+        }
+    }
+
     private void buildGood(Good good) {
         good.setCode(CodeUtils.generate());
         good.setCreator(getUserId());

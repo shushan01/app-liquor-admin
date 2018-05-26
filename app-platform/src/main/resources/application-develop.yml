@@ -1,6 +1,6 @@
 server:
-    port: 8080
-#    context-path: /api
+    port: 8090
+    context-path: /admin/api
 
 ## Redis数据库索引（默认为0）
 #spring.redis.database=0
