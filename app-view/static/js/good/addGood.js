@@ -16,7 +16,7 @@ export default {
             active: 0,
             baseInfoDisplay: "display: block;",
             uploadPictureDisplay: "display: none;",
-            addAttrDisplay: "display: none;",
+            // addAttrDisplay: "display: none;",
             finishDisplay: "display: none;",
             nextCss: "",
             finishCss: "display: none;",
@@ -68,7 +68,7 @@ export default {
             this.active = 0;
             this.baseInfoDisplay = "display: block;";
             this.uploadPictureDisplay = "display: none;";
-            this.addAttrDisplay = "display: none;";
+            // this.addAttrDisplay = "display: none;";
             this.finishDisplay = "display: none;";
             this.nextCss = "";
             this.finishCss = "display: none;";
@@ -82,7 +82,7 @@ export default {
             }
             if (this.active == 1) {
                 this.uploadPictureDisplay = "display: none;";
-                this.addAttrDisplay = "display: block;"
+                // this.addAttrDisplay = "display: block;"
                 this.nextCss = "display: none;";
                 this.finishCss = "display: block;";
                 this.active++;
@@ -92,7 +92,7 @@ export default {
             this.active++;
             this.uploadPictureDisplay = "display: none;";
             this.baseInfoDisplay = "display: none;";
-            this.addAttrDisplay = "display: none;"
+            // this.addAttrDisplay = "display: none;"
             this.finishDisplay = "display: block;"
             this.nextCss = "display: none;";
             this.finishCss = "display: none;";
@@ -130,6 +130,8 @@ export default {
                             this.$message.success('添加商品基本信息成功');
                             this.baseInfoDisplay = "display: none;";
                             this.uploadPictureDisplay = "display: block;";
+                            this.finishCss = "display: block;"
+                            this.nextCss = "display: none;"
                             this.active++;
                         }
                     });

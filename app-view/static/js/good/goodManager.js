@@ -20,6 +20,11 @@ export default {
         this.getData();
     },
     computed: {},
+    watch: {
+        '$route'(to, from) {
+            this.getData();
+        }
+    },
     methods: {
         // 分页当前页改变
         handleCurrentChange(val) {
@@ -43,9 +48,6 @@ export default {
                 this.tableData = res.data.data;
                 this.total = res.data.total;
             })
-        },
-        isDisabled(){
-
         },
         recommendAll() {
             this.$http.get(this.recommendUrl,

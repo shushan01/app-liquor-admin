@@ -13,7 +13,7 @@
                     </el-step>
                     <el-step title="上传商品图片信息" icon="el-icon-upload">
                     </el-step>
-                    <el-step title="添加商品属性信息" icon="el-icon-info"></el-step>
+                    <!--<el-step title="添加商品属性信息" icon="el-icon-info"></el-step>-->
                     <el-step title="完成" icon="el-icon-success"></el-step>
                 </el-steps>
             </div>
@@ -92,9 +92,9 @@
                 </el-dialog>
             </div>
 
-            <div :style="addAttrDisplay">
-                添加商品属性
-            </div>
+            <!--<div :style="addAttrDisplay">-->
+                <!--添加商品属性-->
+            <!--</div>-->
             <div :style="finishDisplay">
                 你已经成功添加完善了商品信息<br/>
                 <el-button @click="goBack">返回</el-button>
