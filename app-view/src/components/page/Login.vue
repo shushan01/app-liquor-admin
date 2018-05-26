@@ -54,6 +54,7 @@
                                 });
                                 console.log(res)
                                 localStorage.setItem('ms_username', res.data.data.name);
+                                localStorage.setItem('baseUrl', this.$http.defaults.baseURL);
                                 this.$router.push('/');
                             } else {
                                 this.$message({

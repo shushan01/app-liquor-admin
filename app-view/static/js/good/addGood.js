@@ -3,7 +3,7 @@ export default {
         return {
             findAllGoodCategoryUrl: '/goodCategory/findAll',
             saveUrl: '/good/save',
-            uploadUrl: '/image/upload',
+            uploadUrl: '',
             deleteImageUrl: '/image/delete',
             goodCategorys: [],
             fileList: [],
@@ -61,6 +61,7 @@ export default {
         this.$http.get(this.findAllGoodCategoryUrl).then((res) => {
             this.goodCategorys = res.data.data;
         });
+        this.uploadUrl = localStorage.getItem("baseUrl") + "/image/upload";
     },
     watch: {
         '$route'(to, from) {
