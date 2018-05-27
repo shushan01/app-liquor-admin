@@ -8,6 +8,8 @@ import com.app.framework.core.utils.PageResponse;
 import com.app.framework.core.utils.Response;
 import com.app.framework.model.Picture;
 import com.app.framework.service.PictureService;
+import io.swagger.models.auth.In;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,16 +35,20 @@ public class ImageController extends BaseController {
     private PictureService pictureService;
 
     @PostMapping("/upload")
-    public Response upload(HttpServletRequest request, @RequestParam("file") MultipartFile file, @RequestParam Long ownerId, @RequestParam String type) throws Exception {
+    public Response upload(HttpServletRequest request, @RequestParam("file") MultipartFile file, @RequestParam Long ownerId, @RequestParam String type, Integer position) throws Exception {
         try {
-            String url = buildDownloadUrl(request, ownerId, type, file.getOriginalFilename());
+            String url = buildDownloadUrl(request, ownerId, type, position, file.getOriginalFilename());
             String uploadPath = FOLDER_SEPARATE + type + FOLDER_SEPARATE + ownerId;
+            if (null != position) {
+                uploadPath = uploadPath + FOLDER_SEPARATE + position;
+            }
             if (!FileUtils.fileExists(file, uploadPath)) {
                 FileUtils.upload(file, false, uploadPath);
                 Picture picture = new Picture();
                 picture.setOwnerId(ownerId);
                 picture.setName(file.getOriginalFilename());
                 picture.setType(type);
+                picture.setPosition(position);
                 picture.setCtime(new Date());
                 picture.setUrl(url);
                 picture.setCreator(getUserId());
@@ -57,7 +63,7 @@ public class ImageController extends BaseController {
         }
     }
 
-    private String buildDownloadUrl(HttpServletRequest request, Long ownerId, String type, String fileName) {
+    private String buildDownloadUrl(HttpServletRequest request, Long ownerId, String type, Integer position, String fileName) {
         StringBuilder sb = new StringBuilder();
         String requestUrl = request.getRequestURL().toString();
         sb.append(requestUrl.substring(0, requestUrl.lastIndexOf("/")));
@@ -67,13 +73,18 @@ public class ImageController extends BaseController {
         sb.append("ownerId=");
         sb.append(ownerId);
         sb.append("&");
+        if (position != null) {
+            sb.append("position=");
+            sb.append(position);
+            sb.append("&");
+        }
         sb.append("fileName=");
         sb.append(fileName);
         return sb.toString();
     }
 
     @GetMapping("/get")
-    public void load(String fileName, String type, Long ownerId, HttpServletResponse response) {
+    public void load(String fileName, String type, Integer position, Long ownerId, HttpServletResponse response) {
         ByteArrayOutputStream outputStream = null;
         ServletOutputStream responseOutputStream = null;
         try {
@@ -82,7 +93,12 @@ public class ImageController extends BaseController {
             response.setDateHeader("Expires", 0);
             String imgFormat = getImageFormat(fileName);
             response.setContentType("image/" + imgFormat);
-            String filePath = FileUtils.getUploadRootPath() + FOLDER_SEPARATE + type + FOLDER_SEPARATE + ownerId + FOLDER_SEPARATE + fileName;
+            String filePath = FileUtils.getUploadRootPath() + FOLDER_SEPARATE + type + FOLDER_SEPARATE + ownerId + FOLDER_SEPARATE;
+            if (null != position) {
+                filePath = filePath + position + FOLDER_SEPARATE + fileName;
+            } else {
+                filePath = filePath + fileName;
+            }
             File img = new File(filePath);
             if (!img.exists()) {
                 return;
@@ -110,9 +126,9 @@ public class ImageController extends BaseController {
     }
 
     @GetMapping("/delete")
-    public Response delete(String fileName, String type, Long ownerId) {
+    public Response delete(String fileName, String type, Integer position, Long ownerId) {
         try {
-            String filePath = FileUtils.getUploadRootPath() + FOLDER_SEPARATE + type + FOLDER_SEPARATE + ownerId + FOLDER_SEPARATE + fileName;
+            String filePath = FileUtils.getUploadRootPath() + FOLDER_SEPARATE + type + FOLDER_SEPARATE + ownerId + FOLDER_SEPARATE + position + FOLDER_SEPARATE + fileName;
             File img = new File(filePath);
             if (!img.exists()) {
                 return Response.error("图片不存在");
@@ -120,6 +136,7 @@ public class ImageController extends BaseController {
             img.delete();
             Picture picture = new Picture();
             picture.setType(type);
+            picture.setPosition(position);
             picture.setOwnerId(ownerId);
             picture.setName(fileName);
             pictureService.delete(pictureService.findOneBy(picture));

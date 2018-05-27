@@ -9,7 +9,9 @@ import java.util.List;
 @Data
 public class GoodDetailVo {
     private Good good;
-    private List<PictureVo> pictures = new ArrayList<>();
+    private List<PictureVo> carouselPictures = new ArrayList<>();
+    private List<PictureVo> goodListPictures = new ArrayList<>();
+    private List<PictureVo> goodDetailPictures = new ArrayList<>();
 
     @Data
     public static class PictureVo {

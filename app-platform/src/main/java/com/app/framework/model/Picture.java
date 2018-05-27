@@ -20,6 +20,7 @@ public class Picture implements Serializable {
     private String description;
     private Long ownerId;
     private String type;
+    private Integer position;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date ctime;
     private Long creator;

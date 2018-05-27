@@ -131,9 +131,13 @@ public class GoodController extends BaseController {
                 if (!dir.exists()) {
                     return Response.error("路径不存在");
                 }
-                File[] imgs = dir.listFiles();
-                for (File img : imgs) {
-                    img.delete();
+                File[] positionDir = dir.listFiles();
+                for (File position : positionDir) {
+                    File[] imgs = position.listFiles();
+                    for (File img : imgs) {
+                        img.delete();
+                    }
+                    position.delete();
                 }
                 dir.delete();
             }
@@ -152,16 +156,27 @@ public class GoodController extends BaseController {
             picture.setOwnerId(id);
             picture.setType("good");
             List<Picture> pictureList = pictureService.findBy(picture);
-            List<PictureVo> pictureVos = new ArrayList<>();
+            List<PictureVo> carouselPictures = new ArrayList<>();
+            List<PictureVo> goodListPictures = new ArrayList<>();
+            List<PictureVo> goodDetailPictures = new ArrayList<>();
+
             for (Picture p : pictureList) {
                 PictureVo pictureVo = new PictureVo();
                 pictureVo.setName(p.getName());
                 pictureVo.setUrl(p.getUrl());
-                pictureVos.add(pictureVo);
+                if (p.getPosition() == 1) {
+                    carouselPictures.add(pictureVo);
+                } else if (p.getPosition() == 2) {
+                    goodListPictures.add(pictureVo);
+                } else {
+                    goodDetailPictures.add(pictureVo);
+                }
             }
             GoodDetailVo goodDetailVo = new GoodDetailVo();
             goodDetailVo.setGood(good);
-            goodDetailVo.setPictures(pictureVos);
+            goodDetailVo.setCarouselPictures(carouselPictures);
+            goodDetailVo.setGoodListPictures(goodListPictures);
+            goodDetailVo.setGoodDetailPictures(goodDetailPictures);
             return Response.success(goodDetailVo);
         } catch (Exception e) {
             logger.error("查看商品详细信息失败!", e);
