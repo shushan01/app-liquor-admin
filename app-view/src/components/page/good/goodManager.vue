@@ -28,6 +28,8 @@
                 </el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="price" sortable width="90px;" label="价格">
                 </el-table-column>
+                <el-table-column :show-overflow-tooltip="true" prop="expressFreight" sortable width="90px;" label="快递费">
+                </el-table-column>
                 <el-table-column :show-overflow-tooltip="true" prop="saleCnt" sortable width="90px;" label="销售量">
                 </el-table-column>
                 <!--<el-table-column :show-overflow-tooltip="true" prop="clickCnt" sortable width="90px;" label="点击量">-->
