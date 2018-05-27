@@ -59,9 +59,15 @@
         methods: {
             // 用户名下拉菜单选择事件
             handleCommand(command) {
+                // localStorage.removeItem('ms_username')
+                // this.$router.push('/login');
                 if (command == 'loginout') {
-                    localStorage.removeItem('ms_username')
-                    this.$router.push('/login');
+                    this.$http.post('/logout').then((res) => {
+                        if (res.data.code == 0) {
+                            localStorage.removeItem('ms_username')
+                            this.$router.push('/login');
+                        }
+                    })
                 }
             },
             // 侧边栏折叠
