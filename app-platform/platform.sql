@@ -16,6 +16,21 @@ CREATE TABLE ts_user (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理后台用户表';
 
+DROP TABLE IF EXISTS `weixin_user`;
+CREATE TABLE `weixin_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(50) NOT NULL COMMENT 'openid',
+  `nick_name` varchar(100) NOT NULL COMMENT '昵称',
+  `sex` varchar(1) DEFAULT NULL COMMENT '性别',
+  `province` varchar(50) DEFAULT NULL COMMENT '省份',
+  `city` varchar(50) DEFAULT NULL COMMENT '城市',
+  `country` varchar(50) DEFAULT NULL COMMENT '国家',
+  `head_img` varchar(100) DEFAULT NULL COMMENT '头像url',
+  `creat_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+	UNIQUE KEY `index_openid` (`openid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='微信用户表';
+
 DROP TABLE if EXISTS ts_role;
 CREATE TABLE ts_role (
   id bigint(20) NOT NULL AUTO_INCREMENT,
