@@ -16,12 +16,25 @@ axios.defaults.withCredentials = true;
 let basURL = "http://localhost:8090/admin/api";
 
 //基本配置的axios
-Vue.prototype.$http = axios.create({
+let http = axios.create({
     baseURL: basURL,
     timeout: 10000,
     params: {}
     // headers: {'Content-Type': 'application/json; charset=utf-8'}
 });
+http.interceptors.response.use(
+    response => {
+        return response;
+    },
+    error => {
+        router.push({
+            path: '/login',
+            query: {redirect: router.currentRoute.fullPath} //从哪个页面跳转
+        });
+        return Promise.reject(error);
+    });
+
+Vue.prototype.$http = http;
 
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
