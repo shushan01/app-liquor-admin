@@ -7,17 +7,31 @@ export default {
             uploadUrl: '',
             deleteImageUrl: '/image/delete',
             goodCategorys: [],
-            fileList: [],
-            dialogImageUrl: '',
-            dialogVisible:false,
-            uploadData: {
+            carouselPageUploadData: {
                 ownerId: -1,
-                type: 'good'
+                type: 'good',
+                position: 1
             },
+            listPageUploadData: {
+                ownerId: -1,
+                type: 'good',
+                position: '2'
+            },
+            detailPageUploadData: {
+                ownerId: -1,
+                type: 'good',
+                position: '3'
+            },
+            carouselFileList: [],
+            listFileList: [],
+            detailFileList: [],
+            activeNames: ['1', '2', '3', '4'],
+            dialogImageUrl: '',
+            dialogVisible: false,
             active: 0,
             baseInfoDisplay: "display: block;",
             uploadPictureDisplay: "display: none;",
-            addAttrDisplay: "display: none;",
+            // addAttrDisplay: "display: none;",
             finishDisplay: "display: none;",
             nextCss: "",
             finishCss: "display: none;",
@@ -72,7 +86,7 @@ export default {
             this.active = 0;
             this.baseInfoDisplay = "display: block;";
             this.uploadPictureDisplay = "display: none;";
-            this.addAttrDisplay = "display: none;";
+            // this.addAttrDisplay = "display: none;";
             this.finishDisplay = "display: none;";
             this.nextCss = "";
             this.finishCss = "display: none;";
@@ -88,7 +102,9 @@ export default {
                 }
             }).then((res) => {
                 console.log(res.data)
-                this.fileList = res.data.data.pictures;
+                this.carouselFileList = res.data.data.carouselPictures;
+                this.listFileList = res.data.data.goodListPictures;
+                this.detailFileList = res.data.data.goodDetailPictures;
                 this.editForm = res.data.data.good;
             });
         },
@@ -98,7 +114,7 @@ export default {
             }
             if (this.active == 1) {
                 this.uploadPictureDisplay = "display: none;";
-                this.addAttrDisplay = "display: block;"
+                // this.addAttrDisplay = "display: block;"
                 this.nextCss = "display: none;";
                 this.finishCss = "display: block;";
                 this.active++;
@@ -108,7 +124,7 @@ export default {
             this.active++;
             this.uploadPictureDisplay = "display: none;";
             this.baseInfoDisplay = "display: none;";
-            this.addAttrDisplay = "display: none;"
+            // this.addAttrDisplay = "display: none;"
             this.finishDisplay = "display: block;"
             this.nextCss = "display: none;";
             this.finishCss = "display: none;";
@@ -118,7 +134,13 @@ export default {
             this.finishCss = "display: none;";
             this.$router.push("/goodManager");
         },
-        handleExceed(files, fileList) {
+        carouselHandleExceed(files, fileList) {
+            this.$message.error('上传图片个数超过限制!最多可以上传5张图片。');
+        },
+        listPageHandleExceed(files, fileList) {
+            this.$message.error('上传图片个数超过限制!最多可以上传3张图片。');
+        },
+        detailPageHandleExceed(files, fileList) {
             this.$message.error('上传图片个数超过限制!最多可以上传12张图片。');
         },
         handlePictureCardPreview(file) {
@@ -142,11 +164,15 @@ export default {
                         }
                     }).then((res) => {
                         if (res.data.code == 0) {
-                            this.uploadData.ownerId = res.data.data;
+                            this.carouselPageUploadData.ownerId = res.data.data;
+                            this.listPageUploadData.ownerId = res.data.data;
+                            this.detailPageUploadData.ownerId = res.data.data;
                             this.addBaseInfoSuccess = true;
                             this.$message.success('修改商品基本信息成功');
                             this.baseInfoDisplay = "display: none;";
                             this.uploadPictureDisplay = "display: block;";
+                            this.finishCss = "display: block;"
+                            this.nextCss = "display: none;"
                             this.active++;
                         }
                     });
@@ -155,12 +181,45 @@ export default {
                 }
             });
         },
-        handleRemove(file, fileList) {
+        carouselHandleRemove(file, fileList) {
             this.$http.get(this.deleteImageUrl, {
                 params: {
-                    type: this.uploadData.type,
-                    ownerId: this.uploadData.ownerId,
-                    fileName: file.name
+                    type: this.carouselPageUploadData.type,
+                    ownerId: this.carouselPageUploadData.ownerId,
+                    fileName: file.name,
+                    position: 1
+                }
+            }).then((res) => {
+                if (res.data.code == 0) {
+                    this.$message.success('删除图片成功');
+                } else {
+                    this.$message.success('删除图片失败');
+                }
+            });
+        },
+        listPageHandleRemove(file, fileList) {
+            this.$http.get(this.deleteImageUrl, {
+                params: {
+                    type: this.listPageUploadData.type,
+                    ownerId: this.listPageUploadData.ownerId,
+                    fileName: file.name,
+                    position: 2
+                }
+            }).then((res) => {
+                if (res.data.code == 0) {
+                    this.$message.success('删除图片成功');
+                } else {
+                    this.$message.success('删除图片失败');
+                }
+            });
+        },
+        detailPageHandleRemove(file, fileList) {
+            this.$http.get(this.deleteImageUrl, {
+                params: {
+                    type: this.detailPageUploadData.type,
+                    ownerId: this.detailPageUploadData.ownerId,
+                    fileName: file.name,
+                    position: 3
                 }
             }).then((res) => {
                 if (res.data.code == 0) {

@@ -13,7 +13,7 @@
                     </el-step>
                     <el-step title="上传商品图片信息" icon="el-icon-upload">
                     </el-step>
-                    <el-step title="修改商品属性信息" icon="el-icon-info"></el-step>
+                    <!--<el-step title="修改商品属性信息" icon="el-icon-info"></el-step>-->
                     <el-step title="完成" icon="el-icon-success"></el-step>
                 </el-steps>
             </div>
@@ -78,29 +78,68 @@
                 </el-form>
             </div>
             <div :style="uploadPictureDisplay">
-                <el-upload
-                    :action="uploadUrl"
-                    ref="upload"
-                    list-type="picture-card"
-                    :on-remove="handleRemove"
-                    :on-error="uploadError"
-                    :on-preview="handlePictureCardPreview"
-                    :auto-upload="true"
-                    :with-credentials="true"
-                    :data="uploadData"
-                    :file-list="fileList"
-                    :limit="12"
-                    :on-exceed="handleExceed">
-                    <i class="el-icon-plus"></i>
-                </el-upload>
-                <el-dialog :visible.sync="dialogVisible">
-                    <img width="100%" :src="dialogImageUrl" alt="">
-                </el-dialog>
+                <el-collapse v-model="activeNames">
+                    <el-collapse-item title="上传首页轮播图片" name="1">
+                        <el-upload
+                            :action="uploadUrl"
+                            ref="upload"
+                            list-type="picture-card"
+                            :on-remove="carouselHandleRemove"
+                            :on-error="uploadError"
+                            :on-preview="handlePictureCardPreview"
+                            :auto-upload="true"
+                            :with-credentials="true"
+                            :data="carouselPageUploadData"
+                            :limit="5"
+                            :file-list="carouselFileList"
+                            :on-exceed="carouselHandleExceed">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-collapse-item>
+                    <el-collapse-item title="上传商品列表页图片" name="2">
+                        <el-upload
+                            :action="uploadUrl"
+                            ref="upload"
+                            list-type="picture-card"
+                            :on-remove="listPageHandleRemove"
+                            :on-error="uploadError"
+                            :on-preview="handlePictureCardPreview"
+                            :auto-upload="true"
+                            :with-credentials="true"
+                            :data="listPageUploadData"
+                            :limit="3"
+                            :file-list="listFileList"
+                            :on-exceed="listPageHandleExceed">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-collapse-item>
+
+                    <el-collapse-item title="上传商品详情页图片" name="3">
+                        <el-upload
+                            :action="uploadUrl"
+                            list-type="picture-card"
+                            :on-remove="detailPageHandleRemove"
+                            :on-error="uploadError"
+                            :on-preview="handlePictureCardPreview"
+                            :auto-upload="true"
+                            :with-credentials="true"
+                            :data="detailPageUploadData"
+                            :limit="12"
+                            :file-list="detailFileList"
+                            :on-exceed="detailPageHandleExceed">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-collapse-item>
+
+                    <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="dialogImageUrl" alt="">
+                    </el-dialog>
+                </el-collapse>
             </div>
 
-            <div :style="addAttrDisplay">
-                添加商品属性
-            </div>
+            <!--<div :style="addAttrDisplay">-->
+            <!--添加商品属性-->
+            <!--</div>-->
             <div :style="finishDisplay">
                 你已经成功完善了商品信息<br/>
                 <el-button @click="goBack">返回</el-button>

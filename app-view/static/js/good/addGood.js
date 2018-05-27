@@ -6,14 +6,8 @@ export default {
             uploadUrl: '',
             deleteImageUrl: '/image/delete',
             goodCategorys: [],
-            fileList: [],
-            listPageFileList: [],
             dialogImageUrl: '',
             dialogVisible: false,
-            uploadData: {
-                ownerId: -1,
-                type: 'good'
-            },
             carouselPageUploadData: {
                 ownerId: -1,
                 type: 'good',
@@ -183,8 +177,8 @@ export default {
         listPageHandleRemove(file, fileList) {
             this.$http.get(this.deleteImageUrl, {
                 params: {
-                    type: this.uploadData.type,
-                    ownerId: this.uploadData.ownerId,
+                    type: this.listPageUploadData.type,
+                    ownerId: this.listPageUploadData.ownerId,
                     fileName: file.name,
                     position: 2
                 }
@@ -199,8 +193,8 @@ export default {
         detailPageHandleRemove(file, fileList) {
             this.$http.get(this.deleteImageUrl, {
                 params: {
-                    type: this.uploadData.type,
-                    ownerId: this.uploadData.ownerId,
+                    type: this.detailPageUploadData.type,
+                    ownerId: this.detailPageUploadData.ownerId,
                     fileName: file.name,
                     position: 3
                 }
