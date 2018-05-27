@@ -41,6 +41,12 @@ export default {
         this.getData();
     },
     computed: {},
+    watch: {
+        '$route'(to, from) {
+            this.tableData = [];
+            this.getData();
+        }
+    },
     methods: {
         // 分页当前页改变
         handleCurrentChange(val) {
