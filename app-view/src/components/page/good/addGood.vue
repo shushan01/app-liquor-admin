@@ -39,9 +39,9 @@
                              <el-option :label="否" :value="0">否</el-option>
                          </el-select>
                      </el-form-item>-->
-                    <el-form-item prop="weight" label="重量">
-                        <el-input v-model.number="addForm.weight" placeholder="请输入商品重量"></el-input>
-                    </el-form-item>
+                    <!--<el-form-item prop="weight" label="重量">-->
+                        <!--<el-input v-model.number="addForm.weight" placeholder="请输入商品重量"></el-input>-->
+                    <!--</el-form-item>-->
                     <!-- <el-form-item label="活动状态">
                          <el-select v-model="addForm.activityStatus" placeholder="活动状态">
                              <el-option :label="是" :value="1">是</el-option>
@@ -57,15 +57,15 @@
                              <el-option :label="否" :value="0">否</el-option>
                          </el-select>
                      </el-form-item>-->
-                    <el-form-item prop="emsFreight" label="EMS运费">
-                        <el-input v-model.number="addForm.emsFreight" placeholder="请输入商品EMS运费"></el-input>
-                    </el-form-item>
+                    <!--<el-form-item prop="emsFreight" label="EMS运费">-->
+                        <!--<el-input v-model.number="addForm.emsFreight" placeholder="请输入商品EMS运费"></el-input>-->
+                    <!--</el-form-item>-->
                     <el-form-item prop="expressFreight" label="快递运费">
                         <el-input v-model.number="addForm.expressFreight" placeholder="请输入商品快递运费"></el-input>
                     </el-form-item>
-                    <el-form-item prop="mailFreight" label="平邮运费">
-                        <el-input v-model.number="addForm.mailFreight" placeholder="请输入商品平邮运费"></el-input>
-                    </el-form-item>
+                    <!--<el-form-item prop="mailFreight" label="平邮运费">-->
+                        <!--<el-input v-model.number="addForm.mailFreight" placeholder="请输入商品平邮运费"></el-input>-->
+                    <!--</el-form-item>-->
                     <!-- <el-form-item prop="stockCnt" label="库存量">
                          <el-input v-model="addForm.stockCnt" placeholder="请输入商品库存量"></el-input>
                      </el-form-item>-->

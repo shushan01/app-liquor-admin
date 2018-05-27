@@ -13,14 +13,18 @@
                     <p>商品类别：{{goodInfo.categoryName}}</p>
                     <p>商品编码：{{goodInfo.code}}</p>
                     <p>商品价格：{{goodInfo.price}}</p>
+                    <p v-if="goodInfo.recommend==0">是否推荐商品：未推荐
+                    </p>
+                    <p v-else="goodInfo.recommend==1">是否推荐商品：已推荐
+                    </p>
                     <p>商品销量：{{goodInfo.saleCnt}}</p>
                     <p>创建时间：{{goodInfo.ctime}}</p>
                     <p>创建人：{{goodInfo.createName}}</p>
                     <p>修改时间：{{goodInfo.utime}}</p>
                     <p>修改人：{{goodInfo.updateName}}</p>
-                    <p>EMS运费：{{goodInfo.emsFreight}} (单位/元)</p>
+                    <!--<p>EMS运费：{{goodInfo.emsFreight}} (单位/元)</p>-->
                     <p>快递运费：{{goodInfo.expressFreight}} (单位/元)</p>
-                    <p>平邮运费：{{goodInfo.mailFreight}} (单位/元)</p>
+                    <!--<p>平邮运费：{{goodInfo.mailFreight}} (单位/元)</p>-->
                 </el-collapse-item>
                 <!--<el-col :span="12">-->
                 <!--<el-collapse-item title="商品属性信息" name="2">-->
@@ -63,7 +67,7 @@
         data() {
             return {
                 detailUrl: '/good/detail',
-                activeNames: ['1', '2','3','4'],
+                activeNames: ['1', '2', '3', '4'],
                 goodId: '',
                 goodInfo: {},
                 carouselFileList: [],
@@ -100,6 +104,7 @@
 </script>
 <style scoped>
     .el-upload--picture-card {
+        display: none;
         background-color: #fbfdff;
         border: 1px dashed #c0ccda;
         border-radius: 6px;
@@ -107,7 +112,6 @@
         box-sizing: border-box;
         width: 148px;
         height: 148px;
-        display: none;
         line-height: 146px;
         vertical-align: top;
     }
