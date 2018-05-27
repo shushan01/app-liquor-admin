@@ -6,10 +6,10 @@
                     <el-col :span="8">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-1">
-                                <i class="el-icon-view grid-con-icon"></i>
+                                <i class="icon-zongxiaoliang1 grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">1234</div>
-                                    <div>总销量</div>
+                                    <div>总下单量</div>
                                 </div>
                             </div>
                         </el-card>
@@ -17,7 +17,7 @@
                     <el-col :span="8">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-2">
-                                <i class="el-icon-view grid-con-icon"></i>
+                                <i class="icon-dangrixiaoshoue grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">1234</div>
                                     <div>总销售额</div>
@@ -45,10 +45,10 @@
                     <el-col :span="8">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-1">
-                                <i class="el-icon-view grid-con-icon"></i>
+                                <i class="icon-xiaoliang grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">1234</div>
-                                    <div>今日销量</div>
+                                    <div>今日下单量</div>
                                 </div>
                             </div>
                         </el-card>
@@ -56,7 +56,7 @@
                     <el-col :span="8">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-2">
-                                <i class="el-icon-view grid-con-icon"></i>
+                                <i class="icon-dangrixiaoshoue grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">1234</div>
                                     <div>今日销售额</div>
@@ -139,7 +139,7 @@
     }
 
     .grid-con-2 .grid-num {
-        color: rgb(45, 140, 240);
+        color: rgb(100, 213, 114);
     }
 
     .grid-con-3 .grid-con-icon {
