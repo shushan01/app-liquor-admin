@@ -22,29 +22,29 @@ export default new Router({
                 {
                     path: '/goodTypeManager',
                     component: resolve => require(['../components/page/goodType/goodTypeManager.vue'], resolve),
-                    meta: {title: '商品类别管理', keepAlive: false}
+                    meta: {title: '商品类别管理'}
                 },
                 {
                     path: '/goodManager',
                     component: resolve => require(['../components/page/good/goodManager.vue'], resolve),
-                    meta: {title: '商品信息管理', keepAlive: false}
+                    meta: {title: '商品信息管理'}
                 },
                 {
                     path: '/addGood',
                     component: resolve => require(['../components/page/good/addGood.vue'], resolve),
-                    meta: {title: '添加商品信息', keepAlive: false}
+                    meta: {title: '添加商品信息'}
                 },
                 {
                     name: 'editGood',
                     path: '/editGood',
                     component: resolve => require(['../components/page/good/editGood.vue'], resolve),
-                    meta: {title: '修改商品信息', keepAlive: false}
+                    meta: {title: '修改商品信息'}
                 },
                 {
                     name: 'detailGood',
                     path: '/detailGood',
                     component: resolve => require(['../components/page/good/detailGood.vue'], resolve),
-                    meta: {title: '商品详细信息', keepAlive: false}
+                    meta: {title: '商品详细信息'}
                 }
             ]
         },

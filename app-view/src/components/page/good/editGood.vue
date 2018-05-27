@@ -142,7 +142,7 @@
             <!--</div>-->
             <div :style="finishDisplay">
                 你已经成功完善了商品信息<br/>
-                <el-button @click="goBack">返回</el-button>
+                <el-button @click="goBack" style="margin-top: 50px;">返回</el-button>
             </div>
             <div style="margin-top: 50px;">
                 <!--<el-button :style="prevCss" @click="prev">上一步</el-button>-->

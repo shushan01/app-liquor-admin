@@ -21,9 +21,9 @@ export default {
     },
     computed: {},
     watch: {
-        '$route'(to, from) {
-            this.getData();
-        }
+        // '$route'(to, from) {
+        //     this.getData();
+        // }
     },
     methods: {
         // 分页当前页改变
