@@ -90,6 +90,9 @@ export default {
             this.finishDisplay = "display: none;";
             this.nextCss = "";
             this.finishCss = "display: none;";
+            this.editForm.id =''
+            this.editForm.id = this.$route.params.goodId;
+            this.getData();
         }
     },
     computed: {},

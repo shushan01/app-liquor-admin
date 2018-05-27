@@ -20,11 +20,7 @@ export default {
         this.getData();
     },
     computed: {},
-    watch: {
-        // '$route'(to, from) {
-        //     this.getData();
-        // }
-    },
+    watch: {},
     methods: {
         // 分页当前页改变
         handleCurrentChange(val) {

@@ -81,6 +81,14 @@
             this.goodId = this.$route.params.goodId;
             this.getData();
         },
+        watch: {
+            '$route': function () {
+                this.goodId = '';
+                this.goodInfo = {};
+                this.goodId = this.$route.params.goodId;
+                this.getData();
+            }
+        },
         methods: {
             //加载表格数据
             getData() {
