@@ -7,11 +7,27 @@ export default {
             deleteImageUrl: '/image/delete',
             goodCategorys: [],
             fileList: [],
+            listPageFileList: [],
             dialogImageUrl: '',
             dialogVisible: false,
             uploadData: {
                 ownerId: -1,
                 type: 'good'
+            },
+            carouselPageUploadData: {
+                ownerId: -1,
+                type: 'good',
+                position: 1
+            },
+            listPageUploadData: {
+                ownerId: -1,
+                type: 'good',
+                position: '2'
+            },
+            detailPageUploadData: {
+                ownerId: -1,
+                type: 'good',
+                position: '3'
             },
             active: 0,
             baseInfoDisplay: "display: block;",
@@ -102,7 +118,13 @@ export default {
             this.finishCss = "display: none;";
             this.$router.push("/goodManager");
         },
-        handleExceed(files, fileList) {
+        carouselHandleExceed(files, fileList) {
+            this.$message.error('上传图片个数超过限制!最多可以上传5张图片。');
+        },
+        listPageHandleExceed(files, fileList) {
+            this.$message.error('上传图片个数超过限制!最多可以上传3张图片。');
+        },
+        detailPageHandleExceed(files, fileList) {
             this.$message.error('上传图片个数超过限制!最多可以上传12张图片。');
         },
         handlePictureCardPreview(file) {
@@ -125,7 +147,9 @@ export default {
                         }
                     }).then((res) => {
                         if (res.data.code == 0) {
-                            this.uploadData.ownerId = res.data.data;
+                            this.carouselPageUploadData.ownerId = res.data.data;
+                            this.listPageUploadData.ownerId = res.data.data;
+                            this.detailPageUploadData.ownerId = res.data.data;
                             this.addBaseInfoSuccess = true;
                             this.$message.success('添加商品基本信息成功');
                             this.baseInfoDisplay = "display: none;";
@@ -140,13 +164,45 @@ export default {
                 }
             });
         },
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
+        carouselHandleRemove(file, fileList) {
+            this.$http.get(this.deleteImageUrl, {
+                params: {
+                    type: this.carouselPageUploadData.type,
+                    ownerId: this.carouselPageUploadData.ownerId,
+                    fileName: file.name,
+                    position: 1
+                }
+            }).then((res) => {
+                if (res.data.code == 0) {
+                    this.$message.success('删除图片成功');
+                } else {
+                    this.$message.success('删除图片失败');
+                }
+            });
+        },
+        listPageHandleRemove(file, fileList) {
             this.$http.get(this.deleteImageUrl, {
                 params: {
                     type: this.uploadData.type,
                     ownerId: this.uploadData.ownerId,
-                    fileName: file.name
+                    fileName: file.name,
+                    position: 2
+                }
+            }).then((res) => {
+                if (res.data.code == 0) {
+                    this.$message.success('删除图片成功');
+                } else {
+                    this.$message.success('删除图片失败');
+                }
+            });
+        },
+        detailPageHandleRemove(file, fileList) {
+            this.$http.get(this.deleteImageUrl, {
+                params: {
+                    type: this.uploadData.type,
+                    ownerId: this.uploadData.ownerId,
+                    fileName: file.name,
+                    position: 3
                 }
             }).then((res) => {
                 if (res.data.code == 0) {
@@ -158,7 +214,6 @@ export default {
         },
         uploadError(err, file, fileList) {
             this.$message.error(JSON.parse(err.message).message);
-            console.log(err, file, fileList);
         }
     }
 }

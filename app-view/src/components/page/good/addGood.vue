@@ -72,32 +72,68 @@
                 </el-form>
             </div>
             <div :style="uploadPictureDisplay">
-                <el-upload
-                    :action="uploadUrl"
-                    ref="upload"
-                    list-type="picture-card"
-                    :on-remove="handleRemove"
-                    :on-error="uploadError"
-                    :on-preview="handlePictureCardPreview"
-                    :auto-upload="true"
-                    :with-credentials="true"
-                    :data="uploadData"
-                    :file-list="fileList"
-                    :limit="12"
-                    :on-exceed="handleExceed">
-                    <i class="el-icon-plus"></i>
-                </el-upload>
-                <el-dialog :visible.sync="dialogVisible">
-                    <img width="100%" :src="dialogImageUrl" alt="">
-                </el-dialog>
+                <el-collapse>
+                    <el-collapse-item title="上传首页轮播图片" name="1">
+                        <el-upload
+                            :action="uploadUrl"
+                            ref="upload"
+                            list-type="picture-card"
+                            :on-remove="carouselHandleRemove"
+                            :on-error="uploadError"
+                            :on-preview="handlePictureCardPreview"
+                            :auto-upload="true"
+                            :with-credentials="true"
+                            :data="carouselPageUploadData"
+                            :limit="5"
+                            :on-exceed="carouselHandleExceed">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-collapse-item>
+                    <el-collapse-item title="上传商品列表页图片" name="2">
+                        <el-upload
+                            :action="uploadUrl"
+                            ref="upload"
+                            list-type="picture-card"
+                            :on-remove="listPageHandleRemove"
+                            :on-error="uploadError"
+                            :on-preview="handlePictureCardPreview"
+                            :auto-upload="true"
+                            :with-credentials="true"
+                            :data="listPageUploadData"
+                            :limit="3"
+                            :on-exceed="listPageHandleExceed">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-collapse-item>
+
+                    <el-collapse-item title="上传商品详情页图片" name="3">
+                        <el-upload
+                            :action="uploadUrl"
+                            list-type="picture-card"
+                            :on-remove="detailPageHandleRemove"
+                            :on-error="uploadError"
+                            :on-preview="handlePictureCardPreview"
+                            :auto-upload="true"
+                            :with-credentials="true"
+                            :data="detailPageUploadData"
+                            :limit="12"
+                            :on-exceed="detailPageHandleExceed">
+                            <i class="el-icon-plus"></i>
+                        </el-upload>
+                    </el-collapse-item>
+
+                    <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="dialogImageUrl" alt="">
+                    </el-dialog>
+                </el-collapse>
             </div>
 
             <!--<div :style="addAttrDisplay">-->
-                <!--添加商品属性-->
+            <!--添加商品属性-->
             <!--</div>-->
             <div :style="finishDisplay">
                 你已经成功添加完善了商品信息<br/>
-                <el-button @click="goBack">返回</el-button>
+                <el-button @click="goBack" style="margin-top: 50px;">返回</el-button>
             </div>
             <div style="margin-top: 50px;">
                 <!--<el-button :style="prevCss" @click="prev">上一步</el-button>-->

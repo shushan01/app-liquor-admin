@@ -8,44 +8,52 @@
         </div>
         <div class="container">
             <el-collapse v-model="activeNames">
-                <el-row>
-                    <el-col :span="12">
-                        <el-collapse-item title="商品基本信息" name="1">
-                            <p>商品名称：{{goodInfo.name}}</p>
-                            <p>商品类别：{{goodInfo.categoryName}}</p>
-                            <p>商品编码：{{goodInfo.code}}</p>
-                            <p>商品价格：{{goodInfo.price}}</p>
-                            <p>商品销量：{{goodInfo.saleCnt}}</p>
-                            <p>创建时间：{{goodInfo.ctime}}</p>
-                            <p>创建人：{{goodInfo.createName}}</p>
-                            <p>修改时间：{{goodInfo.utime}}</p>
-                            <p>修改人：{{goodInfo.updateName}}</p>
-                            <p>EMS运费：{{goodInfo.emsFreight}} (单位/元)</p>
-                            <p>快递运费：{{goodInfo.expressFreight}} (单位/元)</p>
-                            <p>平邮运费：{{goodInfo.mailFreight}} (单位/元)</p>
-                        </el-collapse-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-collapse-item title="商品属性信息" name="2">
+                <el-collapse-item title="商品基本信息" name="1">
+                    <p>商品名称：{{goodInfo.name}}</p>
+                    <p>商品类别：{{goodInfo.categoryName}}</p>
+                    <p>商品编码：{{goodInfo.code}}</p>
+                    <p>商品价格：{{goodInfo.price}}</p>
+                    <p>商品销量：{{goodInfo.saleCnt}}</p>
+                    <p>创建时间：{{goodInfo.ctime}}</p>
+                    <p>创建人：{{goodInfo.createName}}</p>
+                    <p>修改时间：{{goodInfo.utime}}</p>
+                    <p>修改人：{{goodInfo.updateName}}</p>
+                    <p>EMS运费：{{goodInfo.emsFreight}} (单位/元)</p>
+                    <p>快递运费：{{goodInfo.expressFreight}} (单位/元)</p>
+                    <p>平邮运费：{{goodInfo.mailFreight}} (单位/元)</p>
+                </el-collapse-item>
+                <!--<el-col :span="12">-->
+                <!--<el-collapse-item title="商品属性信息" name="2">-->
 
-                        </el-collapse-item>
-                    </el-col>
-                </el-row>
-                <el-row>
-                    <el-col :span="24">
-                        <el-collapse-item title="商品图片信息" name="3">
-                            <el-upload
-                                list-type="picture-card"
-                                :on-preview="handlePictureCardPreview"
-                                :disabled="true"
-                                :file-list="fileList">
-                            </el-upload>
-                            <el-dialog :visible.sync="dialogVisible">
-                                <img width="100%" :src="dialogImageUrl" alt="">
-                            </el-dialog>
-                        </el-collapse-item>
-                    </el-col>
-                </el-row>
+                <!--</el-collapse-item>-->
+                <!--</el-col>-->
+                <el-collapse-item title="商品首页轮播图片" name="2">
+                    <el-upload
+                        list-type="picture-card"
+                        :on-preview="handlePictureCardPreview"
+                        :disabled="true"
+                        :file-list="carouselFileList">
+                    </el-upload>
+                </el-collapse-item>
+                <el-collapse-item title="商品列表页图片" name="3">
+                    <el-upload
+                        list-type="picture-card"
+                        :on-preview="handlePictureCardPreview"
+                        :disabled="true"
+                        :file-list="listFileList">
+                    </el-upload>
+                </el-collapse-item>
+                <el-collapse-item title="商品详情页图片" name="4">
+                    <el-upload
+                        list-type="picture-card"
+                        :on-preview="handlePictureCardPreview"
+                        :disabled="true"
+                        :file-list="detailFileList">
+                    </el-upload>
+                </el-collapse-item>
+                <el-dialog :visible.sync="dialogVisible">
+                    <img width="100%" :src="dialogImageUrl" alt="">
+                </el-dialog>
             </el-collapse>
         </div>
     </div>
@@ -55,10 +63,12 @@
         data() {
             return {
                 detailUrl: '/good/detail',
-                activeNames: ['1', '2'],
+                activeNames: ['1', '2','3','4'],
                 goodId: '',
                 goodInfo: {},
-                fileList: [],
+                carouselFileList: [],
+                listFileList: [],
+                detailFileList: [],
                 dialogImageUrl: '',
                 dialogVisible: false
             };
@@ -75,7 +85,9 @@
                         id: this.goodId
                     }
                 }).then((res) => {
-                    this.fileList = res.data.data.pictures;
+                    this.carouselFileList = res.data.data.carouselPictures;
+                    this.listFileList = res.data.data.goodListPictures;
+                    this.detailFileList = res.data.data.goodDetailPictures;
                     this.goodInfo = res.data.data.good;
                 });
             },
