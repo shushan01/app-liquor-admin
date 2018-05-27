@@ -45,6 +45,12 @@ export default new Router({
                     path: '/detailGood',
                     component: resolve => require(['../components/page/good/detailGood.vue'], resolve),
                     meta: {title: '商品详细信息', keepAlive: false}
+                },
+                {
+                    name: 'orderManager',
+                    path: '/orderManager',
+                    component: resolve => require(['../components/page/order/orderManager.vue'], resolve),
+                    meta: {title: '订单管理', keepAlive: false}
                 }
             ]
         },
