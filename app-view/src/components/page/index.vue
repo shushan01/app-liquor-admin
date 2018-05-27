@@ -9,7 +9,7 @@
                                 <i class="el-icon-view grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">1234</div>
-                                    <div>用户访问量</div>
+                                    <div>总销量</div>
                                 </div>
                             </div>
                         </el-card>
@@ -17,10 +17,10 @@
                     <el-col :span="8">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-2">
-                                <i class="el-icon-message grid-con-icon"></i>
+                                <i class="el-icon-view grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">321</div>
-                                    <div>系统消息</div>
+                                    <div class="grid-num">1234</div>
+                                    <div>总销售额</div>
                                 </div>
                             </div>
                         </el-card>
@@ -28,10 +28,49 @@
                     <el-col :span="8">
                         <el-card shadow="hover" :body-style="{padding: '0px'}">
                             <div class="grid-content grid-con-3">
-                                <i class="el-icon-goods grid-con-icon"></i>
+                                <i class="icon-drxx10 grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">5000</div>
-                                    <div>数量</div>
+                                    <div>总活跃用户量</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
+            </el-col>
+        </el-row>
+        <el-row :gutter="20">
+            <el-col :span="24">
+                <el-row :gutter="20" class="mgb20">
+                    <el-col :span="8">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-1">
+                                <i class="el-icon-view grid-con-icon"></i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">1234</div>
+                                    <div>今日销量</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-2">
+                                <i class="el-icon-view grid-con-icon"></i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">1234</div>
+                                    <div>今日销售额</div>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card shadow="hover" :body-style="{padding: '0px'}">
+                            <div class="grid-content grid-con-3">
+                                <i class="icon-drxx10 grid-con-icon"></i>
+                                <div class="grid-cont-right">
+                                    <div class="grid-num">5000</div>
+                                    <div>今日活跃用户量</div>
                                 </div>
                             </div>
                         </el-card>
